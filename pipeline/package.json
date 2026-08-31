@@ -1,0 +1,13 @@
+{
+  "name": "sd-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shadow Dungeon: converts extracted game tables (GBK CSV .bin) + localization into compact JSON for web/public/data",
+  "scripts": {
+    "build": "node build-data.mjs"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.6.3"
+  }
+}
