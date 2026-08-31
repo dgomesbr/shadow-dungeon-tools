@@ -13,3 +13,6 @@ obj/
 
 # raw game dumps stay local; only derived JSON in web/public/data is committed
 data/raw/
+
+# agent scratch space
+.tmp/
