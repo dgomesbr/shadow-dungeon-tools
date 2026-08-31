@@ -154,8 +154,39 @@ export async function editorView(): Promise<View> {
       async function commit(): Promise<void> {
         const f = active();
         if (!f || st.pending.size === 0) return;
-        const summary = await applySets(f.name, [...st.pending.values()]);
+        const sets = [...st.pending.values()];
+        const summary = await applySets(f.name, sets);
         f.result.summary = summary;
+
+        // The game falls back silently across slot/auto/exit backups, so
+        // character-level edits should hit every loaded file. Handles are
+        // per-file, so mirror by FIELD NAME (player fields, money, talents).
+        const mirror = host.querySelector<HTMLInputElement>('#mirror')?.checked;
+        if (mirror) {
+          const src = f.result.summary;
+          const nameOf = new Map<string, string>(); // handle → semantic key
+          for (const l of src.player) nameOf.set(l.handle, `p:${l.name}`);
+          for (const l of src.talentPoints) nameOf.set(l.handle, `tp:${l.name}`);
+          for (const t of src.talents) nameOf.set(t.handle, `t:${t.name}`);
+          if (src.money) nameOf.set(src.money.handle, 'money');
+          for (const other of st.files.values()) {
+            if (other.name === f.name || !other.result.roundTrip) continue;
+            const os = other.result.summary;
+            const byKey = new Map<string, string>(); // semantic key → other handle
+            for (const l of os.player) byKey.set(`p:${l.name}`, l.handle);
+            for (const l of os.talentPoints) byKey.set(`tp:${l.name}`, l.handle);
+            for (const t of os.talents) byKey.set(`t:${t.name}`, t.handle);
+            if (os.money) byKey.set('money', os.money.handle);
+            const mirrored: SetOp[] = [];
+            for (const op of sets) {
+              const key = nameOf.get(op.handle);
+              const h = key ? byKey.get(key) : undefined;
+              if (h) mirrored.push({ handle: h, value: op.value });
+            }
+            if (mirrored.length) other.result.summary = await applySets(other.name, mirrored);
+          }
+        }
+
         const sel = st.selected?.handle;
         st.pending.clear();
         st.selected = sel
@@ -164,18 +195,22 @@ export async function editorView(): Promise<View> {
         render();
       }
 
-      async function download(): Promise<void> {
+      function saveBlob(buf: ArrayBuffer, name: string): void {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([buf], { type: 'application/octet-stream' }));
+        a.download = name;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+      }
+
+      async function download(all: boolean): Promise<void> {
         const f = active();
         if (!f) return;
         if (st.pending.size && confirm(`Apply ${st.pending.size} pending change(s) before downloading?`)) {
           await commit();
         }
-        const buf = await encodeSave(f.name);
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([buf], { type: 'application/octet-stream' }));
-        a.download = f.name;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+        const targets = all ? [...st.files.values()].filter((o) => o.result.roundTrip) : [f];
+        for (const t of targets) saveBlob(await encodeSave(t.name), t.name);
       }
 
       // ---- rendering ----
@@ -195,6 +230,7 @@ export async function editorView(): Promise<View> {
             <div class="ed-actions">
               <span class="dim">v${esc(s.gameVersion)} · ${(f.size / 1024 / 1024).toFixed(2)} MB</span>
               <button id="dl" ${f.result.roundTrip ? '' : 'disabled title="round-trip check failed — editing disabled"'}>Download</button>
+              ${st.files.size > 1 ? '<button id="dl-all">Download all</button>' : ''}
             </div>
           </div>
           ${f.result.roundTrip ? '' : `<p class="ed-warn">⚠ This file did not re-encode byte-identically (first difference at byte ${f.result.firstDiff}). Editing is disabled to protect your save — please report this on GitHub.</p>`}
@@ -227,6 +263,8 @@ export async function editorView(): Promise<View> {
           </div>
           <div class="ed-pending" id="pending" hidden>
             <span id="pending-n"></span>
+            ${st.files.size > 1 ? `<label class="dim"><input type="checkbox" id="mirror" checked>
+              mirror character/talent edits to all ${st.files.size} files</label>` : ''}
             <button id="apply">Apply</button>
             <button id="discard">Discard</button>
           </div>`;
@@ -235,7 +273,8 @@ export async function editorView(): Promise<View> {
           b.addEventListener('click', () => { st.active = b.dataset['file']!; st.selected = null; st.pending.clear(); render(); }));
         host.querySelector<HTMLInputElement>('.ed-add input')!
           .addEventListener('change', (e) => void loadFiles((e.target as HTMLInputElement).files!));
-        host.querySelector('#dl')!.addEventListener('click', () => void download());
+        host.querySelector('#dl')!.addEventListener('click', () => void download(false));
+        host.querySelector('#dl-all')?.addEventListener('click', () => void download(true));
         host.querySelectorAll<HTMLButtonElement>('.seg').forEach((b) =>
           b.addEventListener('click', () => { st.container = b.dataset['cont'] as State['container']; st.page = 0; render(); }));
         host.querySelector('#apply')?.addEventListener('click', () => void commit());
