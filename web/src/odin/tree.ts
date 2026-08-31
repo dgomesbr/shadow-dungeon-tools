@@ -1,6 +1,6 @@
-// Document model for OdinSerializer binary saves. The reader produces this
-// tree; the writer must re-emit it byte-identically when unmodified.
-// Node kinds mirror the wire format 1:1 so no information is lost.
+// Lossless document model for OdinSerializer binary saves (FinkFramework fork).
+// The reader produces this tree; the writer re-emits it byte-identically when
+// unmodified. Node kinds mirror the wire format 1:1.
 
 export type OdinNode =
   | RefNode
@@ -9,21 +9,21 @@ export type OdinNode =
   | PrimitiveArrayNode
   | PrimitiveNode
   | StringNode
+  | BoolNode
   | NullNode
   | InternalRefNode
-  | ExternalRefNode
-  | BoolNode;
+  | ExternalRefNode;
 
 export interface TypeRef {
-  /** Numeric id assigned at first appearance in the stream. */
+  /** Id assigned at the type's first appearance in the stream (types.Count order). */
   id: number;
-  /** Full type name; undefined when the stream referenced a cached id only. */
-  name?: string;
 }
 
 export interface BaseNode {
   /** Member name; undefined for unnamed entries (array elements, root). */
   name?: string;
+  /** Set only when the stream stored the NAME as 8-bit chars (never seen in practice). */
+  nameNarrow?: true;
 }
 
 export interface RefNode extends BaseNode {
@@ -42,39 +42,42 @@ export interface StructNode extends BaseNode {
 
 export interface ArrayNode extends BaseNode {
   kind: 'array';
-  length: number;
+  /** int64 element count from the stream. Writer emits children.length-derived
+   *  value only if `length` is untouched; keep in sync when editing. */
+  length: bigint;
   children: OdinNode[];
 }
 
 export interface PrimitiveArrayNode extends BaseNode {
   kind: 'primArray';
-  elementType: PrimKind;
-  /** Raw little-endian payload, untouched unless edited. */
+  count: number;
+  elemSize: number;
+  /** Raw little-endian payload (count * elemSize bytes). */
   data: Uint8Array;
-  length: number;
 }
 
 export type PrimKind =
   | 'sbyte' | 'byte' | 'short' | 'ushort' | 'int' | 'uint'
-  | 'long' | 'ulong' | 'float' | 'double' | 'decimal' | 'char' | 'guid';
+  | 'long' | 'ulong' | 'float' | 'double' | 'char';
 
 export interface PrimitiveNode extends BaseNode {
   kind: 'prim';
   prim: PrimKind;
-  /** number for 32-bit-safe values, bigint for long/ulong, string for decimal/guid. */
-  value: number | bigint | string;
+  /** number for ≤32-bit and floats, bigint for long/ulong, number (code unit) for char. */
+  value: number | bigint;
+}
+
+/** decimal / guid — kept as opaque 16-byte payloads (never edited). */
+export interface StringNode extends BaseNode {
+  kind: 'string';
+  value: string;
+  /** false when stored as 8-bit chars; game default is wide (UTF-16LE). */
+  wide: boolean;
 }
 
 export interface BoolNode extends BaseNode {
   kind: 'bool';
   value: boolean;
-}
-
-export interface StringNode extends BaseNode {
-  kind: 'string';
-  value: string;
-  /** true when the stream stored 16-bit chars; preserved for round-trip. */
-  wide: boolean;
 }
 
 export interface NullNode extends BaseNode {
@@ -89,31 +92,42 @@ export interface InternalRefNode extends BaseNode {
 export interface ExternalRefNode extends BaseNode {
   kind: 'extref';
   refKind: 'index' | 'guid' | 'string';
-  value: number | string;
+  /** int32 for index, 16 raw bytes for guid, string for string refs. */
+  value: number | Uint8Array | string;
+  wide?: boolean;
 }
 
+/** Opaque 16-byte primitives (decimal, guid) ride as PrimitiveNode16. */
+export interface Primitive16Node extends BaseNode {
+  kind: 'prim16';
+  prim: 'decimal' | 'guid';
+  data: Uint8Array;
+}
+
+export type AnyNode = OdinNode | Primitive16Node;
+
 export interface OdinDocument {
-  root: OdinNode[];
-  /** Types in first-appearance order; writer re-emits names at same points. */
-  types: TypeRef[];
+  root: AnyNode[];
+  /** Type id → { name, wide } captured at first appearance (TypeName entries). */
+  typeNames: Map<number, { name: string; wide: boolean }>;
 }
 
 // ---- traversal helpers -----------------------------------------------------
 
-export function isContainer(n: OdinNode): n is RefNode | StructNode | ArrayNode {
+export function isContainer(n: AnyNode): n is RefNode | StructNode | ArrayNode {
   return n.kind === 'ref' || n.kind === 'struct' || n.kind === 'array';
 }
 
 /** Find first direct child by member name. */
-export function child(n: OdinNode, name: string): OdinNode | undefined {
+export function child(n: AnyNode, name: string): AnyNode | undefined {
   if (!isContainer(n)) return undefined;
   for (const c of n.children) if (c.name === name) return c;
   return undefined;
 }
 
-/** Resolve a path like ["SaveData", "InventoryData", "InventoryItems"]. */
-export function path(root: OdinNode, ...names: string[]): OdinNode | undefined {
-  let cur: OdinNode | undefined = root;
+/** Resolve a path of member names. */
+export function path(root: AnyNode, ...names: string[]): AnyNode | undefined {
+  let cur: AnyNode | undefined = root;
   for (const nm of names) {
     if (!cur) return undefined;
     cur = child(cur, nm);
@@ -121,18 +135,17 @@ export function path(root: OdinNode, ...names: string[]): OdinNode | undefined {
   return cur;
 }
 
-export function* walk(n: OdinNode): Generator<OdinNode> {
+export function* walk(n: AnyNode): Generator<AnyNode> {
   yield n;
-  if (isContainer(n)) for (const c of n.children) yield* walk(c);
+  if (isContainer(n)) for (const c of n.children) yield* walk(c as AnyNode);
 }
 
-/** Highest refId in the document, for allocating fresh ids when cloning. */
+/** Highest reference id in the document, for allocating fresh ids when cloning. */
 export function maxRefId(doc: OdinDocument): number {
   let max = 0;
   for (const r of doc.root) {
     for (const n of walk(r)) {
-      if (n.kind === 'ref' && n.refId > max) max = n.refId;
-      if (n.kind === 'iref' && n.refId > max) max = n.refId;
+      if ((n.kind === 'ref' || n.kind === 'iref') && n.refId > max) max = n.refId;
     }
   }
   return max;
