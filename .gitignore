@@ -16,3 +16,6 @@ data/raw/
 
 # agent scratch space
 .tmp/
+
+# local editor config
+.claude/
