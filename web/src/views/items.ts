@@ -138,7 +138,7 @@ function affixList(cat: Catalog, pool: string, id: unknown): string {
 
 function tooltipFrame(it: CatalogEntry, lines: string[], footer: string): string {
   const icon = it.icon
-    ? `<img class="tt-icon" src="${BASE + it.icon}" width="${it.iconW}" height="${it.iconH}" alt="" decoding="async">`
+    ? `<img class="tt-icon" src="${BASE + it.icon}" alt="" decoding="async" onerror="this.style.display='none'">`
     : '';
   return `
     <div class="tt" style="--quality: var(--q${it.quality})">

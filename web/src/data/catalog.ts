@@ -12,14 +12,34 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   gem: 'Gems', consumable: 'Consumables', set: 'Sets',
 };
 
-export interface IconsIndex {
-  cellSizePx: number;
-  sprites: Record<string, { path: string; w: number; h: number }>;
-  weaponIconTypes: { iconType: number; sheet: string; sprites: string[] }[];
-  gemIcons: { sheet: string; sprites: string[] };
-  useItemIcons: { sheet: string; sprites: string[] };
-  special: { skillRuneByElement: string[]; spcRune: string; baseRune: string; doubleIcons: string[] };
+// Icon paths are fully deterministic (docs/icons.md): sprite name suffix ==
+// array index, so no runtime index file is needed. IconType → sheet, in the
+// game's serialized IconData order.
+export const ICON_SHEETS = [
+  'StaffC', 'StaffD', 'StaffB', 'StaffA', 'SpellA', 'SpellB',
+  'SwordA', 'SwordB', 'SwordC', 'ShieldA', 'ShieldB', 'ShieldC',
+  'BowB', 'BowC', 'BowA', 'ArrowC', 'ArrowB', 'ArrowA',
+  'StickB', 'StickD', 'StickC', 'StickA', 'CorpseC', 'CorpseB',
+  'CorpseA', 'HeadA', 'ArmorA', 'HandA', 'ShoesA', 'CrossA',
+  'PearlA', 'RingA', 'JewelA',
+] as const;
+
+export function weaponIconPath(iconType: number, icon: number): string {
+  const sheet = ICON_SHEETS[iconType];
+  return sheet ? `icons/weapons/${sheet}_${icon}.png` : '';
 }
+export function gemIconPath(icon: number): string {
+  return `icons/gems/LittleC_${icon}.png`;
+}
+export function useIconPath(icon: number): string {
+  return `icons/consumables/LittleA_${icon}.png`;
+}
+/** ItemIconUtil.GetBaoshiIcon overrides for rune-type gems. */
+export const RUNE_ICONS = {
+  byElement: [75, 76, 77, 78, 79, 80].map((i) => `icons/gems/LittleC_${i}.png`),
+  spc: 'icons/gems/LittleC_81.png',
+  base: 'icons/gems/LittleC_82.png',
+};
 
 export interface CatalogEntry {
   id: number;            // GlobalID (or SetID for sets)
@@ -31,8 +51,6 @@ export interface CatalogEntry {
   plType: number;
   setId: number;         // 0 = none
   icon: string;          // resolved path (relative to BASE_URL)
-  iconW: number;
-  iconH: number;
   search: string;        // precomputed lowercase key
   /** Source for the detail panel: table+row index or plain object. */
   src: { table: Table; row: number } | Record<string, unknown>;
@@ -50,7 +68,6 @@ export interface Catalog {
   useitems: Record<string, unknown>[];
   sets: Record<string, unknown>[];
   affixes: { pool: string; id: number; entries: unknown[] }[];
-  icons: IconsIndex;
   weaponById: Map<unknown, number>;
   affixByPoolId: Map<string, { pool: string; id: number; entries: unknown[] }>;
   skillByIndexName: Map<unknown, number>;
@@ -63,22 +80,14 @@ export function loadCatalog(): Promise<Catalog> {
   return (catalogPromise ??= buildCatalog());
 }
 
-function iconOf(idx: IconsIndex, name: string | undefined): { path: string; w: number; h: number } {
-  const s = name ? idx.sprites[name] : undefined;
-  return s ?? { path: '', w: 60, h: 60 };
-}
-
 async function buildCatalog(): Promise<Catalog> {
-  const [weapons, skills, gems, useitems, sets, affixes, icons] = await Promise.all([
+  const [weapons, skills, gems, useitems, sets, affixes] = await Promise.all([
     loadTable('weapons.json'),
     loadTable('skills.json'),
     loadJSON<Record<string, unknown>[]>('gems.json'),
     loadJSON<Record<string, unknown>[]>('useitems.json'),
     loadJSON<Record<string, unknown>[]>('sets.json'),
     loadJSON<{ pool: string; id: number; entries: unknown[] }[]>('affixes.json'),
-    loadJSON<IconsIndex>('icons-index.json').catch(() =>
-      fetch(`${import.meta.env.BASE_URL}icons/icons-index.json`).then((r) => r.json()),
-    ),
   ]);
 
   const entries: CatalogEntry[] = [];
@@ -90,38 +99,34 @@ async function buildCatalog(): Promise<Catalog> {
   for (let i = 0; i < weapons.length; i++) {
     const r = weapons.rows[i]!;
     const slot = r[wc.slot] as number;
-    const spriteName = icons.weaponIconTypes[r[wc.iconType] as number]?.sprites[r[wc.icon] as number];
-    const ic = iconOf(icons, spriteName);
     const name = String(r[wc.name]);
     entries.push({
       id: r[wc.id] as number,
       cat: slot <= 1 ? 'weapon' : slot <= 5 ? 'armor' : 'accessory',
       name, quality: r[wc.q] as number, level: r[wc.lvl] as number,
       slot, plType: r[wc.pl] as number, setId: (r[wc.set] as number) || 0,
-      icon: ic.path, iconW: ic.w, iconH: ic.h,
+      icon: weaponIconPath(r[wc.iconType] as number, r[wc.icon] as number),
       search: name.toLowerCase(),
       src: { table: weapons, row: i },
     });
   }
   for (const g of gems) {
-    const ic = iconOf(icons, icons.gemIcons.sprites[g['Icon'] as number]);
     const name = String(g['ItemName']);
     entries.push({
       id: g['GlobalID'] as number, cat: 'gem', name,
       quality: Math.min(g['Quality'] as number, 8), level: (g['Level'] as number) || 0,
       slot: -1, plType: -1, setId: 0,
-      icon: ic.path, iconW: ic.w, iconH: ic.h,
+      icon: gemIconPath(g['Icon'] as number),
       search: name.toLowerCase(), src: g,
     });
   }
   for (const u of useitems) {
-    const ic = iconOf(icons, icons.useItemIcons.sprites[u['Icon'] as number]);
     const name = String(u['ItemName']);
     entries.push({
       id: u['GlobalID'] as number, cat: 'consumable', name,
       quality: Math.min(u['Quality'] as number, 8), level: (u['Level'] as number) || 0,
       slot: -1, plType: -1, setId: 0,
-      icon: ic.path, iconW: ic.w, iconH: ic.h,
+      icon: useIconPath(u['Icon'] as number),
       search: name.toLowerCase(), src: u,
     });
   }
@@ -132,15 +137,15 @@ async function buildCatalog(): Promise<Catalog> {
     if (!setId) continue;
     const pieces = (s['pieces'] as number[]) ?? [];
     const head = weaponById.get(pieces[0]);
-    let icon = { path: '', w: 60, h: 60 };
+    let icon = '';
     if (head !== undefined) {
       const r = weapons.rows[head]!;
-      icon = iconOf(icons, icons.weaponIconTypes[r[wc.iconType] as number]?.sprites[r[wc.icon] as number]);
+      icon = weaponIconPath(r[wc.iconType] as number, r[wc.icon] as number);
     }
     const name = String(s['SetName']);
     entries.push({
       id: setId, cat: 'set', name, quality: 6, level: 0, slot: -1, plType: -1, setId,
-      icon: icon.path, iconW: icon.w, iconH: icon.h,
+      icon,
       search: name.toLowerCase(), src: s,
     });
   }
@@ -150,7 +155,7 @@ async function buildCatalog(): Promise<Catalog> {
 
   let procsLoading: Promise<void> | null = null;
   const catalog: Catalog = {
-    entries, weapons, skills, gems, useitems, sets, affixes, icons,
+    entries, weapons, skills, gems, useitems, sets, affixes,
     weaponById, affixByPoolId,
     skillByIndexName: skills.keyBy('IndexName'),
     setById: new Map(sets.map((s) => [s['SetID'], s])),

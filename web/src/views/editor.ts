@@ -1,7 +1,10 @@
 import type { View } from '../router';
 import { applySets, encodeSave, itemDetail, parseSave, type ParseResult } from '../worker/client';
 import type { ItemSummary, Leaf, Rec, SaveSummary, SetOp } from '../worker/protocol';
-import { loadCatalog, QUALITY_NAMES, SLOT_NAMES, ELEMENT_NAMES } from '../data/catalog';
+import {
+  loadCatalog, QUALITY_NAMES, SLOT_NAMES, ELEMENT_NAMES,
+  weaponIconPath, gemIconPath, useIconPath, RUNE_ICONS,
+} from '../data/catalog';
 import { loadJSON } from '../data/coltable';
 
 const BASE = import.meta.env.BASE_URL;
@@ -65,10 +68,9 @@ export async function editorView(): Promise<View> {
       const i = cat.weaponById.get(it.globalId);
       if (i !== undefined) {
         const r = cat.weapons.rows[i]!;
-        const sprite = cat.icons.weaponIconTypes[r[wc.iconType] as number]?.sprites[r[wc.icon] as number];
         return {
           name: String(r[wc.name]),
-          icon: sprite ? cat.icons.sprites[sprite]!.path : '',
+          icon: weaponIconPath(r[wc.iconType] as number, r[wc.icon] as number),
           w: (r[wc.sizeX] as number) || 1,
           h: (r[wc.sizeY] as number) || 1,
         };
@@ -79,27 +81,26 @@ export async function editorView(): Promise<View> {
       const g = gemsById.get(it.globalId);
       // Rune-type gems use dedicated sprites, not their Icon column (docs/icons.md).
       const useType = g ? Number(g['UseType']) : 0;
-      let sprite: string | undefined;
+      let icon = '';
       if (useType === 3) {
         const el = it.leaves.find((l) => l.name === 'EL')?.value;
-        sprite = cat.icons.special.skillRuneByElement[Number(el) || 0];
+        icon = RUNE_ICONS.byElement[Number(el) || 0] ?? RUNE_ICONS.base;
       } else if (useType === 4) {
-        sprite = cat.icons.special.spcRune;
+        icon = RUNE_ICONS.spc;
       } else if (useType === 5) {
-        sprite = cat.icons.special.baseRune;
+        icon = RUNE_ICONS.base;
       } else if (g) {
-        sprite = cat.icons.gemIcons.sprites[g['Icon'] as number];
+        icon = gemIconPath(g['Icon'] as number);
       }
       return {
         name: g ? String(g['ItemName']) : `Gem #${it.globalId}`,
-        icon: sprite ? cat.icons.sprites[sprite]!.path : '', w: 1, h: 1,
+        icon, w: 1, h: 1,
       };
     }
     const u = useById.get(it.globalId);
-    const sprite = u ? cat.icons.useItemIcons.sprites[u['Icon'] as number] : undefined;
     return {
       name: u ? String(u['ItemName']) : `Item #${it.globalId}`,
-      icon: sprite ? cat.icons.sprites[sprite]!.path : '', w: 1, h: 1,
+      icon: u ? useIconPath(u['Icon'] as number) : '', w: 1, h: 1,
     };
   }
 
