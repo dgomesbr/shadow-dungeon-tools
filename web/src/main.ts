@@ -13,7 +13,7 @@ app.innerHTML = `
   <div id="view"></div>
 `;
 
-register('/', () => import('./views/items').then((m) => m.itemsView()));
+register('/', () => import('./views/home').then((m) => m.homeView()));
 register('/items', () => import('./views/items').then((m) => m.itemsView()));
 register('/editor', () => import('./views/editor').then((m) => m.editorView()));
 

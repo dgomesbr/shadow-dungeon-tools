@@ -133,54 +133,86 @@ function affixList(cat: Catalog, pool: string, id: unknown): string {
     const o = e as Record<string, unknown>;
     return `<li>${esc(o['SkN'])} #${esc(o['Inx'])} +${esc(o['NB'])}</li>`;
   });
-  return `<h4>${pool === 'main' ? 'Main affix pool' : pool === 'dot' ? 'DOT affix pool' : 'Skill affix pool'}</h4><ul class="affixes">${lines.join('')}</ul>`;
+  return `<ul class="affixes">${lines.join('')}</ul>`;
+}
+
+function tooltipFrame(it: CatalogEntry, lines: string[], footer: string): string {
+  const icon = it.icon
+    ? `<img class="tt-icon" src="${BASE + it.icon}" width="${it.iconW}" height="${it.iconH}" alt="" decoding="async">`
+    : '';
+  return `
+    <div class="tt" style="--quality: var(--q${it.quality})">
+      <i class="tt-rivet tl"></i><i class="tt-rivet tr"></i><i class="tt-rivet bl"></i><i class="tt-rivet br"></i>
+      <h3 class="tt-name">${esc(it.name)}</h3>
+      <p class="tt-kind">${QUALITY_NAMES[it.quality] ?? `Q${it.quality}`} ${it.slot >= 0 ? SLOT_NAMES[it.slot] : CATEGORY_LABELS[it.cat]}</p>
+      ${icon}
+      <div class="tt-rule"></div>
+      ${lines.join('')}
+      <div class="tt-rule"></div>
+      <p class="tt-foot">${footer}</p>
+    </div>`;
+}
+
+function ttLine(text: string, cls = ''): string {
+  return `<p class="tt-line${cls ? ' ' + cls : ''}">${text}</p>`;
+}
+
+function card(title: string, inner: string): string {
+  return inner ? `<section class="dcard"><h4>${title}</h4>${inner}</section>` : '';
 }
 
 function renderDetail(host: HTMLElement, it: CatalogEntry, cat: Catalog): void {
-  const icon = it.icon
-    ? `<img class="detail-icon" src="${BASE + it.icon}" width="${it.iconW}" height="${it.iconH}" alt="">`
-    : '';
-  let body = '';
-
   const src = it.src as { table?: import('../data/coltable').Table; row?: number };
+  const lines: string[] = [];
+  const cards: string[] = [];
+
   if (src.table !== undefined && src.row !== undefined) {
     const w = rowObj(src.table, src.row);
-    body += statRows([
-      ['Slot', SLOT_NAMES[it.slot]], ['Drop level', w['DropLevelStart']],
-      ['Damage', w['DMG']], ['Health', w['Heal']], ['Mana', w['Mana']], ['Elemental', w['EL']],
-      ['Gem sockets', w['CurAocaoCount']],
-      ['Size', `${w['SizeX']}×${w['SizeY']}`],
-    ]);
-    const sockets = (w['Sockets'] as [string, number][] | undefined) ?? [];
-    if (sockets.length) {
-      body += `<h4>Skill sockets</h4><ul class="affixes">${sockets
-        .map(([sk, pts]) => `<li>${esc(sk)} +${pts}</li>`).join('')}</ul>`;
-    }
+    if (w['DMG']) lines.push(ttLine(`${esc(w['DMG'])} damage`));
+    if (w['Heal']) lines.push(ttLine(`+${esc(w['Heal'])} health`));
+    if (w['Mana']) lines.push(ttLine(`+${esc(w['Mana'])} mana`));
+    if (w['EL']) lines.push(ttLine(`+${esc(w['EL'])}% elemental`, 'el'));
     const fixed = (w['Affixes'] as [number, number, number][] | undefined) ?? [];
-    if (fixed.length) {
-      body += `<h4>Fixed affixes</h4><ul class="affixes">${fixed
-        .map(([i, el, nb]) => `<li>#${i} ${ELEMENT_NAMES[el] ?? ''} +${nb}</li>`).join('')}</ul>`;
+    for (const [i, el, nb] of fixed) {
+      lines.push(ttLine(`+${nb} ${ELEMENT_NAMES[el] ?? ''} <span class="dim">(affix #${i})</span>`, 'mod'));
     }
-    body += affixList(cat, 'main', w['MainID']);
-    body += affixList(cat, 'dot', w['DotID']);
-    body += affixList(cat, 'sk', w['SkID']);
+    const sockets = (w['Sockets'] as [string, number][] | undefined) ?? [];
+    for (const [sk, pts] of sockets) lines.push(ttLine(`+${pts} to ${esc(sk)}`, 'skill'));
+    const aocao = Number(w['CurAocaoCount']) || 0;
+    if (aocao) lines.push(ttLine(`◆ ${aocao} socket slot${aocao > 1 ? 's' : ''}`, 'sockets'));
     const spc = w['SPC'] as number;
     if (spc) {
       const p = cat.procById.get(spc);
-      if (p !== undefined) body += statRows([['Proc', cat.procs.rows[p]![cat.procs.col('name')]]]);
+      if (p !== undefined) lines.push(ttLine(`Proc: ${esc(cat.procs.rows[p]![cat.procs.col('name')])}`, 'proc'));
     }
-    if (it.setId) body += setBlock(cat, it.setId);
+
+    cards.push(card('Summary', statRows([
+      ['GlobalID', w['GlobalID']], ['Drop level', w['DropLevelStart']],
+      ['Grid size', `${w['SizeX']}×${w['SizeY']}`], ['Class group', w['PLtype']],
+      ['Weapon type', w['WeaponType']],
+    ])));
+    cards.push(card('Fixed affixes', fixed.length
+      ? `<ul class="affixes">${fixed.map(([i, el, nb]) => `<li>#${i} ${ELEMENT_NAMES[el] ?? ''} +${nb}</li>`).join('')}</ul>` : ''));
+    cards.push(card('Main affix pool', affixList(cat, 'main', w['MainID'])));
+    cards.push(card('DOT affix pool', affixList(cat, 'dot', w['DotID'])));
+    cards.push(card('Skill affix pool', affixList(cat, 'sk', w['SkID'])));
+    if (it.setId) cards.push(card('Set', setBlock(cat, it.setId)));
   } else if (it.cat === 'set') {
-    body += setBlock(cat, it.id);
+    const pieces = ((it.src as Record<string, unknown>)['pieces'] as number[]) ?? [];
+    lines.push(ttLine(`${pieces.length}-piece armor set`, 'dim'));
+    cards.push(card('Set', setBlock(cat, it.id)));
   } else {
     const o = it.src as Record<string, unknown>;
-    body += statRows(Object.entries(o).filter(([k]) => !['ItemName', 'Icon'].includes(k)) as [string, unknown][]);
+    if (o['Number']) lines.push(ttLine(`Effect value +${esc(o['Number'])}`));
+    if (o['Bstype']) lines.push(ttLine(`${esc(o['Bstype'])}`, 'dim'));
+    if (o['MstackSize']) lines.push(ttLine(`Stacks to ${esc(o['MstackSize'])}`, 'dim'));
+    cards.push(card('Summary', statRows(
+      Object.entries(o).filter(([k]) => !['ItemName', 'Icon'].includes(k)) as [string, unknown][],
+    )));
   }
 
-  host.innerHTML = `
-    <div class="detail-head">${icon}<div><h3 class="q${it.quality}">${esc(it.name)}</h3>
-    <p class="sub">${QUALITY_NAMES[it.quality] ?? `Q${it.quality}`} · ${CATEGORY_LABELS[it.cat]} · #${it.id}</p></div></div>
-    ${body}`;
+  const footer = it.level ? `Drop level ${it.level} · #${it.id}` : `#${it.id}`;
+  host.innerHTML = tooltipFrame(it, lines, footer) + cards.join('');
 }
 
 function setBlock(cat: Catalog, setId: number): string {

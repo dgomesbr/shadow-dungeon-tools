@@ -8,6 +8,7 @@ export type OdinNode =
   | ArrayNode
   | PrimitiveArrayNode
   | PrimitiveNode
+  | Primitive16Node
   | StringNode
   | BoolNode
   | NullNode
@@ -104,7 +105,7 @@ export interface Primitive16Node extends BaseNode {
   data: Uint8Array;
 }
 
-export type AnyNode = OdinNode | Primitive16Node;
+export type AnyNode = OdinNode;
 
 export interface OdinDocument {
   root: AnyNode[];
