@@ -37,6 +37,13 @@ npm install
 npm run dev
 ```
 
+## Verified against the game
+
+The TypeScript OdinSerializer reader/writer round-trips real saves **byte-identically**,
+and saves edited in the browser pass the game's own load checks (replayed via a
+validation tool built on the game's DLLs). The editor additionally refuses to enable
+editing for any file it cannot round-trip byte-for-byte.
+
 ## Design principles
 
 1. **Client-side only.** Static hosting, save parsing/encoding in the browser
