@@ -1,32 +1,14 @@
 import type { View } from '../router';
 import { applySets, encodeSave, itemDetail, parseSave, type ParseResult } from '../worker/client';
-import type { ItemSummary, Leaf, Rec, SaveSummary, SetOp } from '../worker/protocol';
-import {
-  loadCatalog, QUALITY_NAMES, SLOT_NAMES, ELEMENT_NAMES,
-  weaponIconPath, gemIconPath, useIconPath, RUNE_ICONS,
-} from '../data/catalog';
-import { loadJSON } from '../data/coltable';
+import type { ItemSummary, Leaf, SaveSummary, SetOp } from '../worker/protocol';
+import { loadCatalog, SLOT_NAMES } from '../data/catalog';
+import { createCharacterRenderer, esc, loadAffixNames } from '../ui/character';
+import { buildFromSummary, encodeShare } from '../share/codec';
 
 const BASE = import.meta.env.BASE_URL;
 const CELL = 32; // px per inventory grid cell (game uses 60)
 const GRID_W = 15;
 const GRID_H = 17;
-
-interface AffixEntry {
-  label: string;
-  percent?: boolean;
-  bool?: boolean;
-  el?: boolean;
-  format?: string;
-  elVariants?: string[];
-  unmapped?: boolean;
-}
-interface AffixNames {
-  main: Record<string, AffixEntry>;
-  dot: Record<string, AffixEntry>;
-  sk: Record<string, AffixEntry>;
-  aocao: Record<string, string>;
-}
 
 interface OpenFile {
   name: string;
@@ -43,101 +25,11 @@ interface State {
   pending: Map<string, SetOp>;
 }
 
-function esc(s: unknown): string {
-  return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
-}
-
-function fmt(n: number): string {
-  if (!Number.isFinite(n)) return String(n);
-  return Math.abs(n) >= 10 || Number.isInteger(n) ? String(Math.round(n)) : n.toFixed(1);
-}
-
-// Elemental value meaning depends on the equipment slot (see docs/save-data-model.md).
-function elementSuffix(charType: number): string {
-  if (charType === 0 || charType === 7 || charType === 9) return 'damage';
-  if (charType === 1 || charType === 8) return 'penetration';
-  return 'resistance';
-}
-
 export async function editorView(): Promise<View> {
   const cat = await loadCatalog();
-  const affixNames = await loadJSON<AffixNames>('affix-names.json')
-    .catch(() => ({ main: {}, dot: {}, sk: {}, aocao: {} } as AffixNames));
-  const gemsById = new Map(cat.gems.map((g) => [g['GlobalID'] as number, g]));
-  const useById = new Map(cat.useitems.map((u) => [u['GlobalID'] as number, u]));
-
-  const wc = {
-    iconType: cat.weapons.col('IconType'), icon: cat.weapons.col('Icon'),
-    sizeX: cat.weapons.col('SizeX'), sizeY: cat.weapons.col('SizeY'),
-    name: cat.weapons.col('ItemName'),
-  };
-
-  function itemInfo(it: ItemSummary): { name: string; icon: string; w: number; h: number } {
-    if (it.kind === 'weapon') {
-      const i = cat.weaponById.get(it.globalId);
-      if (i !== undefined) {
-        const r = cat.weapons.rows[i]!;
-        return {
-          name: String(r[wc.name]),
-          icon: weaponIconPath(r[wc.iconType] as number, r[wc.icon] as number),
-          w: (r[wc.sizeX] as number) || 1,
-          h: (r[wc.sizeY] as number) || 1,
-        };
-      }
-      return { name: `Weapon #${it.globalId}`, icon: '', w: 1, h: 1 };
-    }
-    if (it.kind === 'gem') {
-      const g = gemsById.get(it.globalId);
-      // Rune-type gems use dedicated sprites, not their Icon column (docs/icons.md).
-      const useType = g ? Number(g['UseType']) : 0;
-      let icon = '';
-      if (useType === 3) {
-        const el = it.leaves.find((l) => l.name === 'EL')?.value;
-        icon = RUNE_ICONS.byElement[Number(el) || 0] ?? RUNE_ICONS.base;
-      } else if (useType === 4) {
-        icon = RUNE_ICONS.spc;
-      } else if (useType === 5) {
-        icon = RUNE_ICONS.base;
-      } else if (g) {
-        icon = gemIconPath(g['Icon'] as number);
-      }
-      return {
-        name: g ? String(g['ItemName']) : `Gem #${it.globalId}`,
-        icon, w: 1, h: 1,
-      };
-    }
-    const u = useById.get(it.globalId);
-    return {
-      name: u ? String(u['ItemName']) : `Item #${it.globalId}`,
-      icon: u ? useIconPath(u['Icon'] as number) : '', w: 1, h: 1,
-    };
-  }
-
-  function fmtBy(n: number, format?: string): string {
-    if (format === 'int') return String(Math.floor(n));
-    if (format === '0.0') return n.toFixed(1);
-    return fmt(n);
-  }
-
-  function affixLine(pool: 'main' | 'dot', rec: Rec, skillName?: string): string {
-    const index = Number(rec['Index']);
-    const el = Number(rec['EL']) || 0;
-    const n = Number(rec['number']) || 0;
-    // 3xxx/4xxx indexes are skill/companion affixes fed by the SK pool.
-    const spec = affixNames[pool][String(index)]
-      ?? (index >= 3000 ? affixNames.sk[String(index)] : undefined);
-    if (spec && !spec.unmapped) {
-      let label = spec.elVariants?.[el] ?? spec.label;
-      label = label
-        .replace('{el}', ELEMENT_NAMES[el] ?? '')
-        .replace(/\{skill\}|\{target\}|\{link\}|\{mode\}/g, skillName ?? 'skill');
-      if (spec.bool) return esc(label);
-      // Percent labels already carry their % sign after {n}.
-      const v = fmtBy(n, spec.format) + (spec.percent && !label.includes('{n}%') ? '%' : '');
-      return esc(label.replace('{n}', v));
-    }
-    return `+${fmt(n)} <span class="dim">(#${index}${el ? ' ' + (ELEMENT_NAMES[el] ?? '') : ''})</span>`;
-  }
+  const affixNames = await loadAffixNames();
+  const R = createCharacterRenderer(cat, affixNames);
+  const itemInfo = R.itemInfo;
 
   return {
     mount(container) {
@@ -226,6 +118,26 @@ export async function editorView(): Promise<View> {
         setTimeout(() => URL.revokeObjectURL(a.href), 5000);
       }
 
+      // Compact build link: binary-packed + deflated + base64url in the URL
+      // hash — short enough for Discord's 2000-char non-Nitro limit, and the
+      // fragment never reaches any server.
+      async function share(): Promise<void> {
+        const f = active();
+        if (!f) return;
+        const btn = host.querySelector<HTMLButtonElement>('#share');
+        try {
+          const payload = await encodeShare(buildFromSummary(f.result.summary), cat);
+          const url = `${location.origin}${location.pathname}#/build?d=${payload}`;
+          await navigator.clipboard.writeText(url);
+          if (btn) {
+            btn.textContent = `Copied! (${url.length} chars)`;
+            setTimeout(() => { btn.textContent = 'Share build'; }, 2500);
+          }
+        } catch (e) {
+          alert(`Share failed: ${e instanceof Error ? e.message : e}`);
+        }
+      }
+
       async function download(all: boolean): Promise<void> {
         const f = active();
         if (!f) return;
@@ -252,6 +164,7 @@ export async function editorView(): Promise<View> {
             </div>
             <div class="ed-actions">
               <span class="dim">v${esc(s.gameVersion)} · ${(f.size / 1024 / 1024).toFixed(2)} MB</span>
+              <button id="share" title="Copy a compact build link (fits in a Discord message)">Share build</button>
               <button id="dl" ${f.result.roundTrip ? '' : 'disabled title="round-trip check failed — editing disabled"'}>Download</button>
               ${st.files.size > 1 ? '<button id="dl-all">Download all</button>' : ''}
             </div>
@@ -296,6 +209,7 @@ export async function editorView(): Promise<View> {
           b.addEventListener('click', () => { st.active = b.dataset['file']!; st.selected = null; st.pending.clear(); render(); }));
         host.querySelector<HTMLInputElement>('.ed-add input')!
           .addEventListener('change', (e) => void loadFiles((e.target as HTMLInputElement).files!));
+        host.querySelector('#share')!.addEventListener('click', () => void share());
         host.querySelector('#dl')!.addEventListener('click', () => void download(false));
         host.querySelector('#dl-all')?.addEventListener('click', () => void download(true));
         host.querySelectorAll<HTMLButtonElement>('.seg').forEach((b) =>
@@ -381,17 +295,7 @@ export async function editorView(): Promise<View> {
       // Paper-doll arranged like the in-game character screen.
       function renderDoll(s: SaveSummary): void {
         const el = host.querySelector<HTMLElement>('#equip')!;
-        const bySlot = new Map(s.equipment.map((it) => [it.slot, it]));
-        el.innerHTML = Array.from({ length: 10 }, (_, slot) => {
-          const it = bySlot.get(slot);
-          if (!it) return `<div class="eq-slot empty" style="grid-area:s${slot}"><span>${SLOT_NAMES[slot]}</span></div>`;
-          const info = itemInfo(it);
-          return `<button class="eq-slot ${st.selected?.handle === it.handle ? 'sel' : ''}" data-h="${it.handle}"
-            style="grid-area:s${slot};--quality:var(--q${it.quality})" title="${esc(info.name)}">
-            ${info.icon ? `<img src="${BASE + info.icon}" alt="" loading="lazy">` : ''}
-            <span>${SLOT_NAMES[slot]}</span>
-          </button>`;
-        }).join('');
+        el.innerHTML = R.dollHTML(s.equipment, st.selected?.handle);
         el.querySelectorAll<HTMLButtonElement>('.eq-slot[data-h]').forEach((b) =>
           b.addEventListener('click', () => selectItem(b.dataset['h']!)));
       }
@@ -433,93 +337,6 @@ export async function editorView(): Promise<View> {
         renderItemPanel();
       }
 
-      // ---- in-game tooltip rendered from the SAVE's rolled values ----
-      function saveTooltip(it: ItemSummary, info: { name: string; icon: string }, s: SaveSummary): string {
-        const leaves = new Map(it.leaves.map((l) => [l.name, l.value]));
-        const lines: string[] = [];
-
-        if (it.kind === 'weapon') {
-          // Resolve {skill} for 3xxx/4xxx affixes from the template's SK pool.
-          const skNameFor = (index: number): string | undefined => {
-            const ti = cat.weaponById.get(it.globalId);
-            if (ti === undefined) return undefined;
-            const skId = cat.weapons.rows[ti]![cat.weapons.col('SkID')];
-            const pool = cat.affixByPoolId.get(`sk:${skId}`);
-            const e = pool?.entries.find(
-              (x) => Number((x as Record<string, unknown>)['Inx']) === index,
-            ) as Record<string, unknown> | undefined;
-            return (e?.['SkN'] as string) || undefined;
-          };
-          const suffix = elementSuffix(it.charType);
-          ELEMENT_NAMES.forEach((elName, el) => {
-            const v = Number(leaves.get(elName)) || 0;
-            if (v) lines.push(`<p class="tt-line el-${el}">+${fmt(v)}% ${elName} ${suffix}</p>`);
-          });
-          for (const m of it.main ?? []) {
-            const idx = Number(m['Index']);
-            lines.push(`<p class="tt-line mod">${affixLine('main', m, idx >= 3000 ? skNameFor(idx) : undefined)}</p>`);
-          }
-          for (const d of it.dot ?? []) lines.push(`<p class="tt-line el-${Number(d['EL']) || 0}">${affixLine('dot', d)}</p>`);
-          for (const sk of it.wpsk ?? []) {
-            if (sk['IndexName']) lines.push(`<p class="tt-line skill">+${fmt(Number(sk['Number']))} to ${esc(sk['IndexName'])}</p>`);
-          }
-          const sockets = it.aocao ?? [];
-          if (sockets.length) {
-            lines.push(`<p class="tt-line sockets">${sockets.map((a) => {
-              const label = affixNames.aocao[String(a['Type'])] ?? `socket type ${a['Type']}`;
-              return `<span class="socket" title="${esc(label)}">◆</span>`;
-            }).join(' ')}</p>`);
-          }
-          const setIndex = Number(leaves.get('Set_Index')) || 0;
-          if (setIndex) {
-            const set = cat.setById.get(setIndex);
-            if (set) {
-              const equippedCount = s.equipment.filter((e) =>
-                Number(e.leaves.find((l) => l.name === 'Set_Index')?.value) === setIndex).length;
-              lines.push(`<div class="tt-rule"></div><p class="tt-line set">${esc(set['SetName'])} (${equippedCount} equipped)</p>`);
-              for (const gid of (set['pieces'] as number[] | undefined) ?? []) {
-                const i = cat.weaponById.get(gid);
-                if (i === undefined) continue;
-                const pieceName = String(cat.weapons.rows[i]![wc.name]);
-                const worn = s.equipment.some((e) => e.globalId === gid);
-                lines.push(`<p class="tt-line set-piece ${worn ? 'worn' : 'unworn'}">${esc(pieceName)}</p>`);
-              }
-              // Tier requirement is positional: bonuses[i] activates at i+2 pieces
-              // (Set_DT.Lit[count-2], see docs/save-data-model.md).
-              const bonuses = (set['bonuses'] as Record<string, unknown>[] | undefined) ?? [];
-              bonuses.forEach((b, i) => {
-                if (!b['SkN'] && !b['Index']) return;
-                const need = i + 2;
-                const on = equippedCount >= need;
-                lines.push(`<p class="tt-line set-bonus ${on ? 'worn' : 'unworn'}">(${need}) ${esc(b['SkN'] || `#${b['Index']}`)} +${esc(b['NB'])}</p>`);
-              });
-            }
-          }
-        } else {
-          const g = it.kind === 'gem' ? gemsById.get(it.globalId) : useById.get(it.globalId);
-          const skname = leaves.get('SKname');
-          if (skname) lines.push(`<p class="tt-line skill">Rune of ${esc(skname)}</p>`);
-          if (g?.['Bstype'] && g['Number']) lines.push(`<p class="tt-line mod">+${esc(g['Number'])} ${esc(g['Bstype'])}</p>`);
-          else if (g?.['Number']) lines.push(`<p class="tt-line">Effect value +${esc(g['Number'])}</p>`);
-          if (it.stack) lines.push(`<p class="tt-line dim">Stack: ${it.stack}${g?.['MstackSize'] ? ` / ${g['MstackSize']}` : ''}</p>`);
-        }
-
-        const place = it.page >= 0
-          ? `page ${it.page + 1} · (${it.gridX},${it.gridY})`
-          : it.slot >= 0 ? `equipped · ${SLOT_NAMES[it.slot]}` : 'chest';
-        return `
-          <div class="tt" style="--quality: var(--q${it.quality})">
-            <i class="tt-rivet tl"></i><i class="tt-rivet tr"></i><i class="tt-rivet bl"></i><i class="tt-rivet br"></i>
-            <h3 class="tt-name">${esc(info.name)}</h3>
-            <p class="tt-kind">${QUALITY_NAMES[it.quality] ?? `Q${it.quality}`} ${it.kind === 'weapon' ? SLOT_NAMES[it.charType] ?? '' : it.kind}</p>
-            ${info.icon ? `<img class="tt-icon" src="${BASE + info.icon}" alt="" decoding="async">` : ''}
-            <div class="tt-rule"></div>
-            ${lines.join('')}
-            <div class="tt-rule"></div>
-            <p class="tt-foot">#${it.globalId} · ${place}</p>
-          </div>`;
-      }
-
       function renderItemPanel(): void {
         const panel = host.querySelector<HTMLElement>('#item-panel');
         if (!panel) return;
@@ -532,7 +349,7 @@ export async function editorView(): Promise<View> {
         const info = itemInfo(it);
         const editable = f.result.roundTrip;
         panel.innerHTML = `
-          ${saveTooltip(it, info, f.result.summary)}
+          ${R.saveTooltip(it, info, f.result.summary.equipment)}
           <section class="dcard"><h4>Edit fields</h4>
             <div id="item-fields">${it.leaves.map((l) => fieldRow(l, editable)).join('')}</div>
             <button id="deep" class="ghost">Show all fields (affixes, sockets, procs…)</button>

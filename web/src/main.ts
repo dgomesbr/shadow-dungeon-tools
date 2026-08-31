@@ -16,5 +16,6 @@ app.innerHTML = `
 register('/', () => import('./views/home').then((m) => m.homeView()));
 register('/items', () => import('./views/items').then((m) => m.itemsView()));
 register('/editor', () => import('./views/editor').then((m) => m.editorView()));
+register('/build', () => import('./views/build').then((m) => m.buildView()));
 
 start(document.getElementById('view')!);

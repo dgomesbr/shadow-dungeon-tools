@@ -203,6 +203,10 @@ button:hover { border-color: var(--accent); }
 .ed-add:hover { color: var(--fg); }
 .ed-actions { display: flex; gap: 0.8rem; align-items: center; }
 .ed-warn { margin: 0; padding: 0.5rem 1rem; background: #3a1414; color: #ffb4b4; font-size: 0.88rem; }
+.ed-note { margin: 0; padding: 0.5rem 1rem; background: #1c2618; color: #b8dcae; font-size: 0.88rem; }
+.build-cols { grid-template-columns: 1fr 380px; max-width: 60rem; margin: 0 auto; width: 100%; }
+.build-talents { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.2rem; }
+.build-talents .frow b { color: var(--accent-hi); }
 
 .ed-cols {
   flex: 1; min-height: 0; display: grid;
