@@ -35,6 +35,7 @@ a { color: var(--accent-hi); text-decoration: none; }
 .brand { font-weight: 700; letter-spacing: 0.02em; color: var(--fg); }
 .brand span { color: var(--accent-hi); }
 .topbar nav { display: flex; gap: 1.25rem; }
+.topbar .build { margin-left: auto; color: var(--fg-dim); font-size: 0.72rem; font-family: monospace; cursor: help; }
 .topbar nav a { color: var(--fg-dim); padding: 0.35rem 0; border-bottom: 2px solid transparent; }
 .topbar nav a.active, .topbar nav a:hover { color: var(--fg); border-bottom-color: var(--accent); }
 
