@@ -211,6 +211,8 @@ export async function editorView(): Promise<View> {
               <div class="ed-doll" id="equip"></div>
               <h4>Character</h4>
               <div id="char-fields"></div>
+              <h4>Talents</h4>
+              <div id="talents"></div>
               <details><summary>All player fields (${s.player.length})</summary><div id="char-all"></div></details>
             </section>
             <section class="ed-inv">
@@ -240,6 +242,7 @@ export async function editorView(): Promise<View> {
         host.querySelector('#discard')?.addEventListener('click', () => { st.pending.clear(); render(); });
 
         renderChar(s, f.result.roundTrip);
+        renderTalents(s, f.result.roundTrip);
         renderDoll(s);
         renderGrid(s);
         renderItemPanel();
@@ -279,6 +282,38 @@ export async function editorView(): Promise<View> {
         const all = host.querySelector<HTMLElement>('#char-all')!;
         all.innerHTML = s.player.filter((l) => !KEY.includes(l.name)).map((l) => fieldRow(l, editable)).join('');
         bindInputs(all);
+      }
+
+      function renderTalents(s: SaveSummary, editable: boolean): void {
+        const el = host.querySelector<HTMLElement>('#talents');
+        if (!el) return;
+        const pts = new Map(s.talentPoints.map((l) => [l.name, l]));
+        const invested = s.talents.filter((t) => t.level > 0);
+        const skillClass = (name: string): number => {
+          const i = cat.skillByIndexName.get(name);
+          if (i === undefined) return -1;
+          return Number(cat.skills.rows[i]![cat.skills.col('Xi')]) || -1;
+        };
+        const talentRow = (t: { name: string; level: number; handle: string }): string => `
+          <label class="frow"><span title="class ${skillClass(t.name)}">${esc(t.name)}</span>
+          <input type="number" data-h="${t.handle}" data-k="int" value="${t.level}" ${editable ? '' : 'disabled'}></label>`;
+        el.innerHTML = `
+          <p class="dim">Points: ${esc(pts.get('P_Used')?.value ?? 0)} / ${esc(pts.get('P_Base')?.value ?? 0)} used
+            · DF ${esc(pts.get('P_Used_DF')?.value ?? 0)}</p>
+          ${pts.get('P_Base') ? fieldRow({ ...pts.get('P_Base')!, name: 'P_Base (total points)' }, editable) : ''}
+          <div id="talent-rows">${invested.map(talentRow).join('')}</div>
+          <input id="talent-search" type="search" placeholder="Find any of ${s.talents.length} skills…">
+          <div id="talent-found"></div>`;
+        bindInputs(el);
+        const search = el.querySelector<HTMLInputElement>('#talent-search')!;
+        const found = el.querySelector<HTMLElement>('#talent-found')!;
+        search.addEventListener('input', () => {
+          const q = search.value.trim().toLowerCase();
+          if (!q) { found.innerHTML = ''; return; }
+          const hits = s.talents.filter((t) => t.level === 0 && t.name.toLowerCase().includes(q)).slice(0, 20);
+          found.innerHTML = hits.map(talentRow).join('');
+          bindInputs(found);
+        });
       }
 
       // Paper-doll arranged like the in-game character screen.

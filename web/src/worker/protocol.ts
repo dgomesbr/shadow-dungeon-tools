@@ -57,6 +57,13 @@ export interface ItemSummary {
   spc?: Rec[];    // proc instances
 }
 
+export interface TalentSkill {
+  name: string;
+  level: number;
+  /** Handle of the Level_Base leaf. */
+  handle: string;
+}
+
 export interface SaveSummary {
   fileName: string;
   gameVersion: string;
@@ -68,4 +75,8 @@ export interface SaveSummary {
   equipment: ItemSummary[];
   inventory: ItemSummary[];
   chest: ItemSummary[];
+  /** TalentData: P_Base/P_Used/P_Used_DF etc. */
+  talentPoints: Leaf[];
+  /** All_Skill_Datas entries (every skill, invested or not). */
+  talents: TalentSkill[];
 }

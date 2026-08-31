@@ -256,6 +256,43 @@ export function buildSummary(doc: OdinDocument, fileName: string): SaveSummary {
     }
   }
 
+  // TalentData: points + the All_Skill_Datas dictionary ($k skill name → $v
+  // SkillSaveData with Level_Base).
+  const talent = at('TalentData');
+  let talentPoints: import('../worker/protocol').Leaf[] = [];
+  const talents: import('../worker/protocol').TalentSkill[] = [];
+  if (talent && isContainer(talent.node)) {
+    talentPoints = shallowLeaves(talent.node, talent.handle);
+    for (let i = 0; i < talent.node.children.length; i++) {
+      const c = talent.node.children[i] as AnyNode;
+      if (c.name !== 'All_Skill_Datas' || !isContainer(c)) continue;
+      for (let a = 0; a < c.children.length; a++) {
+        const arr = c.children[a] as AnyNode;
+        if (arr.kind !== 'array') continue;
+        for (let p = 0; p < arr.children.length; p++) {
+          const pair = arr.children[p] as AnyNode;
+          if (!isContainer(pair)) continue;
+          const k = child(pair, '$k');
+          if (!k || k.kind !== 'string') continue;
+          const vi = pair.children.findIndex((n) => (n as AnyNode).name === '$v');
+          const v = vi >= 0 ? (pair.children[vi] as AnyNode) : undefined;
+          if (!v || !isContainer(v)) continue;
+          for (let l = 0; l < v.children.length; l++) {
+            const leaf = v.children[l] as AnyNode;
+            if (leaf.name === 'Level_Base' && leaf.kind === 'prim') {
+              talents.push({
+                name: k.value,
+                level: typeof leaf.value === 'bigint' ? Number(leaf.value) : leaf.value,
+                handle: `${talent.handle}.${i}.${a}.${p}.${vi}.${l}`,
+              });
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
   return {
     fileName,
     gameVersion: gv?.kind === 'string' ? gv.value : '',
@@ -266,5 +303,7 @@ export function buildSummary(doc: OdinDocument, fileName: string): SaveSummary {
     equipment,
     inventory,
     chest,
+    talentPoints,
+    talents,
   };
 }
