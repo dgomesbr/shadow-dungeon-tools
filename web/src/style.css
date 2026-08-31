@@ -1,8 +1,57 @@
 :root {
   color-scheme: dark;
-  --bg: #0d0d10;
+  --bg: #0c0c10;
+  --bg-raise: #14141a;
+  --bg-panel: #1a1a22;
+  --border: #2a2a35;
   --fg: #e8e6e3;
-  font-family: system-ui, sans-serif;
+  --fg-dim: #9a97a0;
+  --accent: #b48a3c;
+  --accent-hi: #e6c06a;
+  /* Item quality colors, index 0-6 (6 = Mythical). */
+  --q0: #9a97a0;
+  --q1: #ffffff;
+  --q2: #5fd35f;
+  --q3: #5b9bd5;
+  --q4: #b06ae0;
+  --q5: #e08a3c;
+  --q6: #ffd44d;
+  font-family: system-ui, 'Segoe UI', sans-serif;
+  font-size: 15px;
 }
+
+* { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); }
-.boot { display: grid; place-items: center; min-height: 100vh; }
+a { color: var(--accent-hi); text-decoration: none; }
+
+.topbar {
+  display: flex; align-items: center; gap: 2rem;
+  padding: 0 1.25rem; height: 52px;
+  background: var(--bg-raise); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+.brand { font-weight: 700; letter-spacing: 0.02em; color: var(--fg); }
+.brand span { color: var(--accent-hi); }
+.topbar nav { display: flex; gap: 1.25rem; }
+.topbar nav a { color: var(--fg-dim); padding: 0.35rem 0; border-bottom: 2px solid transparent; }
+.topbar nav a.active, .topbar nav a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+
+#view { height: calc(100vh - 52px); overflow: hidden; }
+
+.vlist { overflow-y: auto; height: 100%; contain: strict; }
+.vlist-spacer { position: relative; }
+.vlist-row { position: absolute; left: 0; right: 0; top: 0; will-change: transform; }
+
+.q0 { color: var(--q0); } .q1 { color: var(--q1); } .q2 { color: var(--q2); }
+.q3 { color: var(--q3); } .q4 { color: var(--q4); } .q5 { color: var(--q5); }
+.q6 { color: var(--q6); }
+
+.boot { display: grid; place-items: center; height: 100%; color: var(--fg-dim); }
+
+button, input, select {
+  background: var(--bg-panel); color: var(--fg);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 0.4rem 0.7rem; font: inherit;
+}
+button { cursor: pointer; }
+button:hover { border-color: var(--accent); }
