@@ -9,9 +9,15 @@ Fan-made tooling for **Shadow Dungeon** (OO Cat, Steam appid 4423580):
   [d2runewizard's hero editor](https://d2runewizard.com/hero-editor).
 - **`pipeline/`** — scripts that extract the game's item/affix/set/skill tables and
   localization into the compact JSON the web app ships with.
-- **`mods/`** — BepInEx plugins (e.g. SummonAll).
-- **`docs/`** — the `.sav` binary format spec, save data model, game data schema, and
-  a full modding guide (BepInEx installation, Harmony patterns, how to add features).
+- **`mods/`** — BepInEx plugins (e.g. [SummonAll](mods/SummonAll/)).
+- **`docs/`** — everything reverse-engineered, code-cited:
+  - [sav-binary-format.md](docs/sav-binary-format.md) — the OdinSerializer binary wire format, byte by byte
+  - [save-data-model.md](docs/save-data-model.md) — every serialized save class, enums, editing invariants
+  - [data-schema.md](docs/data-schema.md) — the generated JSON tables and their join keys
+  - [icons.md](docs/icons.md) — how item icons are resolved and extracted
+  - [architecture.md](docs/architecture.md) — web app design, safety gates, perf budgets
+  - [ui-reference.md](docs/ui-reference.md) — research on juister.dev and d2runewizard
+  - [modding/](docs/modding/) — BepInEx installation, mod mechanics, plugin authoring, credits
 
 ## Credits
 

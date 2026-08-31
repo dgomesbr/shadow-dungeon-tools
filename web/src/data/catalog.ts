@@ -42,7 +42,10 @@ export interface Catalog {
   entries: CatalogEntry[];
   weapons: Table;
   skills: Table;
-  procs: Table;
+  /** Loaded on demand — 6.9k rows only the detail panel needs. */
+  procs?: Table;
+  procById?: Map<unknown, number>;
+  loadProcs(): Promise<void>;
   gems: Record<string, unknown>[];
   useitems: Record<string, unknown>[];
   sets: Record<string, unknown>[];
@@ -51,7 +54,6 @@ export interface Catalog {
   weaponById: Map<unknown, number>;
   affixByPoolId: Map<string, { pool: string; id: number; entries: unknown[] }>;
   skillByIndexName: Map<unknown, number>;
-  procById: Map<unknown, number>;
   setById: Map<unknown, Record<string, unknown>>;
 }
 
@@ -67,10 +69,9 @@ function iconOf(idx: IconsIndex, name: string | undefined): { path: string; w: n
 }
 
 async function buildCatalog(): Promise<Catalog> {
-  const [weapons, skills, procs, gems, useitems, sets, affixes, icons] = await Promise.all([
+  const [weapons, skills, gems, useitems, sets, affixes, icons] = await Promise.all([
     loadTable('weapons.json'),
     loadTable('skills.json'),
-    loadTable('procs.json'),
     loadJSON<Record<string, unknown>[]>('gems.json'),
     loadJSON<Record<string, unknown>[]>('useitems.json'),
     loadJSON<Record<string, unknown>[]>('sets.json'),
@@ -147,13 +148,20 @@ async function buildCatalog(): Promise<Catalog> {
   const affixByPoolId = new Map<string, { pool: string; id: number; entries: unknown[] }>();
   for (const a of affixes) affixByPoolId.set(`${a.pool}:${a.id}`, a);
 
-  return {
-    entries, weapons, skills, procs, gems, useitems, sets, affixes, icons,
+  let procsLoading: Promise<void> | null = null;
+  const catalog: Catalog = {
+    entries, weapons, skills, gems, useitems, sets, affixes, icons,
     weaponById, affixByPoolId,
     skillByIndexName: skills.keyBy('IndexName'),
-    procById: procs.keyBy('ID'),
     setById: new Map(sets.map((s) => [s['SetID'], s])),
+    loadProcs() {
+      return (procsLoading ??= loadTable('procs.json').then((t) => {
+        catalog.procs = t;
+        catalog.procById = t.keyBy('ID');
+      }));
+    },
   };
+  return catalog;
 }
 
 /** Materialize a column-table row as an object (detail panel only). */

@@ -182,8 +182,14 @@ function renderDetail(host: HTMLElement, it: CatalogEntry, cat: Catalog): void {
     if (aocao) lines.push(ttLine(`◆ ${aocao} socket slot${aocao > 1 ? 's' : ''}`, 'sockets'));
     const spc = w['SPC'] as number;
     if (spc) {
-      const p = cat.procById.get(spc);
-      if (p !== undefined) lines.push(ttLine(`Proc: ${esc(cat.procs.rows[p]![cat.procs.col('name')])}`, 'proc'));
+      if (cat.procById && cat.procs) {
+        const p = cat.procById.get(spc);
+        if (p !== undefined) lines.push(ttLine(`Proc: ${esc(cat.procs.rows[p]![cat.procs.col('name')])}`, 'proc'));
+      } else {
+        // procs.json loads on demand; re-render this panel when it arrives
+        lines.push(ttLine('Proc: …', 'proc'));
+        void cat.loadProcs().then(() => renderDetail(host, it, cat));
+      }
     }
 
     cards.push(card('Summary', statRows([
