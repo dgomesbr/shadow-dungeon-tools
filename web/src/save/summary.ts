@@ -114,11 +114,35 @@ function num(n: AnyNode | undefined, name: string): number {
 
 const PAYLOAD_NAMES = ['Weapon', 'Baoshi', 'UseItem'] as const;
 
+type Rec = Record<string, number | string | boolean>;
+
+/** Scalar maps for each element of a named list/array member (e.g. Main, WPSK). */
+function elementRecords(payload: AnyNode, name: string): Rec[] {
+  const holder = child(payload, name);
+  if (!holder || !isContainer(holder)) return [];
+  const out: Rec[] = [];
+  for (const c of holder.children) {
+    const arr = c as AnyNode;
+    if (arr.kind !== 'array') continue;
+    for (const el of arr.children) {
+      const e = el as AnyNode;
+      if (!isContainer(e)) continue;
+      const rec: Rec = {};
+      for (const leaf of e.children) {
+        const l = leaf as AnyNode;
+        if (l.name !== undefined && leafKind(l)) rec[l.name] = leafValue(l);
+      }
+      out.push(rec);
+    }
+  }
+  return out;
+}
+
 function itemFromPayload(
   payload: AnyNode, payloadHandle: string, kind: ItemSummary['kind'],
   pos: { page: number; gridX: number; gridY: number; slot: number },
 ): ItemSummary {
-  return {
+  const it: ItemSummary = {
     handle: payloadHandle,
     kind,
     ...pos,
@@ -130,6 +154,14 @@ function itemFromPayload(
     index: num(payload, 'Index'),
     leaves: shallowLeaves(payload, payloadHandle),
   };
+  if (kind === 'weapon') {
+    it.main = elementRecords(payload, 'Main');
+    it.dot = elementRecords(payload, 'DOT');
+    it.wpsk = elementRecords(payload, 'WPSK');
+    it.aocao = elementRecords(payload, 'Aocao');
+    it.spc = elementRecords(payload, 'SPC');
+  }
+  return it;
 }
 
 function wrappersToItems(listNode: AnyNode, listHandle: string): ItemSummary[] {

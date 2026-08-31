@@ -216,14 +216,53 @@ button:hover { border-color: var(--accent); }
 .ed-char details { margin-top: 0.8rem; }
 .ed-char summary { cursor: pointer; color: var(--fg-dim); font-size: 0.85rem; }
 
-.ed-equip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; }
-.eq-slot {
-  position: relative; aspect-ratio: 1; padding: 2px; display: grid; place-items: center;
-  border: 1px solid var(--quality, var(--border)); background: var(--bg);
-  overflow: hidden;
+/* character hero strip */
+.ed-hero {
+  display: flex; align-items: baseline; gap: 1.6rem; flex-wrap: wrap;
+  padding: 0.7rem 1.2rem;
+  background:
+    radial-gradient(ellipse 50% 100% at 50% 0%, rgb(180 138 60 / 0.1), transparent),
+    var(--bg-raise);
+  border-bottom: 1px solid var(--border);
 }
-.eq-slot img { max-width: 85%; max-height: 70%; object-fit: contain; }
-.eq-slot span { font-size: 0.58rem; color: var(--fg-dim); line-height: 1; }
+.ed-hero h2 { margin: 0; font-size: 1.4rem; color: var(--accent-hi); }
+.ed-hero-stat { color: var(--fg-dim); font-size: 0.85rem; }
+.ed-hero-stat b { color: var(--fg); font-size: 1.05rem; }
+.ed-hero-stat.gold b { color: var(--q6); }
+
+/* paper-doll arranged like the in-game character screen */
+.ed-doll {
+  display: grid; gap: 0.4rem;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  grid-template-rows: repeat(4, 62px);
+  grid-template-areas:
+    "s0 s2 s6"
+    "s0 s3 s1"
+    "s4 s3 s7"
+    "s8 s5 s9";
+}
+.eq-slot {
+  position: relative; padding: 2px; display: grid; place-items: center;
+  border: 1px solid var(--quality, var(--border)); background: #0a0a0e;
+  border-radius: 4px; overflow: hidden;
+  box-shadow: inset 0 0 12px rgb(0 0 0 / 0.6);
+}
+.eq-slot.empty { border-style: dashed; opacity: 0.45; }
+.eq-slot.sel { outline: 2px solid var(--accent-hi); }
+.eq-slot img { max-width: 90%; max-height: 74%; object-fit: contain; filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.7)); }
+.eq-slot span {
+  position: absolute; bottom: 2px; left: 0; right: 0;
+  font-size: 0.55rem; color: var(--fg-dim); line-height: 1; pointer-events: none;
+}
+
+/* elemental line colors (Fire/Frozen/Thunder/Poison/Physics/Shadow) */
+.el-0 { color: #ff6a4d; } .el-1 { color: #6fd4ff; } .el-2 { color: #ffd44d; }
+.el-3 { color: #6fe06a; } .el-4 { color: #cfcfcf; } .el-5 { color: #b06ae0; }
+.tt-line .socket { color: var(--fg-dim); font-size: 1rem; letter-spacing: 0.2em; cursor: help; }
+.tt-line.set { color: var(--q1); font-weight: 700; }
+.tt-line.set-piece, .tt-line.set-bonus { font-size: 0.85rem; }
+.worn { color: var(--q1); }
+.unworn { color: var(--fg-dim); opacity: 0.65; }
 
 .ed-inv { display: flex; flex-direction: column; min-width: 0; overflow: auto; padding: 0.8rem 1rem; }
 .ed-inv-head { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }

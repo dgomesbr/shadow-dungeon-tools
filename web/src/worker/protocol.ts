@@ -31,6 +31,8 @@ export interface Leaf {
   value: number | string | boolean;
 }
 
+export type Rec = Record<string, number | string | boolean>;
+
 export interface ItemSummary {
   handle: string;
   kind: 'weapon' | 'gem' | 'useitem';
@@ -47,6 +49,12 @@ export interface ItemSummary {
   index: number;
   /** Direct scalar fields of the item payload. */
   leaves: Leaf[];
+  /** Weapon-only structured data for game-style tooltips. */
+  main?: Rec[];   // WPDT_A {Index, EL, number}
+  dot?: Rec[];
+  wpsk?: Rec[];   // skill sockets {IndexName, Number, Number2, price}
+  aocao?: Rec[];  // gem sockets {Type, ...}
+  spc?: Rec[];    // proc instances
 }
 
 export interface SaveSummary {

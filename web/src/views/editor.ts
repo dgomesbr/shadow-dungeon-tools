@@ -1,12 +1,20 @@
 import type { View } from '../router';
 import { applySets, encodeSave, itemDetail, parseSave, type ParseResult } from '../worker/client';
-import type { ItemSummary, Leaf, SaveSummary, SetOp } from '../worker/protocol';
-import { loadCatalog, QUALITY_NAMES, SLOT_NAMES, type Catalog } from '../data/catalog';
+import type { ItemSummary, Leaf, Rec, SaveSummary, SetOp } from '../worker/protocol';
+import { loadCatalog, QUALITY_NAMES, SLOT_NAMES, ELEMENT_NAMES } from '../data/catalog';
+import { loadJSON } from '../data/coltable';
 
 const BASE = import.meta.env.BASE_URL;
 const CELL = 32; // px per inventory grid cell (game uses 60)
 const GRID_W = 15;
 const GRID_H = 17;
+
+interface AffixEntry { label: string; percent?: boolean; bool?: boolean }
+interface AffixNames {
+  main: Record<string, AffixEntry>;
+  dot: Record<string, AffixEntry>;
+  aocao: Record<string, string>;
+}
 
 interface OpenFile {
   name: string;
@@ -27,8 +35,22 @@ function esc(s: unknown): string {
   return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
 }
 
+function fmt(n: number): string {
+  if (!Number.isFinite(n)) return String(n);
+  return Math.abs(n) >= 10 || Number.isInteger(n) ? String(Math.round(n)) : n.toFixed(1);
+}
+
+// Elemental value meaning depends on the equipment slot (see docs/save-data-model.md).
+function elementSuffix(charType: number): string {
+  if (charType === 0 || charType === 7 || charType === 9) return 'damage';
+  if (charType === 1 || charType === 8) return 'penetration';
+  return 'resistance';
+}
+
 export async function editorView(): Promise<View> {
   const cat = await loadCatalog();
+  const affixNames = await loadJSON<AffixNames>('affix-names.json')
+    .catch(() => ({ main: {}, dot: {}, aocao: {} } as AffixNames));
   const gemsById = new Map(cat.gems.map((g) => [g['GlobalID'] as number, g]));
   const useById = new Map(cat.useitems.map((u) => [u['GlobalID'] as number, u]));
 
@@ -55,8 +77,7 @@ export async function editorView(): Promise<View> {
     }
     if (it.kind === 'gem') {
       const g = gemsById.get(it.globalId);
-      // Rune-type gems use dedicated sprites, not their Icon column
-      // (ItemIconUtil.GetBaoshiIcon — see docs/icons.md).
+      // Rune-type gems use dedicated sprites, not their Icon column (docs/icons.md).
       const useType = g ? Number(g['UseType']) : 0;
       let sprite: string | undefined;
       if (useType === 3) {
@@ -80,6 +101,19 @@ export async function editorView(): Promise<View> {
       name: u ? String(u['ItemName']) : `Item #${it.globalId}`,
       icon: sprite ? cat.icons.sprites[sprite]!.path : '', w: 1, h: 1,
     };
+  }
+
+  function affixLine(pool: 'main' | 'dot', rec: Rec): string {
+    const index = Number(rec['Index']);
+    const el = Number(rec['EL']) || 0;
+    const n = Number(rec['number']) || 0;
+    const spec = affixNames[pool][String(index)];
+    if (spec) {
+      if (spec.bool) return esc(spec.label.replace('{el}', ELEMENT_NAMES[el] ?? ''));
+      const v = fmt(n) + (spec.percent ? '%' : '');
+      return esc(spec.label.replace('{n}', v).replace('{el}', ELEMENT_NAMES[el] ?? ''));
+    }
+    return `+${fmt(n)} <span class="dim">(#${index}${el ? ' ' + (ELEMENT_NAMES[el] ?? '') : ''})</span>`;
   }
 
   return {
@@ -122,8 +156,11 @@ export async function editorView(): Promise<View> {
         if (!f || st.pending.size === 0) return;
         const summary = await applySets(f.name, [...st.pending.values()]);
         f.result.summary = summary;
+        const sel = st.selected?.handle;
         st.pending.clear();
-        st.selected = null;
+        st.selected = sel
+          ? [...summary.equipment, ...summary.inventory, ...summary.chest].find((i) => i.handle === sel) ?? null
+          : null;
         render();
       }
 
@@ -146,6 +183,7 @@ export async function editorView(): Promise<View> {
         const f = active();
         if (!f) { renderDropzone(); return; }
         const s = f.result.summary;
+        const p = new Map(s.player.map((l) => [l.name, l.value]));
         host.innerHTML = `
           <div class="ed-top">
             <div class="ed-tabs">${[...st.files.values()].map((o) => `
@@ -155,17 +193,24 @@ export async function editorView(): Promise<View> {
               <label class="ed-add">+ add file<input type="file" accept=".sav" multiple hidden></label>
             </div>
             <div class="ed-actions">
-              <span class="dim">v${esc(s.gameVersion)} · ${(f.size / 1024 / 1024).toFixed(2)} MB · ${Math.floor(s.playTime / 3600)}h played</span>
+              <span class="dim">v${esc(s.gameVersion)} · ${(f.size / 1024 / 1024).toFixed(2)} MB</span>
               <button id="dl" ${f.result.roundTrip ? '' : 'disabled title="round-trip check failed — editing disabled"'}>Download</button>
             </div>
           </div>
           ${f.result.roundTrip ? '' : `<p class="ed-warn">⚠ This file did not re-encode byte-identically (first difference at byte ${f.result.firstDiff}). Editing is disabled to protect your save — please report this on GitHub.</p>`}
+          <div class="ed-hero">
+            <h2>${esc(p.get('PlayerName') ?? '—')}</h2>
+            <span class="ed-hero-stat"><b>${esc(p.get('Level') ?? '?')}</b> level</span>
+            <span class="ed-hero-stat"><b>${esc(p.get('DFLevel') ?? 0)}</b> divine favor</span>
+            <span class="ed-hero-stat gold"><b>${Number(s.money?.value ?? 0).toLocaleString()}</b> gold</span>
+            <span class="ed-hero-stat"><b>${Math.floor(s.playTime / 3600)}h ${Math.floor((s.playTime % 3600) / 60)}m</b> played</span>
+          </div>
           <div class="ed-cols">
             <section class="ed-char">
+              <h4>Equipment</h4>
+              <div class="ed-doll" id="equip"></div>
               <h4>Character</h4>
               <div id="char-fields"></div>
-              <h4>Equipment</h4>
-              <div class="ed-equip" id="equip"></div>
               <details><summary>All player fields (${s.player.length})</summary><div id="char-all"></div></details>
             </section>
             <section class="ed-inv">
@@ -176,7 +221,7 @@ export async function editorView(): Promise<View> {
               </div>
               <div class="ed-grid" id="grid" style="width:${GRID_W * CELL}px;height:${GRID_H * CELL}px"></div>
             </section>
-            <aside class="ed-item" id="item-panel"><p class="hint">Select an item to edit it.</p></aside>
+            <aside class="ed-item" id="item-panel"><p class="hint">Select an item — its in-game tooltip renders here.</p></aside>
           </div>
           <div class="ed-pending" id="pending" hidden>
             <span id="pending-n"></span>
@@ -195,7 +240,7 @@ export async function editorView(): Promise<View> {
         host.querySelector('#discard')?.addEventListener('click', () => { st.pending.clear(); render(); });
 
         renderChar(s, f.result.roundTrip);
-        renderEquip(s);
+        renderDoll(s);
         renderGrid(s);
         renderItemPanel();
         renderPendingBar();
@@ -236,16 +281,21 @@ export async function editorView(): Promise<View> {
         bindInputs(all);
       }
 
-      function renderEquip(s: SaveSummary): void {
+      // Paper-doll arranged like the in-game character screen.
+      function renderDoll(s: SaveSummary): void {
         const el = host.querySelector<HTMLElement>('#equip')!;
-        el.innerHTML = s.equipment.map((it) => {
+        const bySlot = new Map(s.equipment.map((it) => [it.slot, it]));
+        el.innerHTML = Array.from({ length: 10 }, (_, slot) => {
+          const it = bySlot.get(slot);
+          if (!it) return `<div class="eq-slot empty" style="grid-area:s${slot}"><span>${SLOT_NAMES[slot]}</span></div>`;
           const info = itemInfo(it);
-          return `<button class="eq-slot" data-h="${it.handle}" style="--quality: var(--q${it.quality})" title="${esc(info.name)}">
+          return `<button class="eq-slot ${st.selected?.handle === it.handle ? 'sel' : ''}" data-h="${it.handle}"
+            style="grid-area:s${slot};--quality:var(--q${it.quality})" title="${esc(info.name)}">
             ${info.icon ? `<img src="${BASE + info.icon}" alt="" loading="lazy">` : ''}
-            <span>${SLOT_NAMES[it.slot] ?? `Slot ${it.slot}`}</span>
+            <span>${SLOT_NAMES[slot]}</span>
           </button>`;
         }).join('');
-        el.querySelectorAll<HTMLButtonElement>('.eq-slot').forEach((b) =>
+        el.querySelectorAll<HTMLButtonElement>('.eq-slot[data-h]').forEach((b) =>
           b.addEventListener('click', () => selectItem(b.dataset['h']!)));
       }
 
@@ -281,7 +331,76 @@ export async function editorView(): Promise<View> {
         const s = active()?.result.summary;
         if (!s) return;
         st.selected = [...s.equipment, ...s.inventory, ...s.chest].find((i) => i.handle === handle) ?? null;
+        host.querySelectorAll('.eq-slot.sel').forEach((e) => e.classList.remove('sel'));
+        host.querySelector(`.eq-slot[data-h="${handle}"]`)?.classList.add('sel');
         renderItemPanel();
+      }
+
+      // ---- in-game tooltip rendered from the SAVE's rolled values ----
+      function saveTooltip(it: ItemSummary, info: { name: string; icon: string }, s: SaveSummary): string {
+        const leaves = new Map(it.leaves.map((l) => [l.name, l.value]));
+        const lines: string[] = [];
+
+        if (it.kind === 'weapon') {
+          const suffix = elementSuffix(it.charType);
+          ELEMENT_NAMES.forEach((elName, el) => {
+            const v = Number(leaves.get(elName)) || 0;
+            if (v) lines.push(`<p class="tt-line el-${el}">+${fmt(v)}% ${elName} ${suffix}</p>`);
+          });
+          for (const m of it.main ?? []) lines.push(`<p class="tt-line mod">${affixLine('main', m)}</p>`);
+          for (const d of it.dot ?? []) lines.push(`<p class="tt-line el-${Number(d['EL']) || 0}">${affixLine('dot', d)}</p>`);
+          for (const sk of it.wpsk ?? []) {
+            if (sk['IndexName']) lines.push(`<p class="tt-line skill">+${fmt(Number(sk['Number']))} to ${esc(sk['IndexName'])}</p>`);
+          }
+          const sockets = it.aocao ?? [];
+          if (sockets.length) {
+            lines.push(`<p class="tt-line sockets">${sockets.map((a) => {
+              const label = affixNames.aocao[String(a['Type'])] ?? `socket type ${a['Type']}`;
+              return `<span class="socket" title="${esc(label)}">◆</span>`;
+            }).join(' ')}</p>`);
+          }
+          const setIndex = Number(leaves.get('Set_Index')) || 0;
+          if (setIndex) {
+            const set = cat.setById.get(setIndex);
+            if (set) {
+              const equippedCount = s.equipment.filter((e) =>
+                Number(e.leaves.find((l) => l.name === 'Set_Index')?.value) === setIndex).length;
+              lines.push(`<div class="tt-rule"></div><p class="tt-line set">${esc(set['SetName'])} (${equippedCount} equipped)</p>`);
+              for (const gid of (set['pieces'] as number[] | undefined) ?? []) {
+                const i = cat.weaponById.get(gid);
+                if (i === undefined) continue;
+                const pieceName = String(cat.weapons.rows[i]![wc.name]);
+                const worn = s.equipment.some((e) => e.globalId === gid);
+                lines.push(`<p class="tt-line set-piece ${worn ? 'worn' : 'unworn'}">${esc(pieceName)}</p>`);
+              }
+              const bonuses = (set['bonuses'] as Record<string, unknown>[] | undefined) ?? [];
+              for (const b of bonuses) {
+                if (!b['MTP']) continue;
+                const on = equippedCount >= Number(b['MTP']);
+                lines.push(`<p class="tt-line set-bonus ${on ? 'worn' : 'unworn'}">(${b['MTP']}) ${esc(b['SkN'] || `#${b['Index']}`)} +${esc(b['NB'])}</p>`);
+              }
+            }
+          }
+        } else {
+          const g = it.kind === 'gem' ? gemsById.get(it.globalId) : useById.get(it.globalId);
+          if (g?.['Number']) lines.push(`<p class="tt-line">Effect value +${esc(g['Number'])}</p>`);
+          if (it.stack) lines.push(`<p class="tt-line dim">Stack: ${it.stack}${g?.['MstackSize'] ? ` / ${g['MstackSize']}` : ''}</p>`);
+        }
+
+        const place = it.page >= 0
+          ? `page ${it.page + 1} · (${it.gridX},${it.gridY})`
+          : it.slot >= 0 ? `equipped · ${SLOT_NAMES[it.slot]}` : 'chest';
+        return `
+          <div class="tt" style="--quality: var(--q${it.quality})">
+            <i class="tt-rivet tl"></i><i class="tt-rivet tr"></i><i class="tt-rivet bl"></i><i class="tt-rivet br"></i>
+            <h3 class="tt-name">${esc(info.name)}</h3>
+            <p class="tt-kind">${QUALITY_NAMES[it.quality] ?? `Q${it.quality}`} ${it.kind === 'weapon' ? SLOT_NAMES[it.charType] ?? '' : it.kind}</p>
+            ${info.icon ? `<img class="tt-icon" src="${BASE + info.icon}" alt="" decoding="async">` : ''}
+            <div class="tt-rule"></div>
+            ${lines.join('')}
+            <div class="tt-rule"></div>
+            <p class="tt-foot">#${it.globalId} · ${place}</p>
+          </div>`;
       }
 
       function renderItemPanel(): void {
@@ -290,23 +409,18 @@ export async function editorView(): Promise<View> {
         const it = st.selected;
         const f = active();
         if (!it || !f) {
-          panel.innerHTML = `<p class="hint">Select an item to edit it.</p>`;
+          panel.innerHTML = `<p class="hint">Select an item — its in-game tooltip renders here.</p>`;
           return;
         }
         const info = itemInfo(it);
         const editable = f.result.roundTrip;
         panel.innerHTML = `
-          <div class="ed-item-head" style="--quality: var(--q${it.quality})">
-            ${info.icon ? `<img src="${BASE + info.icon}" alt="">` : ''}
-            <div>
-              <h3>${esc(info.name)}</h3>
-              <p class="dim">${QUALITY_NAMES[it.quality] ?? `Q${it.quality}`} · ${it.kind}
-                ${it.page >= 0 ? ` · page ${it.page + 1} (${it.gridX},${it.gridY})` : it.slot >= 0 ? ` · ${SLOT_NAMES[it.slot]}` : ''}</p>
-            </div>
-          </div>
-          <div id="item-fields">${it.leaves.map((l) => fieldRow(l, editable)).join('')}</div>
-          <button id="deep" class="ghost">Show all fields (affixes, sockets, procs…)</button>
-          <div id="item-deep"></div>`;
+          ${saveTooltip(it, info, f.result.summary)}
+          <section class="dcard"><h4>Edit fields</h4>
+            <div id="item-fields">${it.leaves.map((l) => fieldRow(l, editable)).join('')}</div>
+            <button id="deep" class="ghost">Show all fields (affixes, sockets, procs…)</button>
+            <div id="item-deep"></div>
+          </section>`;
         bindInputs(panel.querySelector<HTMLElement>('#item-fields')!);
         panel.querySelector('#deep')!.addEventListener('click', async () => {
           const leaves = await itemDetail(f.name, it.handle);
