@@ -11,8 +11,8 @@ Client-side-only SPA (GitHub Pages). No framework, no backend, no telemetry.
 | `data/coltable.ts` | Loader for column-oriented JSON tables; index-based access, O(1) joins. |
 | `odin/` | OdinSerializer binary reader/writer (see `docs/sav-binary-format.md`) and the lossless document tree (`tree.ts`). |
 | `worker/` | Save parse/encode runs in a Web Worker; `client.ts` is a promise RPC wrapper; ArrayBuffers are transferred, not copied. |
-| `views/items.ts` | Item library: search, filters, virtualized results, detail panel. |
-| `views/editor.ts` | Save editor: upload → parse (worker) → edit → encode → download. |
+| `views/items.ts` | Item library: search, filters, virtualized results, game-tooltip detail panel. |
+| `views/editor.ts` | Character-view save editor: hero strip, paper-doll (in-game slot layout), inventory/chest grids, talents panel, save-value game tooltips, multi-file mirroring, download. |
 
 ## Data flow
 
@@ -36,7 +36,9 @@ addressed by node handles.
    SaveTransactionId, BackupKind) are never exposed as editable.
 3. Users are guided to apply identical edits to `slot_1.sav`, `slot_1_auto.sav`
    and `slot_1_exit.sav` (the game falls back silently across them), and to
-   answer "Upload to Steam Cloud" on the conflict dialog.
+   answer "Upload to Steam Cloud" on the conflict dialog. When multiple files
+   are loaded, character/talent/money edits are mirrored to every file by
+   FIELD NAME (handles are per-file index paths and must not cross files).
 4. Inventory placement edits validate full item footprints (grid 15×17,
    page count from the save) because the game silently deletes overlapping or
    out-of-range items.
