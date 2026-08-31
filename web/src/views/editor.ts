@@ -12,10 +12,19 @@ const CELL = 32; // px per inventory grid cell (game uses 60)
 const GRID_W = 15;
 const GRID_H = 17;
 
-interface AffixEntry { label: string; percent?: boolean; bool?: boolean }
+interface AffixEntry {
+  label: string;
+  percent?: boolean;
+  bool?: boolean;
+  el?: boolean;
+  format?: string;
+  elVariants?: string[];
+  unmapped?: boolean;
+}
 interface AffixNames {
   main: Record<string, AffixEntry>;
   dot: Record<string, AffixEntry>;
+  sk: Record<string, AffixEntry>;
   aocao: Record<string, string>;
 }
 
@@ -53,7 +62,7 @@ function elementSuffix(charType: number): string {
 export async function editorView(): Promise<View> {
   const cat = await loadCatalog();
   const affixNames = await loadJSON<AffixNames>('affix-names.json')
-    .catch(() => ({ main: {}, dot: {}, aocao: {} } as AffixNames));
+    .catch(() => ({ main: {}, dot: {}, sk: {}, aocao: {} } as AffixNames));
   const gemsById = new Map(cat.gems.map((g) => [g['GlobalID'] as number, g]));
   const useById = new Map(cat.useitems.map((u) => [u['GlobalID'] as number, u]));
 
@@ -104,15 +113,28 @@ export async function editorView(): Promise<View> {
     };
   }
 
-  function affixLine(pool: 'main' | 'dot', rec: Rec): string {
+  function fmtBy(n: number, format?: string): string {
+    if (format === 'int') return String(Math.floor(n));
+    if (format === '0.0') return n.toFixed(1);
+    return fmt(n);
+  }
+
+  function affixLine(pool: 'main' | 'dot', rec: Rec, skillName?: string): string {
     const index = Number(rec['Index']);
     const el = Number(rec['EL']) || 0;
     const n = Number(rec['number']) || 0;
-    const spec = affixNames[pool][String(index)];
-    if (spec) {
-      if (spec.bool) return esc(spec.label.replace('{el}', ELEMENT_NAMES[el] ?? ''));
-      const v = fmt(n) + (spec.percent ? '%' : '');
-      return esc(spec.label.replace('{n}', v).replace('{el}', ELEMENT_NAMES[el] ?? ''));
+    // 3xxx/4xxx indexes are skill/companion affixes fed by the SK pool.
+    const spec = affixNames[pool][String(index)]
+      ?? (index >= 3000 ? affixNames.sk[String(index)] : undefined);
+    if (spec && !spec.unmapped) {
+      let label = spec.elVariants?.[el] ?? spec.label;
+      label = label
+        .replace('{el}', ELEMENT_NAMES[el] ?? '')
+        .replace(/\{skill\}|\{target\}|\{link\}|\{mode\}/g, skillName ?? 'skill');
+      if (spec.bool) return esc(label);
+      // Percent labels already carry their % sign after {n}.
+      const v = fmtBy(n, spec.format) + (spec.percent && !label.includes('{n}%') ? '%' : '');
+      return esc(label.replace('{n}', v));
     }
     return `+${fmt(n)} <span class="dim">(#${index}${el ? ' ' + (ELEMENT_NAMES[el] ?? '') : ''})</span>`;
   }
@@ -417,12 +439,26 @@ export async function editorView(): Promise<View> {
         const lines: string[] = [];
 
         if (it.kind === 'weapon') {
+          // Resolve {skill} for 3xxx/4xxx affixes from the template's SK pool.
+          const skNameFor = (index: number): string | undefined => {
+            const ti = cat.weaponById.get(it.globalId);
+            if (ti === undefined) return undefined;
+            const skId = cat.weapons.rows[ti]![cat.weapons.col('SkID')];
+            const pool = cat.affixByPoolId.get(`sk:${skId}`);
+            const e = pool?.entries.find(
+              (x) => Number((x as Record<string, unknown>)['Inx']) === index,
+            ) as Record<string, unknown> | undefined;
+            return (e?.['SkN'] as string) || undefined;
+          };
           const suffix = elementSuffix(it.charType);
           ELEMENT_NAMES.forEach((elName, el) => {
             const v = Number(leaves.get(elName)) || 0;
             if (v) lines.push(`<p class="tt-line el-${el}">+${fmt(v)}% ${elName} ${suffix}</p>`);
           });
-          for (const m of it.main ?? []) lines.push(`<p class="tt-line mod">${affixLine('main', m)}</p>`);
+          for (const m of it.main ?? []) {
+            const idx = Number(m['Index']);
+            lines.push(`<p class="tt-line mod">${affixLine('main', m, idx >= 3000 ? skNameFor(idx) : undefined)}</p>`);
+          }
           for (const d of it.dot ?? []) lines.push(`<p class="tt-line el-${Number(d['EL']) || 0}">${affixLine('dot', d)}</p>`);
           for (const sk of it.wpsk ?? []) {
             if (sk['IndexName']) lines.push(`<p class="tt-line skill">+${fmt(Number(sk['Number']))} to ${esc(sk['IndexName'])}</p>`);

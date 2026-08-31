@@ -4,6 +4,35 @@ import {
   loadCatalog, rowObj, CATEGORY_LABELS, QUALITY_NAMES, SLOT_NAMES, ELEMENT_NAMES,
   type Catalog, type CatalogEntry, type Category,
 } from '../data/catalog';
+import { loadJSON } from '../data/coltable';
+
+interface AffixEntry {
+  label: string; percent?: boolean; bool?: boolean; format?: string;
+  elVariants?: string[]; unmapped?: boolean;
+}
+interface AffixNames {
+  main: Record<string, AffixEntry>;
+  dot: Record<string, AffixEntry>;
+  sk: Record<string, AffixEntry>;
+  aocao: Record<string, string>;
+}
+let AFFIX: AffixNames = { main: {}, dot: {}, sk: {}, aocao: {} };
+
+function affixLabel(pool: 'main' | 'dot' | 'sk', index: number, el: number, nb: number, skn?: string): string {
+  const spec = AFFIX[pool][String(index)] ?? (index >= 3000 ? AFFIX.sk[String(index)] : undefined);
+  if (!spec || spec.unmapped) {
+    return `+${nb} <span class="dim">#${index}${el ? ' ' + (ELEMENT_NAMES[el] ?? '') : ''}</span>`;
+  }
+  let label = spec.elVariants?.[el] ?? spec.label;
+  label = label
+    .replace('{el}', ELEMENT_NAMES[el] ?? '')
+    .replace(/\{skill\}|\{target\}|\{link\}|\{mode\}/g, skn ?? 'skill');
+  if (spec.bool) return esc(label);
+  // Percent labels already carry their % sign after {n}.
+  const v = (spec.format === 'int' ? String(Math.floor(nb)) : String(nb))
+    + (spec.percent && !label.includes('{n}%') ? '%' : '');
+  return esc(label.replace('{n}', v));
+}
 
 const BASE = import.meta.env.BASE_URL;
 const CATS = Object.keys(CATEGORY_LABELS) as Category[];
@@ -18,6 +47,8 @@ interface Filters {
 
 export async function itemsView(): Promise<View> {
   const cat = await loadCatalog();
+  AFFIX = await loadJSON<AffixNames>('affix-names.json')
+    .catch(() => ({ main: {}, dot: {}, sk: {}, aocao: {} } as AffixNames));
 
   return {
     mount(container) {
@@ -128,10 +159,10 @@ function affixList(cat: Catalog, pool: string, id: unknown): string {
   const lines = a.entries.map((e) => {
     if (Array.isArray(e)) {
       const [index, el, nb] = e as [number, number, number];
-      return `<li>#${index} ${ELEMENT_NAMES[el] ?? ''} +${nb}</li>`;
+      return `<li>${affixLabel(pool as 'main' | 'dot', index, el, nb)}</li>`;
     }
     const o = e as Record<string, unknown>;
-    return `<li>${esc(o['SkN'])} #${esc(o['Inx'])} +${esc(o['NB'])}</li>`;
+    return `<li>${affixLabel('sk', Number(o['Inx']), Number(o['EL']) || 0, Number(o['NB']) || 0, String(o['SkN'] ?? ''))}</li>`;
   });
   return `<ul class="affixes">${lines.join('')}</ul>`;
 }
@@ -174,7 +205,7 @@ function renderDetail(host: HTMLElement, it: CatalogEntry, cat: Catalog): void {
     if (w['EL']) lines.push(ttLine(`+${esc(w['EL'])}% elemental`, 'el'));
     const fixed = (w['Affixes'] as [number, number, number][] | undefined) ?? [];
     for (const [i, el, nb] of fixed) {
-      lines.push(ttLine(`+${nb} ${ELEMENT_NAMES[el] ?? ''} <span class="dim">(affix #${i})</span>`, 'mod'));
+      lines.push(ttLine(affixLabel('main', i, el, nb), 'mod'));
     }
     const sockets = (w['Sockets'] as [string, number][] | undefined) ?? [];
     for (const [sk, pts] of sockets) lines.push(ttLine(`+${pts} to ${esc(sk)}`, 'skill'));
@@ -198,7 +229,7 @@ function renderDetail(host: HTMLElement, it: CatalogEntry, cat: Catalog): void {
       ['Weapon type', w['WeaponType']],
     ])));
     cards.push(card('Fixed affixes', fixed.length
-      ? `<ul class="affixes">${fixed.map(([i, el, nb]) => `<li>#${i} ${ELEMENT_NAMES[el] ?? ''} +${nb}</li>`).join('')}</ul>` : ''));
+      ? `<ul class="affixes">${fixed.map(([i, el, nb]) => `<li>${affixLabel('main', i, el, nb)}</li>`).join('')}</ul>` : ''));
     cards.push(card('Main affix pool', affixList(cat, 'main', w['MainID'])));
     cards.push(card('DOT affix pool', affixList(cat, 'dot', w['DotID'])));
     cards.push(card('Skill affix pool', affixList(cat, 'sk', w['SkID'])));

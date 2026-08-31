@@ -1,0 +1,2546 @@
+{
+ "_source": "Generated from decompiled WeaponClass.cs (GetMainArrayLine:802, GetDotArrayLine:1812, GetSKArrayLine:2045, GetCPArrayLine:2263), ItemManager.FormatWeaponStatValue:3714, WeaponBaoshiApplyUtil.GetSocketType:73, SaveDataEquipmentSanitizer.GemFloatFields:468, and English strings from Main_FY.json / MainDisplay_FY.json. See docs/affix-mapping.md.",
+ "elements": [
+  "Fire",
+  "Frost",
+  "Lightning",
+  "Poison",
+  "Physical",
+  "Shadow"
+ ],
+ "main": {
+  "1": {
+   "label": "Maximum health points + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "2": {
+   "label": "Maximum mana points + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3": {
+   "label": "Health Regeneration/S + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "4": {
+   "label": "Mana Regeneration/S + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "5": {
+   "label": "Life leech on kill + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "6": {
+   "label": "Mana leech on kill + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "10": {
+   "label": "Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "11": {
+   "label": "Attack speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "12": {
+   "label": "Movement speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "13": {
+   "label": "Critical hit chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "14": {
+   "label": "Critical hit damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "15": {
+   "label": "Cooldown reduction + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "16": {
+   "label": "Mana- + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "17": {
+   "label": "Block chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "18": {
+   "label": "Damage reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "19": {
+   "label": "Negative Effect Duration Reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "20": {
+   "label": "Slow Resistance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "21": {
+   "label": "All penetration + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "22": {
+   "label": "All resistance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "30": {
+   "label": "Critical damage taken reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "31": {
+   "label": "Damage dealt to elite enemies and bosses + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "32": {
+   "label": "Damage reduction against elite enemies and bosses + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "50": {
+   "label": "Treasure drop rate + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "51": {
+   "label": "Projectile Speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "52": {
+   "label": "Accessory Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "53": {
+   "label": "Stun Chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "54": {
+   "label": "Pierce Chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "60": {
+   "label": "Maximum life regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "61": {
+   "label": "Maximum mana regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "62": {
+   "label": "Convert {n}% of damage dealt into health recovery",
+   "percent": true,
+   "format": "1dp"
+  },
+  "63": {
+   "label": "Convert {n}% of damage dealt into mana recovery",
+   "percent": true,
+   "format": "1dp"
+  },
+  "80": {
+   "label": "Gem effect + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "81": {
+   "label": "Gem effect + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "100": {
+   "label": "Ally HP + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "101": {
+   "label": "Ally Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "102": {
+   "label": "Ally Atk Spd + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "103": {
+   "label": "Ally Move + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "104": {
+   "label": "Ally Resist + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "150": {
+   "label": "Attached weapon skill damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "151": {
+   "label": "Attached weapon skill trigger chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "170": {
+   "label": "Shrine duration + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "171": {
+   "label": "Potion duration + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "200": {
+   "label": "Cooldown reduction Limit + {n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "201": {
+   "label": "Block chance Limit + {n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "202": {
+   "label": "Damage reduction Limit + {n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "203": {
+   "label": "Enemy damage reduction cap + {n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "204": {
+   "label": "Enemy attack speed reduction cap + {n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "205": {
+   "label": "Enemy movement speed reduction cap + {n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "300": {
+   "label": "Debuff Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "301": {
+   "label": "Debuff duration + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "302": {
+   "label": "Debuff stacks + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "303": {
+   "label": "Moving enemies take + {n}% damage from debuffs",
+   "percent": true,
+   "format": "int"
+  },
+  "304": {
+   "label": "Elite enemies take + {n}% damage from debuffs",
+   "percent": true,
+   "format": "int"
+  },
+  "305": {
+   "label": "For each additional debuff on an enemy: debuff damage to that enemy + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "306": {
+   "label": "For each debuff on an enemy: damage taken by that enemy + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "307": {
+   "label": "Execution effects also work at full strength on elite enemies; executing an enemy restores 1% of maximum health",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "400": {
+   "label": "For each equipped enhanced weapon: Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "401": {
+   "label": "For each equipped enhanced weapon: Attack speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "402": {
+   "label": "For each equipped enhanced weapon: Movement speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "403": {
+   "label": "For each equipped enhanced weapon: Critical hit chance + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "404": {
+   "label": "For each equipped enhanced weapon: Critical hit damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "405": {
+   "label": "For each equipped enhanced weapon: Maximum life regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "406": {
+   "label": "For each equipped enhanced weapon: Maximum mana regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "407": {
+   "label": "For each equipped enhanced weapon: Ally HP + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "408": {
+   "label": "For each equipped enhanced weapon: Ally Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "409": {
+   "label": "For each equipped enhanced weapon: Ally Atk Spd + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "410": {
+   "label": "For each equipped enhanced weapon: Ally Move + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "411": {
+   "label": "For each equipped enhanced weapon: Ally Resist + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "412": {
+   "label": "For each equipped enhanced weapon: Debuff Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "413": {
+   "label": "For each equipped enhanced weapon: Trap Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "414": {
+   "label": "For each equipped enhanced weapon: Accessory Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "415": {
+   "label": "For each equipped weapon with an attached skill: Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "416": {
+   "label": "For each equipped weapon with an attached skill: Attack speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "417": {
+   "label": "For each equipped weapon with an attached skill: Movement speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "418": {
+   "label": "For each equipped weapon with an attached skill: Critical hit chance + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "419": {
+   "label": "For each equipped weapon with an attached skill: Critical hit damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "420": {
+   "label": "For each equipped weapon with an attached skill: Maximum life regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "421": {
+   "label": "For each equipped weapon with an attached skill: Maximum mana regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "422": {
+   "label": "For each equipped weapon with an attached skill: Ally HP + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "423": {
+   "label": "For each equipped weapon with an attached skill: Ally Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "424": {
+   "label": "For each equipped weapon with an attached skill: Ally Atk Spd + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "425": {
+   "label": "For each equipped weapon with an attached skill: Ally Move + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "426": {
+   "label": "For each equipped weapon with an attached skill: Ally Resist + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "427": {
+   "label": "For each equipped weapon with an attached skill: Debuff Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "428": {
+   "label": "For each equipped weapon with an attached skill: Trap Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "429": {
+   "label": "For each equipped weapon with an attached skill: Accessory Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "430": {
+   "label": "For each equipped transmuted weapon: Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "431": {
+   "label": "For each equipped transmuted weapon: Attack speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "432": {
+   "label": "For each equipped transmuted weapon: Movement speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "433": {
+   "label": "For each equipped transmuted weapon: Critical hit chance + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "434": {
+   "label": "For each equipped transmuted weapon: Critical hit damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "435": {
+   "label": "For each equipped transmuted weapon: Maximum life regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "436": {
+   "label": "For each equipped transmuted weapon: Maximum mana regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "437": {
+   "label": "For each equipped transmuted weapon: Ally HP + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "438": {
+   "label": "For each equipped transmuted weapon: Ally Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "439": {
+   "label": "For each equipped transmuted weapon: Ally Atk Spd + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "440": {
+   "label": "For each equipped transmuted weapon: Ally Move + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "441": {
+   "label": "For each equipped transmuted weapon: Ally Resist + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "442": {
+   "label": "For each equipped transmuted weapon: Debuff Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "443": {
+   "label": "For each equipped transmuted weapon: Trap Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "444": {
+   "label": "For each equipped transmuted weapon: Accessory Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "445": {
+   "label": "For each talent skill point on equipped weapons: Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "446": {
+   "label": "For each talent skill point on equipped weapons: Attack speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "447": {
+   "label": "For each talent skill point on equipped weapons: Movement speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "448": {
+   "label": "For each talent skill point on equipped weapons: Ally HP + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "449": {
+   "label": "For each talent skill point on equipped weapons: Ally Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "450": {
+   "label": "For each talent skill point on equipped weapons: Ally Atk Spd + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "451": {
+   "label": "For each talent skill point on equipped weapons: Ally Resist + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "452": {
+   "label": "For each talent skill point on equipped weapons: Trap Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "453": {
+   "label": "For each talent skill point on equipped weapons: Accessory Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "454": {
+   "label": "For each talent skill point on equipped weapons: Accessory orb count + {n}",
+   "percent": false,
+   "format": "1dp"
+  },
+  "455": {
+   "label": "For each gem socketed in equipped weapons: Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "456": {
+   "label": "For each gem socketed in equipped weapons: Attack speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "457": {
+   "label": "For each gem socketed in equipped weapons: Movement speed + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "458": {
+   "label": "For each gem socketed in equipped weapons: Ally HP + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "459": {
+   "label": "For each gem socketed in equipped weapons: Ally Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "460": {
+   "label": "For each gem socketed in equipped weapons: Ally Atk Spd + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "461": {
+   "label": "For each gem socketed in equipped weapons: Ally Resist + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "462": {
+   "label": "For each gem socketed in equipped weapons: Trap Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "463": {
+   "label": "For each gem socketed in equipped weapons: Accessory Damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "464": {
+   "label": "For each gem socketed in equipped weapons: Accessory orb count + {n}",
+   "percent": false,
+   "format": "1dp"
+  },
+  "500": {
+   "label": "When Health points is below 20%: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "501": {
+   "label": "When Health points is below 50%: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "502": {
+   "label": "When Health points is above 90%: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "503": {
+   "label": "At full Health points: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "504": {
+   "label": "When health is below 20%: chance to fire the hit-triggered skill +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "505": {
+   "label": "At full health: chance to fire the hit-triggered skill +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "506": {
+   "label": "When Health points is below 20%: Damage reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "507": {
+   "label": "When Health points is below 50%: Damage reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "508": {
+   "label": "Immune to critical damage below 10% health",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "509": {
+   "label": "When Mana points is below 20%: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "510": {
+   "label": "When Mana points is below 50%: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "511": {
+   "label": "When Mana points is above 90%: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "512": {
+   "label": "At full Mana points: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "513": {
+   "label": "When mana is below 20%: chance to fire the hit-triggered skill +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "514": {
+   "label": "At full mana: chance to fire the hit-triggered skill +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "550": {
+   "label": "While moving: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "551": {
+   "label": "While moving: Attack speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "552": {
+   "label": "While moving: Block chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "553": {
+   "label": "While standing still: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "554": {
+   "label": "While standing still: Attack speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "555": {
+   "label": "While standing still: Damage reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "556": {
+   "label": "While standing still: Maximum life regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "557": {
+   "label": "While standing still: Maximum mana regeneration /S + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "558": {
+   "label": "While dashing: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "559": {
+   "label": "While dashing: Damage reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "600": {
+   "label": "Convert {n}% of Maximum health points into additional damage",
+   "percent": true,
+   "format": "1dp"
+  },
+  "601": {
+   "label": "Convert {n}% of missing health into additional damage",
+   "percent": true,
+   "format": "1dp"
+  },
+  "602": {
+   "label": "Convert {n}% of Maximum mana points into additional damage",
+   "percent": true,
+   "format": "1dp"
+  },
+  "603": {
+   "label": "Convert {n}% of Mana points into additional damage",
+   "percent": true,
+   "format": "1dp"
+  },
+  "604": {
+   "label": "Convert {n}% of missing mana into additional damage",
+   "percent": true,
+   "format": "1dp"
+  },
+  "610": {
+   "label": "Convert {n}% of Maximum health points into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "611": {
+   "label": "Convert {n}% of Maximum mana points into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "612": {
+   "label": "Convert {n}% of Cooldown reduction into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "613": {
+   "label": "Convert {n}% of {el} Resistance into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "614": {
+   "label": "Convert {n}% of {el} Penetration into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "615": {
+   "label": "Convert {n}% of Block chance into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "616": {
+   "label": "Convert {n}% of Critical hit chance into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "617": {
+   "label": "Convert {n}% of Damage reduction into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "618": {
+   "label": "Convert {n}% of Pierce Chance into {el} Damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "650": {
+   "label": "Convert {n}% of Cooldown reduction into companion damage",
+   "percent": true,
+   "format": "int"
+  },
+  "651": {
+   "label": "Convert {n}% of Attack speed into companion damage",
+   "percent": true,
+   "format": "int"
+  },
+  "652": {
+   "label": "Convert {n}% of Movement speed into additional damage",
+   "percent": true,
+   "format": "int"
+  },
+  "653": {
+   "label": "Convert {n}% of Movement speed into attack speed",
+   "percent": true,
+   "format": "int"
+  },
+  "654": {
+   "label": "Critical chance above 100% is converted into critical damage",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "655": {
+   "label": "Convert {n}% of {el} Penetration into critical damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "700": {
+   "label": "For each 1% of maximum health missing: damage + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "701": {
+   "label": "For each 1% of maximum mana missing: item drop rate + {n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "750": {
+   "label": "Damage +30%, but mana cost +200%",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "751": {
+   "label": "Damage +40%, but damage taken +20%",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "752": {
+   "label": "Debuff damage is tripled, but direct damage -30%",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "753": {
+   "label": "Cannot block damage, but maximum health +500%",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "800": {
+   "label": "On each skill cast: Damage + {n}%, lasts 4s, up to 5 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "801": {
+   "label": "On each skill cast: Damage + {n}%, lasts 3s, up to 6 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "802": {
+   "label": "On each skill cast: Attack speed + {n}%, lasts 3s, up to 6 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "803": {
+   "label": "On each skill cast: Attack speed + {n}%, lasts 3s, up to 8 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "804": {
+   "label": "On each skill cast: All penetration + {n}%, lasts 3s, up to 6 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "805": {
+   "label": "On each skill cast: Critical hit chance + {n}%, lasts 3s, up to 10 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "806": {
+   "label": "On each skill cast: Critical hit damage + {n}%, lasts 3s, up to 12 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "807": {
+   "label": "On each skill cast: Debuff Damage + {n}%, lasts 3s, up to 6 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "808": {
+   "label": "On each skill cast: Debuff Damage + {n}%, lasts 4s, up to 8 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "850": {
+   "label": "For each different buff on you: companion damage +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "851": {
+   "label": "For each debuff on you: matching element damage +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "852": {
+   "label": "For each debuff on you: movement speed +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "853": {
+   "label": "Every 5s, automatically clear 1 debuff and restore {n}% health",
+   "percent": true,
+   "format": "float"
+  },
+  "854": {
+   "label": "Every 3s, automatically clear 1 debuff and restore {n}% health",
+   "percent": true,
+   "format": "float"
+  },
+  "855": {
+   "label": "After a successful block: Damage +{n}%, lasts 6s, up to 6 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "856": {
+   "label": "After casting an ultimate skill: damage of other element types +{n}% for 3s",
+   "percent": true,
+   "format": "int"
+  },
+  "857": {
+   "label": "After picking up a gem: movement speed + {n}% for 3 seconds",
+   "percent": true,
+   "format": "int"
+  },
+  "858": {
+   "label": "While not using skills: damage +{n}% each second, up to 5 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "859": {
+   "label": "While not using skills: damage +{n}% each second, up to 8 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "860": {
+   "label": "After using a movement skill: damage +{n}%, lasts 3s, up to 10 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "861": {
+   "label": "While moving, charge each second: damage +{n}%, up to 4 stacks; cleared after the next skill use",
+   "percent": true,
+   "format": "int"
+  },
+  "862": {
+   "label": "When taking fatal damage: trigger Last Stand for 1s, ignore all damage, attack speed +{n}%; cooldown 30s",
+   "percent": true,
+   "format": "float"
+  },
+  "863": {
+   "label": "When taking fatal damage: trigger Rage for 1s, ignore all damage, damage +{n}%; cooldown 24s",
+   "percent": true,
+   "format": "float"
+  },
+  "864": {
+   "label": "When taking fatal damage: trigger Stealth for 1s, ignore all damage, move speed +{n}%; cooldown 25s",
+   "percent": true,
+   "format": "float"
+  },
+  "1000": {
+   "label": "For each companion present: Damage +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1001": {
+   "label": "For each companion present: Attack speed +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1002": {
+   "label": "For each companion present: Movement speed +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1003": {
+   "label": "For each companion present: Maximum health points +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1004": {
+   "label": "For each companion present: Maximum mana points +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1005": {
+   "label": "For each companion present: Damage reduction +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1006": {
+   "label": "For each companion present: Treasure drop rate +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1007": {
+   "label": "For each companion present: Accessory Damage +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1010": {
+   "label": "For each companion present: {el} Damage +{n}%",
+   "percent": true,
+   "el": true,
+   "format": "1dp"
+  },
+  "1011": {
+   "label": "For each companion present: {el} Penetration +{n}%",
+   "percent": true,
+   "el": true,
+   "format": "1dp"
+  },
+  "1020": {
+   "label": "For each companion present: Ally HP +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1021": {
+   "label": "For each companion present: Ally Damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1022": {
+   "label": "For each companion present: Ally Atk Spd +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1023": {
+   "label": "For each companion present: Ally Resist +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1024": {
+   "label": "For each companion type present: Damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1025": {
+   "label": "For each companion type present: Attack speed +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1026": {
+   "label": "For each companion type present: Movement speed +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1027": {
+   "label": "For each companion type present: Maximum health points +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1028": {
+   "label": "For each companion type present: Maximum mana points +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1029": {
+   "label": "For each companion type present: Damage reduction +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1030": {
+   "label": "For each companion type present: Treasure drop rate +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1031": {
+   "label": "For each companion type present: Accessory Damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1040": {
+   "label": "For each companion type present: {el} Damage +{n}%",
+   "percent": true,
+   "el": true,
+   "format": "1dp"
+  },
+  "1041": {
+   "label": "For each companion type present: {el} Penetration +{n}%",
+   "percent": true,
+   "el": true,
+   "format": "1dp"
+  },
+  "1050": {
+   "label": "For each companion type present: Ally HP +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1051": {
+   "label": "For each companion type present: Ally Damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1052": {
+   "label": "For each companion type present: Ally Atk Spd +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1053": {
+   "label": "For each companion type present: Ally Resist +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1054": {
+   "label": "For each companion type present: Debuff Damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1057": {
+   "label": "Unknown effect (index 1057; not handled by current game tooltip code, no line is shown)",
+   "percent": false,
+   "unmapped": true,
+   "format": "float"
+  },
+  "1058": {
+   "label": "Unknown effect (index 1058; not handled by current game tooltip code, no line is shown)",
+   "percent": false,
+   "unmapped": true,
+   "format": "float"
+  },
+  "1100": {
+   "label": "For each orb on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1101": {
+   "label": "For each arrow on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1102": {
+   "label": "For each javelin on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1103": {
+   "label": "For each flying sword on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1104": {
+   "label": "For each flying spear on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1105": {
+   "label": "For each flying insect on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1106": {
+   "label": "For each fairy on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1107": {
+   "label": "For each dart on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1108": {
+   "label": "For each flying claw on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1109": {
+   "label": "For each flying hammer on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1110": {
+   "label": "For each scythe on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1111": {
+   "label": "For each ice crystal on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1112": {
+   "label": "For each death reap on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1113": {
+   "label": "For each skeleton orb on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1114": {
+   "label": "For each laser projectile on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1115": {
+   "label": "For each lightning bolt on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1116": {
+   "label": "For each sword energy on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1117": {
+   "label": "For each accessory orb on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1118": {
+   "label": "For each laser beam on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1119": {
+   "label": "For each Blade Soul flying sword on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1120": {
+   "label": "For each sword-mark slash on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1121": {
+   "label": "For each ground spike on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1122": {
+   "label": "For each ball lightning on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1123": {
+   "label": "For each ion spark on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1124": {
+   "label": "For each ground skill on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1125": {
+   "label": "For each domain on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1126": {
+   "label": "For each tornado on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1127": {
+   "label": "For each lightning strike on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1128": {
+   "label": "For each magic circle on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1129": {
+   "label": "For each nova on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1130": {
+   "label": "For each death explosion on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1131": {
+   "label": "For each corpse explosion on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1132": {
+   "label": "For each falling object on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1133": {
+   "label": "For each trap orb on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1134": {
+   "label": "For each trap on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1135": {
+   "label": "For each laser field on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1136": {
+   "label": "For each volcano on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1137": {
+   "label": "For each energy core on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1138": {
+   "label": "For each hydra on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1139": {
+   "label": "For each totem on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1140": {
+   "label": "For each teleport on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1141": {
+   "label": "For each transformation on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1142": {
+   "label": "For each buff on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1143": {
+   "label": "For each path on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1144": {
+   "label": "For each dash on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1145": {
+   "label": "For each shield on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1146": {
+   "label": "For each summoned bow arrow on the field: player damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1150": {
+   "label": "For each Trap on the field: companion damage +{n}%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1200": {
+   "label": "Each nearby Enemies: player Damage +{n}%, up to 20%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1201": {
+   "label": "Each nearby Enemies: player Damage +{n}%, up to 48%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1202": {
+   "label": "Each nearby Enemies: player Damage reduction +{n}%, up to 9%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1203": {
+   "label": "Each nearby Enemies: player Block chance +{n}%, up to 12%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1204": {
+   "label": "Each nearby Elite enemy: player Damage +{n}%, up to 15%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1205": {
+   "label": "Each nearby Elite enemy: player Attack speed +{n}%, up to 24%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1206": {
+   "label": "Each nearby Elite enemy: player Critical hit damage +{n}%, up to 16%",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1250": {
+   "label": "After killing a Enemies: Damage +{n}%, lasts 3s, up to 8 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1251": {
+   "label": "After killing a Enemies: Damage +{n}%, lasts 5s, up to 10 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1252": {
+   "label": "After killing a Enemies: Attack speed +{n}%, lasts 3s, up to 5 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1253": {
+   "label": "After killing a Enemies: Attack speed +{n}%, lasts 5s, up to 8 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1260": {
+   "label": "After killing a Enemies: {el} Damage +{n}%, lasts 6s, up to 8 stacks",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "1270": {
+   "label": "After killing a Enemies: Ally Damage +{n}%, lasts 2s, up to 4 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1271": {
+   "label": "After killing a Enemies: Ally Damage +{n}%, lasts 3s, up to 6 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1272": {
+   "label": "After killing a Enemies: Ally Atk Spd +{n}%, lasts 2s, up to 5 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1273": {
+   "label": "After killing a Enemies: Ally Atk Spd +{n}%, lasts 3s, up to 6 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1274": {
+   "label": "After killing a Elite enemy: Damage +{n}%, lasts 5s, up to 3 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1275": {
+   "label": "After killing a Elite enemy: All resistance +{n}%, lasts 3s, up to 3 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "1276": {
+   "label": "On enemy kill: 1% chance to refresh all skills and gain damage +{n}% for 3s",
+   "percent": true,
+   "format": "int"
+  },
+  "1300": {
+   "label": "{el} skill: {n}% chance on hit to remove 8% of enemy max HP",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "1301": {
+   "label": "{el} skill: {n}% chance on hit to remove 5% of enemy max HP",
+   "percent": true,
+   "el": true,
+   "format": "float"
+  },
+  "1302": {
+   "label": "{el} skill: {n}% chance on hit to remove 3% of enemy max HP",
+   "percent": true,
+   "el": true,
+   "format": "float"
+  },
+  "1330": {
+   "label": "Infernal flame continuously burns the player: lose {n}% HP per second, become immune to other debuffs, and deal equal damage to all nearby enemies",
+   "percent": true,
+   "elVariants": [
+    "Infernal flame continuously burns the player: lose {n}% HP per second, become immune to other debuffs, and deal equal damage to all nearby enemies",
+    "Eternal frost continuously erodes the player: lose {n}% HP per second, become immune to other debuffs, and deal equal damage to all nearby enemies",
+    "Holy light continuously burns the player: lose {n}% HP per second, become immune to other debuffs, and deal equal damage to all nearby enemies",
+    "Poison fills the entire body: lose {n}% HP per second, become immune to other debuffs, and deal equal damage to all nearby enemies",
+    "Spikes fill the entire body: lose {n}% HP per second, become immune to other debuffs, and deal equal damage to all nearby enemies",
+    "Void curse spreads across the entire body: lose {n}% HP per second, become immune to other debuffs, and deal equal damage to all nearby enemies"
+   ],
+   "el": true,
+   "format": "float"
+  },
+  "1350": {
+   "label": "{el} damage ignores resistance",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "1360": {
+   "label": "all attacks ignore enemy damage reduction",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1370": {
+   "label": "Enemies below 20% HP take + {n}% damage",
+   "percent": true,
+   "format": "int"
+  },
+  "1371": {
+   "label": "Enemies below 50% HP take + {n}% damage",
+   "percent": true,
+   "format": "int"
+  },
+  "1372": {
+   "label": "Enemies above 60% HP take + {n}% damage",
+   "percent": true,
+   "format": "int"
+  },
+  "1373": {
+   "label": "Full-health enemies take + {n}% damage",
+   "percent": true,
+   "format": "int"
+  },
+  "1374": {
+   "label": "Attacks against full-health enemies always crit; critical damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1390": {
+   "label": "Against enemies within 5m: Damage + {n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1391": {
+   "label": "damage increases with distance, up to 30%",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1395": {
+   "label": "On critical hit: {n}% chance to explode the target and deal equal damage to one nearby enemy",
+   "percent": true,
+   "format": "int"
+  },
+  "1396": {
+   "label": "On critical kill: {n}% chance to explode the corpse and deal damage equal to 50% of the slain enemy’s maximum health to nearby enemies",
+   "percent": true,
+   "format": "int"
+  },
+  "1397": {
+   "label": "On critical hit: {n}% chance to instantly kill non-elite enemies below 30% health",
+   "percent": true,
+   "format": "int"
+  },
+  "1500": {
+   "label": "Accessory orb base count limit + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "1501": {
+   "label": "Accessory orb count doubled",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1502": {
+   "label": "When field orb count is above 80: accessory orb damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1503": {
+   "label": "When field orb count is above 120: accessory orb damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1504": {
+   "label": "Accessory orb damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1505": {
+   "label": "At full mana: accessory orb damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1506": {
+   "label": "Accessory orb spawn interval - {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1507": {
+   "label": "summon bow damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1508": {
+   "label": "summon bow firing interval - {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1509": {
+   "label": "For each summoned bow on the field: accessory damage +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1510": {
+   "label": "For each summoned bow on the field: damage reduction +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1600": {
+   "label": "Trap Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1601": {
+   "label": "Trap duration + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1602": {
+   "label": "Totem effect + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1603": {
+   "label": "Totem duration + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1604": {
+   "label": "Player receives the full totem effect",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1800": {
+   "label": "You can no longer inflict debuffs on enemies, but critical damage +{n}%",
+   "percent": true,
+   "format": "float"
+  },
+  "1801": {
+   "label": "Taking damage is increased by 10%, and damage taken is paid from mana first",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1802": {
+   "label": "Convert {n}% of mana spent into self healing",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1803": {
+   "label": "Mana regeneration stops working and is converted into health regeneration",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1804": {
+   "label": "Companions receive the same percentage health regeneration as the player",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1805": {
+   "label": "After being hit by an enemy, reflect damage equal to 10% of maximum health",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1806": {
+   "label": "When any skill hits an enemy, it deals extra damage equal to {n}% of the player’s max mana",
+   "percent": true,
+   "format": "1dp"
+  },
+  "1807": {
+   "label": "Damage above 40% of maximum health is halved, and damage below 3% of maximum health is ignored",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1808": {
+   "label": "After a successful block: chance to fire the hit-triggered skill +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1809": {
+   "label": "While health is above 50%, continuously lose health; damage, attack speed and movement speed increase as health falls",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1810": {
+   "label": "Immune to ground damage-over-time skills",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1811": {
+   "label": "Summons are unaffected by debuffs",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1812": {
+   "label": "Summons are immune to ground damage-over-time skills",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1813": {
+   "label": "While above 5% health, skills consume 1% health and deal +10% damage",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1814": {
+   "label": "While above 5% health, skills consume 3% health and deal +36% damage",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1815": {
+   "label": "Summons evenly share {n}% of damage taken by the player",
+   "percent": true,
+   "format": "int"
+  },
+  "1816": {
+   "label": "All blade soul swords doubled",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1817": {
+   "label": "Each time an enemy is hit by a skill of a different element, it takes {n}% extra damage",
+   "percent": true,
+   "format": "int"
+  },
+  "1818": {
+   "label": "Explosion Range + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1819": {
+   "label": "Totem and buff-type skill range +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1820": {
+   "label": "Convert 0.00001% of total held gold into damage",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1821": {
+   "label": "automatically open chests and shrines",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1822": {
+   "label": "On player death: explode and kill all nearby non-elite enemies",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1900": {
+   "label": "When Health points is below 20%: automatically use a health potion",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1901": {
+   "label": "When Mana points is below 10%: automatically use a mana potion",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1905": {
+   "label": "When the player uses a recovery potion, companions recover the same amount of health",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "1910": {
+   "label": "Each time you use a permanent potion: gain an extra {n} health",
+   "percent": false,
+   "format": "float"
+  },
+  "1911": {
+   "label": "Each time you use a permanent potion: gain an extra {n} mana",
+   "percent": false,
+   "format": "float"
+  },
+  "1912": {
+   "label": "Each time you use a permanent potion: gain an extra {n} damage",
+   "percent": false,
+   "format": "float"
+  },
+  "1950": {
+   "label": "Pickup Range + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1951": {
+   "label": "Fairy Pickup + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1952": {
+   "label": "Fairy item dismantling price +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1953": {
+   "label": "For each owned fairy: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1954": {
+   "label": "For each owned fairy: Treasure drop rate + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "1955": {
+   "label": "Fairy skill firing interval - {n}%",
+   "percent": true,
+   "format": "int"
+  }
+ },
+ "dot": {
+  "2000": {
+   "label": "{el}: each application adds {n} extra stack(s)",
+   "percent": false,
+   "el": true,
+   "format": "float"
+  },
+  "2001": {
+   "label": "Critical hits always add 1 stack of {el}",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2002": {
+   "label": "When an enemy that damaged you counterattacks, there is a {n}% chance to add 1 stack of {el}",
+   "percent": true,
+   "el": true,
+   "format": "float"
+  },
+  "2003": {
+   "label": "{el}: each damage tick has {n}% chance to add 1 extra stack",
+   "percent": true,
+   "el": true,
+   "format": "float"
+  },
+  "2004": {
+   "label": "{el}: {n}% chance to apply full stacks instantly",
+   "percent": true,
+   "el": true,
+   "format": "float"
+  },
+  "2005": {
+   "label": "{el}: applied stacks are doubled",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2022": {
+   "label": "Unknown effect (index 2022; not handled by current game tooltip code, no line is shown)",
+   "percent": false,
+   "unmapped": true,
+   "format": "float"
+  },
+  "2100": {
+   "label": "{el} can spread",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2101": {
+   "label": "{el}: spread stacks + {n}",
+   "percent": false,
+   "el": true,
+   "format": "float"
+  },
+  "2102": {
+   "label": "{el} spreads all current stacks on the enemy",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2200": {
+   "label": "{el}: explodes the enemy every 3s, dealing damage equal to 3 times the current stack count, then reduces stacks to 1",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2201": {
+   "label": "{el}: explosions consume only half the stacks",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2202": {
+   "label": "{el}: explosions add {n} extra stack(s)",
+   "percent": false,
+   "el": true,
+   "format": "float"
+  },
+  "2203": {
+   "label": "{el}: explosions have a {n}% chance to instantly kill enemies with 6+ debuff stacks",
+   "percent": true,
+   "el": true,
+   "format": "1dp"
+  },
+  "2300": {
+   "label": "{el}: enemies become vulnerable, all damage taken + {n}%",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2301": {
+   "label": "{el}: torn wounds prevent healing; healing becomes equal damage",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2302": {
+   "label": "{el}: silences enemies, reducing strong skill casts; ineffective on bosses",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2303": {
+   "label": "{el}: death explosions have a {n}% chance to hit the same enemy type instead of the player",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2304": {
+   "label": "{el}: curses enemies; their attacks cannot crit or apply debuffs",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2305": {
+   "label": "{el}: weakened enemies have a {n}% chance to gain 1 stack when stunned",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2306": {
+   "label": "Elite enemies with {el} have a {n}% chance on death to randomly explode a nearby enemy",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2400": {
+   "label": "{el} can critically hit",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  },
+  "2401": {
+   "label": "{el}: all attached child skill damage + {n}%",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2402": {
+   "label": "{el}: at 8+ stacks, each damage tick removes {n}% enemy health",
+   "percent": true,
+   "el": true,
+   "format": "1dp"
+  },
+  "2450": {
+   "label": "Companions deal + {n}% damage to enemies with {el}",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2500": {
+   "label": "For each nearby enemy with {el}, player damage + {n}%",
+   "percent": true,
+   "el": true,
+   "format": "1dp"
+  },
+  "2501": {
+   "label": "{el}: deals + {n}% damage to enemies below 50% health",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2550": {
+   "label": "When player health is below 50%, {el} damage + {n}%",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2551": {
+   "label": "When player is at full health, {el} damage + {n}%",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2552": {
+   "label": "When player mana is below 40%, {el} damage + {n}%",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2600": {
+   "label": "{el}: {n}% chance to freeze non-elite enemies forever",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2601": {
+   "label": "{el}: when freezing enemies, {n}% chance to remove 8% of their max health",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2602": {
+   "label": "{el}: freeze chance + {n}% against enemies below 30% health",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2603": {
+   "label": "{el}: frozen enemies take + {n}% damage",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "2604": {
+   "label": "{el}: enemies frozen forever continue taking debuff damage until death",
+   "percent": false,
+   "bool": true,
+   "el": true,
+   "format": "float"
+  }
+ },
+ "sk": {
+  "3000": {
+   "label": "{skill} transforms into {target}",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "3100": {
+   "label": "{skill}: Firing count + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "3101": {
+   "label": "{skill}: Split count + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "3102": {
+   "label": "{skill}: Target count + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "3103": {
+   "label": "{skill}: Shots per cast + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "3200": {
+   "label": "When using {skill}, also fire {link}",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "3201": {
+   "label": "When using {skill}, also fire all ready skills in the same talent tree",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "3202": {
+   "label": "Any non-basic attack skill can also fire {skill}",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "3203": {
+   "label": "{skill} gains the damage bonus from {link}",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "3300": {
+   "label": "{skill} auto-casts when ready, without a cast action",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "3301": {
+   "label": "After firing {skill}: {n}% chance to refresh cooldown immediately",
+   "percent": true,
+   "format": "int"
+  },
+  "3302": {
+   "label": "{skill}: damage + {n}% for each enemy hit",
+   "percent": true,
+   "format": "int"
+  },
+  "3303": {
+   "label": "{skill}: damage + {n}% for each companion on the field",
+   "percent": true,
+   "format": "int"
+  },
+  "3304": {
+   "label": "{skill}: each enemy hit has {n}% chance to add 1 ricochet",
+   "percent": true,
+   "format": "int"
+  },
+  "3305": {
+   "label": "{skill}: {n}% chance to execute non-elite enemies",
+   "percent": true,
+   "format": "1dp"
+  },
+  "3306": {
+   "label": "After a successful block: {n}% chance to fire {skill}",
+   "percent": true,
+   "format": "int"
+  },
+  "3307": {
+   "label": "{skill}: attack skills gained after transformation damage +{n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3308": {
+   "label": "{skill}: damage doubled",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "3400": {
+   "label": "After using {skill}, gain invincibility for {n}s",
+   "percent": false,
+   "format": "float"
+  },
+  "3401": {
+   "label": "Critical hits have {n}% chance to extend {skill}'s duration",
+   "percent": true,
+   "format": "float"
+  },
+  "3402": {
+   "label": "Critical hits have {n}% chance to reduce {skill}'s current cooldown",
+   "percent": true,
+   "format": "float"
+  },
+  "3403": {
+   "label": "When {skill} ends, restore {n}% health",
+   "percent": true,
+   "format": "int"
+  },
+  "3404": {
+   "label": "{skill}: creates a wind erosion zone, reducing enemy projectile speed by {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3500": {
+   "label": "After using {skill}: Damage + {n}% for 4s, max 5 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "3501": {
+   "label": "After using {skill}: Attack speed + {n}% for 3s, max 4 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "3502": {
+   "label": "After using {skill}: Movement speed + {n}% for 2s, max 3 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "3503": {
+   "label": "After using {skill}: Companion Damage + {n}% for 3s, max 4 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "3504": {
+   "label": "After using {skill}: Companion Attack Speed + {n}% for 2s, max 4 stacks",
+   "percent": true,
+   "format": "int"
+  },
+  "3530": {
+   "label": "After using {skill}: {el} Damage + {n}% for 3s, max 4 stacks",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "3535": {
+   "label": "After using {skill}: {el} Penetration + {n}% for 2s, max 3 stacks",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "3550": {
+   "label": "While {skill} exists: Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3551": {
+   "label": "While {skill} exists: Attack speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3552": {
+   "label": "While {skill} exists: Movement speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3553": {
+   "label": "While {skill} exists: Critical hit chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3554": {
+   "label": "While {skill} exists: Critical hit damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3555": {
+   "label": "While {skill} exists: Debuff- + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3556": {
+   "label": "While {skill} exists: Damage reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3557": {
+   "label": "While {skill} exists: Block chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3558": {
+   "label": "While {skill} exists: Accessory Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3559": {
+   "label": "While {skill} exists: Trap Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3560": {
+   "label": "While {skill} exists: Debuff Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "3561": {
+   "label": "While {skill} exists: Ally Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4000": {
+   "label": "{skill} transforms into {target}",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "4011": {
+   "label": "{skill}: unknown companion bonus (index 4011; not handled by current game tooltip code, no line is shown)",
+   "percent": false,
+   "unmapped": true,
+   "format": "float"
+  },
+  "4012": {
+   "label": "{skill}: unknown companion bonus (index 4012; not handled by current game tooltip code, no line is shown)",
+   "percent": false,
+   "unmapped": true,
+   "format": "float"
+  },
+  "4037": {
+   "label": "{skill}: unknown companion bonus (index 4037; not handled by current game tooltip code, no line is shown)",
+   "percent": false,
+   "unmapped": true,
+   "format": "float"
+  },
+  "4050": {
+   "label": "{skill} automatically summons all missing companions after the player resurrects, without triggering summon-generation skills",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "4100": {
+   "label": "{skill}: summon count + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "4101": {
+   "label": "{skill}: summon count {mode}",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "4200": {
+   "label": "{skill}: attack firing count + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "4201": {
+   "label": "{skill}: attack firing count {mode}",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "4202": {
+   "label": "{skill}: each attack triggers damage twice",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "4300": {
+   "label": "{skill}: after a successful block, the player restores {n}% max health",
+   "percent": true,
+   "format": "float"
+  },
+  "4301": {
+   "label": "{skill}: damage + {n}%, but loses 3% health per second; if below 50% health, taking damage kills it",
+   "percent": true,
+   "format": "int"
+  },
+  "4302": {
+   "label": "{skill}: when attacked, {n}% chance to trigger Soul Explosion and die together with the attacker, ineffective against Bosses",
+   "percent": true,
+   "format": "int"
+  },
+  "4303": {
+   "label": "{skill}: when applying a debuff on hit, extra stacks + {n}",
+   "percent": false,
+   "format": "float"
+  },
+  "4304": {
+   "label": "{skill}: attacks always crit, but cannot trigger debuffs",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "4305": {
+   "label": "{skill}: attacks ignore enemy damage reduction",
+   "percent": false,
+   "bool": true,
+   "format": "float"
+  },
+  "4306": {
+   "label": "{skill}: continuous damage skill range + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4307": {
+   "label": "{skill}: killing an enemy restores {n}% of player max health",
+   "percent": true,
+   "format": "1dp"
+  },
+  "4308": {
+   "label": "{skill}: when attacked, reflects damage equal to {n}% of player max health",
+   "percent": true,
+   "format": "int"
+  },
+  "4400": {
+   "label": "Each {skill} on the field: player damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4401": {
+   "label": "Each {skill} on the field: player {el} Penetration + {n}%",
+   "percent": true,
+   "el": true,
+   "format": "int"
+  },
+  "4402": {
+   "label": "Each {skill} on the field: player Attack speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4403": {
+   "label": "Each {skill} on the field: player Movement speed + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4404": {
+   "label": "Each {skill} on the field: player Maximum health points + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4405": {
+   "label": "Each {skill} on the field: player Maximum mana points + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4406": {
+   "label": "Each {skill} on the field: player Cooldown reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4407": {
+   "label": "Each {skill} on the field: player Critical hit chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4408": {
+   "label": "Each {skill} on the field: player Critical hit damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4409": {
+   "label": "Each {skill} on the field: player Block chance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4410": {
+   "label": "Each {skill} on the field: player Damage reduction + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4411": {
+   "label": "Each {skill} on the field: player Debuff- + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4412": {
+   "label": "Each {skill} on the field: player All penetration + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4413": {
+   "label": "Each {skill} on the field: player All resistance + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4414": {
+   "label": "Each {skill} on the field: player Treasure drop rate + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4415": {
+   "label": "Each {skill} on the field: player Trap Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4416": {
+   "label": "Each {skill} on the field: player Accessory Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  },
+  "4417": {
+   "label": "Each {skill} on the field: player Debuff Damage + {n}%",
+   "percent": true,
+   "format": "int"
+  }
+ },
+ "aocao": {
+  "0": "Maximum health points",
+  "1": "Fire Resistance",
+  "2": "Fire Penetration",
+  "3": "Fire Damage",
+  "4": "Treasure drop rate",
+  "5": "Lightning Resistance",
+  "6": "Lightning Penetration",
+  "7": "Lightning Damage",
+  "8": "Companion Maximum Life",
+  "9": "Poison Resistance",
+  "10": "Poison Penetration",
+  "11": "Companion Attack Speed",
+  "12": "Poison Damage",
+  "13": "Maximum mana points",
+  "14": "Frost Resistance",
+  "15": "Frost Penetration",
+  "16": "Frost Damage",
+  "17": "Companion Damage",
+  "18": "Shadow Resistance",
+  "19": "Shadow Penetration",
+  "20": "Movement speed",
+  "21": "Shadow Damage",
+  "22": "Attack speed",
+  "23": "Physical Resistance",
+  "24": "Physical Penetration",
+  "25": "Physical Damage"
+ }
+}
