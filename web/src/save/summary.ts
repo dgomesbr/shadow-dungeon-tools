@@ -1,0 +1,238 @@
+// Worker-side: projects a parsed OdinDocument into the flat, UI-friendly
+// SaveSummary, and applies edits addressed by node handles.
+// A handle is a dot-joined child-index path from the root node, e.g. "9.2.0.5".
+import { child, isContainer, type AnyNode, type OdinDocument } from '../odin/tree';
+import type { ItemSummary, Leaf, LeafKind, SaveSummary } from '../worker/protocol';
+
+const PROTECTED = new Set([
+  'GameVersion', 'BackupKind', 'SaveCreatedUtcTicks', 'SessionBaselineUtcTicks',
+  'SessionId', 'SaveTransactionId',
+]);
+
+export function resolveHandle(doc: OdinDocument, handle: string): AnyNode {
+  let cur: AnyNode = doc.root[0]!;
+  if (handle === '') return cur;
+  for (const part of handle.split('.')) {
+    if (!isContainer(cur)) throw new Error(`handle ${handle}: not a container at ${part}`);
+    const next = cur.children[Number(part)] as AnyNode | undefined;
+    if (!next) throw new Error(`handle ${handle}: missing child ${part}`);
+    cur = next;
+  }
+  return cur;
+}
+
+function leafKind(n: AnyNode): LeafKind | null {
+  switch (n.kind) {
+    case 'prim':
+      return n.prim === 'float' || n.prim === 'double' ? 'float'
+        : n.prim === 'long' || n.prim === 'ulong' ? 'long' : 'int';
+    case 'string': return 'string';
+    case 'bool': return 'bool';
+    default: return null;
+  }
+}
+
+function leafValue(n: AnyNode): number | string | boolean {
+  if (n.kind === 'prim') {
+    if (typeof n.value === 'bigint') {
+      return n.value >= BigInt(Number.MIN_SAFE_INTEGER) && n.value <= BigInt(Number.MAX_SAFE_INTEGER)
+        ? Number(n.value)
+        : n.value.toString();
+    }
+    return n.value;
+  }
+  if (n.kind === 'string') return n.value;
+  if (n.kind === 'bool') return n.value;
+  throw new Error('not a leaf');
+}
+
+/** Shallow scalar children of a container, with handles. */
+export function shallowLeaves(n: AnyNode, baseHandle: string, includeProtected = false): Leaf[] {
+  const out: Leaf[] = [];
+  if (!isContainer(n)) return out;
+  for (let i = 0; i < n.children.length; i++) {
+    const c = n.children[i] as AnyNode;
+    const kind = leafKind(c);
+    if (!kind || c.name === undefined) continue;
+    if (!includeProtected && PROTECTED.has(c.name)) continue;
+    out.push({
+      name: c.name,
+      handle: baseHandle === '' ? String(i) : `${baseHandle}.${i}`,
+      kind,
+      value: leafValue(c),
+    });
+  }
+  return out;
+}
+
+/** All scalar leaves in a subtree (recursive), path-named. Used by the item editor. */
+export function deepLeaves(n: AnyNode, baseHandle: string, baseName = '', out: Leaf[] = []): Leaf[] {
+  if (!isContainer(n)) return out;
+  for (let i = 0; i < n.children.length; i++) {
+    const c = n.children[i] as AnyNode;
+    const handle = baseHandle === '' ? String(i) : `${baseHandle}.${i}`;
+    const label = c.name !== undefined
+      ? (baseName ? `${baseName}.${c.name}` : c.name)
+      : `${baseName}[${i}]`;
+    const kind = leafKind(c);
+    if (kind) {
+      out.push({ name: label, handle, kind, value: leafValue(c) });
+    } else if (isContainer(c)) {
+      deepLeaves(c, handle, label, out);
+    }
+  }
+  return out;
+}
+
+export function applySet(doc: OdinDocument, handle: string, value: number | string | boolean): void {
+  const n = resolveHandle(doc, handle);
+  if (n.name !== undefined && PROTECTED.has(n.name)) throw new Error(`${n.name} is protected`);
+  switch (n.kind) {
+    case 'prim':
+      if (n.prim === 'long' || n.prim === 'ulong') n.value = BigInt(value as number | string);
+      else if (n.prim === 'float' || n.prim === 'double') n.value = Number(value);
+      else n.value = Math.trunc(Number(value));
+      return;
+    case 'string':
+      n.value = String(value);
+      return;
+    case 'bool':
+      n.value = Boolean(value);
+      return;
+    default:
+      throw new Error(`cannot set node kind ${n.kind}`);
+  }
+}
+
+// ---- item extraction --------------------------------------------------------
+
+function num(n: AnyNode | undefined, name: string): number {
+  const c = n ? child(n, name) : undefined;
+  if (c && c.kind === 'prim') return typeof c.value === 'bigint' ? Number(c.value) : c.value;
+  return 0;
+}
+
+const PAYLOAD_NAMES = ['Weapon', 'Baoshi', 'UseItem'] as const;
+
+function itemFromPayload(
+  payload: AnyNode, payloadHandle: string, kind: ItemSummary['kind'],
+  pos: { page: number; gridX: number; gridY: number; slot: number },
+): ItemSummary {
+  return {
+    handle: payloadHandle,
+    kind,
+    ...pos,
+    globalId: num(payload, 'GlobalID'),
+    quality: num(payload, 'Quality'),
+    charType: num(payload, 'CharType'),
+    plType: num(payload, 'PLtype'),
+    stack: num(payload, 'CstackSize'),
+    index: num(payload, 'Index'),
+    leaves: shallowLeaves(payload, payloadHandle),
+  };
+}
+
+function wrappersToItems(listNode: AnyNode, listHandle: string): ItemSummary[] {
+  // List<ContainerItemSaveData> → [array] → wrappers
+  const out: ItemSummary[] = [];
+  if (!isContainer(listNode)) return out;
+  for (let a = 0; a < listNode.children.length; a++) {
+    const arr = listNode.children[a] as AnyNode;
+    if (arr.kind !== 'array') continue;
+    const arrHandle = `${listHandle}.${a}`;
+    for (let w = 0; w < arr.children.length; w++) {
+      const wrap = arr.children[w] as AnyNode;
+      if (!isContainer(wrap)) continue;
+      const wrapHandle = `${arrHandle}.${w}`;
+      const pos = {
+        page: num(wrap, 'Page'),
+        gridX: num(wrap, 'GridX'),
+        gridY: num(wrap, 'GridY'),
+        slot: -1,
+      };
+      for (const pn of PAYLOAD_NAMES) {
+        for (let c = 0; c < wrap.children.length; c++) {
+          const cand = wrap.children[c] as AnyNode;
+          if (cand.name === pn && (cand.kind === 'ref' || cand.kind === 'struct')) {
+            out.push(itemFromPayload(cand, `${wrapHandle}.${c}`,
+              pn === 'Weapon' ? 'weapon' : pn === 'Baoshi' ? 'gem' : 'useitem', pos));
+          }
+        }
+      }
+    }
+  }
+  return out;
+}
+
+export function buildSummary(doc: OdinDocument, fileName: string): SaveSummary {
+  const root = doc.root[0]!;
+  if (!isContainer(root)) throw new Error('unexpected root node');
+
+  const idx = new Map<string, number>();
+  root.children.forEach((c, i) => { if (c.name) idx.set(c.name, i); });
+  const at = (name: string): { node: AnyNode; handle: string } | null => {
+    const i = idx.get(name);
+    return i === undefined ? null : { node: root.children[i] as AnyNode, handle: String(i) };
+  };
+
+  const gv = child(root, 'GameVersion');
+  const player = at('PlayerData');
+  const inv = at('InventoryData');
+  const global = at('EmbeddedGlobalData');
+
+  const equipment: ItemSummary[] = [];
+  let money: Leaf | null = null;
+  let pageCount = 0;
+  const inventory: ItemSummary[] = [];
+  const chest: ItemSummary[] = [];
+
+  if (inv && isContainer(inv.node)) {
+    pageCount = num(inv.node, 'PageCount');
+    for (let i = 0; i < inv.node.children.length; i++) {
+      const c = inv.node.children[i] as AnyNode;
+      const handle = `${inv.handle}.${i}`;
+      if (c.name === 'Money' && c.kind === 'prim') {
+        money = { name: 'Money', handle, kind: 'long', value: leafValue(c) as number };
+      } else if (c.name === 'Equipments' && isContainer(c)) {
+        for (let a = 0; a < c.children.length; a++) {
+          const arr = c.children[a] as AnyNode;
+          if (arr.kind !== 'array') continue;
+          for (let e = 0; e < arr.children.length; e++) {
+            const wp = arr.children[e] as AnyNode;
+            if (wp.kind !== 'ref' && wp.kind !== 'struct') continue;
+            const h = `${handle}.${a}.${e}`;
+            equipment.push(itemFromPayload(wp, h, 'weapon',
+              { page: -1, gridX: -1, gridY: -1, slot: num(wp, 'CharType') }));
+          }
+        }
+      } else if (c.name === 'InventoryItems') {
+        inventory.push(...wrappersToItems(c, handle));
+      }
+    }
+  }
+
+  if (global && isContainer(global.node)) {
+    for (let i = 0; i < global.node.children.length; i++) {
+      const c = global.node.children[i] as AnyNode;
+      if (c.name === 'GlobalChestData' && isContainer(c)) {
+        const gh = `${global.handle}.${i}`;
+        for (let j = 0; j < c.children.length; j++) {
+          const cc = c.children[j] as AnyNode;
+          if (isContainer(cc)) chest.push(...wrappersToItems(cc, `${gh}.${j}`));
+        }
+      }
+    }
+  }
+
+  return {
+    fileName,
+    gameVersion: gv?.kind === 'string' ? gv.value : '',
+    playTime: num(root, 'PlayTimeSeconds'),
+    player: player ? shallowLeaves(player.node, player.handle) : [],
+    money,
+    pageCount,
+    equipment,
+    inventory,
+    chest,
+  };
+}

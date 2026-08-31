@@ -3,7 +3,7 @@
 import { loadJSON, loadTable, Table } from './coltable';
 
 export const QUALITY_NAMES = ['Normal', 'Magic', 'Rare', 'Exquisite', 'Epic', 'Legendary', 'Mythical', 'Q7', 'Q8'] as const;
-export const SLOT_NAMES = ['Main Hand', 'Off Hand', 'Head', 'Body', 'Hands', 'Feet', 'Accessory', 'Accessory', 'Accessory', 'Accessory'] as const;
+export const SLOT_NAMES = ['Main Hand', 'Off Hand', 'Head', 'Body', 'Hands', 'Feet', 'Amulet', 'Orb', 'Ring', 'Jewelry'] as const;
 export const ELEMENT_NAMES = ['Fire', 'Frozen', 'Thunder', 'Poison', 'Physics', 'Shadow'] as const;
 
 export type Category = 'weapon' | 'armor' | 'accessory' | 'gem' | 'consumable' | 'set';

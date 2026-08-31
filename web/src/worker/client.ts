@@ -1,4 +1,4 @@
-import type { WorkerRequest, WorkerResponse, SaveSummary } from './protocol';
+import type { Leaf, SaveSummary, SetOp, WorkerRequest, WorkerResponse } from './protocol';
 
 // Promise-based RPC to the save worker. One worker instance, lazily created;
 // ArrayBuffers are transferred, never structured-cloned.
@@ -23,35 +23,43 @@ function getWorker(): Worker {
   return worker;
 }
 
-function call(req: WorkerRequest, transfer: Transferable[]): Promise<WorkerResponse> {
-  return new Promise((resolve, reject) => {
+async function call<T extends WorkerResponse & { ok: true }>(
+  req: WorkerRequest, transfer: Transferable[],
+): Promise<T> {
+  const res = await new Promise<WorkerResponse>((resolve, reject) => {
     pending.set(req.id, { resolve, reject });
     getWorker().postMessage(req, transfer);
   });
-}
-
-async function unwrap<T extends WorkerResponse>(p: Promise<WorkerResponse>): Promise<T> {
-  const res = await p;
   if (!res.ok) throw new Error(res.error);
   return res as T;
 }
 
-export async function parseSave(buffer: ArrayBuffer, fileName: string): Promise<SaveSummary> {
-  const res = await unwrap<Extract<WorkerResponse, { op: 'parse' }>>(
-    call({ id: nextId++, op: 'parse', buffer, fileName }, [buffer]),
-  );
-  return res.summary;
+export interface ParseResult {
+  summary: SaveSummary;
+  roundTrip: boolean;
+  firstDiff: number;
 }
 
-export async function encodeSave(patch: unknown, fileName: string): Promise<ArrayBuffer> {
-  const res = await unwrap<Extract<WorkerResponse, { op: 'encode' }>>(
-    call({ id: nextId++, op: 'encode', patch, fileName }, []),
-  );
-  return res.buffer;
+export async function parseSave(buffer: ArrayBuffer, fileName: string): Promise<ParseResult> {
+  const r = await call<Extract<WorkerResponse, { op: 'parse' }>>(
+    { id: nextId++, op: 'parse', buffer, fileName }, [buffer]);
+  return { summary: r.summary, roundTrip: r.roundTrip, firstDiff: r.firstDiff };
 }
 
-export async function verifyRoundtrip(buffer: ArrayBuffer): Promise<{ identical: boolean; firstDiff: number }> {
-  return unwrap<Extract<WorkerResponse, { op: 'roundtrip' }>>(
-    call({ id: nextId++, op: 'roundtrip', buffer }, [buffer]),
-  );
+export async function applySets(fileName: string, sets: SetOp[]): Promise<SaveSummary> {
+  const r = await call<Extract<WorkerResponse, { op: 'set' }>>(
+    { id: nextId++, op: 'set', fileName, sets }, []);
+  return r.summary;
+}
+
+export async function itemDetail(fileName: string, handle: string): Promise<Leaf[]> {
+  const r = await call<Extract<WorkerResponse, { op: 'detail' }>>(
+    { id: nextId++, op: 'detail', fileName, handle }, []);
+  return r.leaves;
+}
+
+export async function encodeSave(fileName: string): Promise<ArrayBuffer> {
+  const r = await call<Extract<WorkerResponse, { op: 'encode' }>>(
+    { id: nextId++, op: 'encode', fileName }, []);
+  return r.buffer;
 }
