@@ -42,7 +42,7 @@ export class VList<T> {
     this.items = items;
     this.spacer.style.height = `${items.length * this.opts.rowHeight}px`;
     this.first = -1; // force full repaint
-    this.schedule();
+    this.paint(); // synchronous: rAF may never fire in hidden tabs
   }
 
   private schedule = (): void => {
