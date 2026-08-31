@@ -373,17 +373,23 @@ export async function editorView(): Promise<View> {
                 const worn = s.equipment.some((e) => e.globalId === gid);
                 lines.push(`<p class="tt-line set-piece ${worn ? 'worn' : 'unworn'}">${esc(pieceName)}</p>`);
               }
+              // Tier requirement is positional: bonuses[i] activates at i+2 pieces
+              // (Set_DT.Lit[count-2], see docs/save-data-model.md).
               const bonuses = (set['bonuses'] as Record<string, unknown>[] | undefined) ?? [];
-              for (const b of bonuses) {
-                if (!b['MTP']) continue;
-                const on = equippedCount >= Number(b['MTP']);
-                lines.push(`<p class="tt-line set-bonus ${on ? 'worn' : 'unworn'}">(${b['MTP']}) ${esc(b['SkN'] || `#${b['Index']}`)} +${esc(b['NB'])}</p>`);
-              }
+              bonuses.forEach((b, i) => {
+                if (!b['SkN'] && !b['Index']) return;
+                const need = i + 2;
+                const on = equippedCount >= need;
+                lines.push(`<p class="tt-line set-bonus ${on ? 'worn' : 'unworn'}">(${need}) ${esc(b['SkN'] || `#${b['Index']}`)} +${esc(b['NB'])}</p>`);
+              });
             }
           }
         } else {
           const g = it.kind === 'gem' ? gemsById.get(it.globalId) : useById.get(it.globalId);
-          if (g?.['Number']) lines.push(`<p class="tt-line">Effect value +${esc(g['Number'])}</p>`);
+          const skname = leaves.get('SKname');
+          if (skname) lines.push(`<p class="tt-line skill">Rune of ${esc(skname)}</p>`);
+          if (g?.['Bstype'] && g['Number']) lines.push(`<p class="tt-line mod">+${esc(g['Number'])} ${esc(g['Bstype'])}</p>`);
+          else if (g?.['Number']) lines.push(`<p class="tt-line">Effect value +${esc(g['Number'])}</p>`);
           if (it.stack) lines.push(`<p class="tt-line dim">Stack: ${it.stack}${g?.['MstackSize'] ? ` / ${g['MstackSize']}` : ''}</p>`);
         }
 

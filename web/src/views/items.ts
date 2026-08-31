@@ -236,9 +236,12 @@ function setBlock(cat: Catalog, setId: number): string {
       return `<li class="q${r[qC]}">${esc(r[nameC])}</li>`;
     }).join('')}</ul>`;
   }
+  // Tier requirement is positional: bonuses[i] activates at i+2 pieces.
   const bonuses = (s['bonuses'] as Record<string, unknown>[] | undefined) ?? [];
-  html += bonuses.filter((b) => b['MTP']).map((b) =>
-    `<div class="stat"><span>${esc(b['MTP'])} pieces</span><b>${esc(b['SkN'] || `#${b['Index']}`)} +${esc(b['NB'])}</b></div>`,
+  html += bonuses.map((b, i) =>
+    b['SkN'] || b['Index']
+      ? `<div class="stat"><span>${i + 2} pieces</span><b>${esc(b['SkN'] || `#${b['Index']}`)} +${esc(b['NB'])}</b></div>`
+      : '',
   ).join('');
   return html;
 }
