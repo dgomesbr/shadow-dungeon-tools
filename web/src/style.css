@@ -1,0 +1,8 @@
+:root {
+  color-scheme: dark;
+  --bg: #0d0d10;
+  --fg: #e8e6e3;
+  font-family: system-ui, sans-serif;
+}
+body { margin: 0; background: var(--bg); color: var(--fg); }
+.boot { display: grid; place-items: center; min-height: 100vh; }

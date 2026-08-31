@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.local
+.DS_Store
+
+# local test fixtures (personal saves) — never commit
+fixtures/
+*.sav
+
+# .NET build output
+bin/
+obj/
+
+# raw game dumps stay local; only derived JSON in web/public/data is committed
+data/raw/
