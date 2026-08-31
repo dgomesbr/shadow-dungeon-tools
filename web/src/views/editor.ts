@@ -1,7 +1,7 @@
 import type { View } from '../router';
 import { applySets, encodeSave, itemDetail, parseSave, type ParseResult } from '../worker/client';
 import type { ItemSummary, Leaf, SaveSummary, SetOp } from '../worker/protocol';
-import { loadCatalog, SLOT_NAMES } from '../data/catalog';
+import { loadCatalog, ELEMENT_NAMES, QUALITY_NAMES, SLOT_NAMES } from '../data/catalog';
 import { createCharacterRenderer, esc, loadAffixNames } from '../ui/character';
 import { buildFromSummary, encodeShare } from '../share/codec';
 
@@ -337,6 +337,165 @@ export async function editorView(): Promise<View> {
         renderItemPanel();
       }
 
+      // ---- click-to-edit inside the tooltip --------------------------------
+      // Elemental leaves already carry handles; nested affix/socket handles are
+      // resolved once per item from the worker's deep-leaf listing (dotted
+      // names like "Main[0][2].number").
+      function buildHandleMap(it: ItemSummary, deep: Leaf[]): Map<string, string> {
+        const m = new Map<string, string>();
+        const q = it.leaves.find((l) => l.name === 'Quality');
+        if (q) m.set('q', q.handle);
+        ELEMENT_NAMES.forEach((n, e) => {
+          const l = it.leaves.find((x) => x.name === n);
+          if (l) m.set(`el:${e}`, l.handle);
+        });
+        for (const l of deep) {
+          const mt = /^(Main|DOT|WPSK)\[\d+\]\[(\d+)\]\.(IndexName|Index|EL|number|Number)$/.exec(l.name);
+          if (!mt) continue;
+          const group = mt[1] === 'Main' ? 'main' : mt[1] === 'DOT' ? 'dot' : 'wpsk';
+          const part = mt[3] === 'number' || mt[3] === 'Number' ? 'n'
+            : mt[3] === 'EL' ? 'el'
+            : mt[3] === 'IndexName' ? 'skill' : 'idx';
+          m.set(`${group}:${mt[2]}:${part}`, l.handle);
+        }
+        return m;
+      }
+
+      async function applyTooltipEdit(f: OpenFile, sets: SetOp[]): Promise<void> {
+        f.result.summary = await applySets(f.name, sets);
+        const sel = st.selected?.handle;
+        const s = f.result.summary;
+        st.selected = sel
+          ? [...s.equipment, ...s.inventory, ...s.chest].find((i) => i.handle === sel) ?? null
+          : null;
+        render();
+      }
+
+      function bindTooltipEditing(panel: HTMLElement, it: ItemSummary, f: OpenFile): void {
+        let hmapP: Promise<Map<string, string>> | null = null;
+        const hmap = (): Promise<Map<string, string>> =>
+          (hmapP ??= itemDetail(f.name, it.handle).then((deep) => buildHandleMap(it, deep)));
+        const leafVal = (name: string): number =>
+          Number(it.leaves.find((l) => l.name === name)?.value) || 0;
+
+        panel.querySelectorAll<HTMLElement>('.tt .tok').forEach((tokEl) => {
+          tokEl.addEventListener('click', async (ev) => {
+            ev.stopPropagation();
+            if (tokEl.querySelector('select, input')) return; // already editing
+            const map = await hmap();
+            const [group, a, b] = tokEl.dataset['tok']!.split(':');
+            const commit = (sets: SetOp[]): void => {
+              if (sets.length) void applyTooltipEdit(f, sets);
+            };
+            const restore = (): void => renderItemPanel();
+            const mount = (ctrl: HTMLElement): void => {
+              tokEl.textContent = '';
+              tokEl.appendChild(ctrl);
+              (ctrl as HTMLInputElement).focus();
+              ctrl.addEventListener('keydown', (e) => { if ((e as KeyboardEvent).key === 'Escape') restore(); });
+              ctrl.addEventListener('blur', () => setTimeout(restore, 150));
+            };
+            const select = (options: [string, string][], current: string, onPick: (v: string) => void): void => {
+              const s = document.createElement('select');
+              s.innerHTML = options
+                .map(([v, l]) => `<option value="${esc(v)}" ${v === current ? 'selected' : ''}>${esc(l)}</option>`)
+                .join('');
+              s.addEventListener('change', () => onPick(s.value));
+              mount(s);
+            };
+            const numberInput = (current: number, onPick: (v: number) => void): void => {
+              const i = document.createElement('input');
+              i.type = 'number';
+              i.step = 'any';
+              i.value = String(current);
+              i.addEventListener('change', () => onPick(Number(i.value)));
+              mount(i);
+            };
+
+            if (group === 'q') {
+              // Quality stays ≤ 6 — the game's own maximum (higher crashes tooltips).
+              select(QUALITY_NAMES.slice(0, 7).map((n, i) => [String(i), n] as [string, string]), String(it.quality),
+                (v) => { const h = map.get('q'); commit(h ? [{ handle: h, value: Number(v) }] : []); });
+            } else if (group === 'elv') {
+              const el = Number(a);
+              numberInput(leafVal(ELEMENT_NAMES[el]!), (v) => {
+                const h = map.get(`el:${el}`);
+                commit(h ? [{ handle: h, value: v }] : []);
+              });
+            } else if (group === 'elname') {
+              const el = Number(a);
+              select(ELEMENT_NAMES.map((n, i) => [String(i), n] as [string, string]), String(el), (v) => {
+                const t = Number(v);
+                if (t === el) { restore(); return; }
+                const hOld = map.get(`el:${el}`);
+                const hNew = map.get(`el:${t}`);
+                if (!hOld || !hNew) { restore(); return; }
+                // Swap the two elemental leaves: moves this line to the new
+                // element, preserving any roll the target element already had.
+                commit([
+                  { handle: hOld, value: leafVal(ELEMENT_NAMES[t]!) },
+                  { handle: hNew, value: leafVal(ELEMENT_NAMES[el]!) },
+                ]);
+              });
+            } else if (group === 'main' || group === 'dot') {
+              const i = Number(a);
+              const rec = (group === 'main' ? it.main : it.dot)?.[i];
+              if (!rec) return;
+              if (b === 'n') {
+                numberInput(Number(rec['number']) || 0, (v) => {
+                  const h = map.get(`${group}:${i}:n`);
+                  commit(h ? [{ handle: h, value: v }] : []);
+                });
+              } else if (b === 'el') {
+                select(ELEMENT_NAMES.map((n, ix) => [String(ix), n] as [string, string]), String(Number(rec['EL']) || 0), (v) => {
+                  const h = map.get(`${group}:${i}:el`);
+                  commit(h ? [{ handle: h, value: Number(v) }] : []);
+                });
+              } else {
+                const pool = group === 'main' ? affixNames.main : affixNames.dot;
+                const opts = Object.entries(pool)
+                  .filter(([, s]) => !s.unmapped)
+                  .sort((x, y) => Number(x[0]) - Number(y[0]))
+                  .map(([idx, s]) =>
+                    [idx, `#${idx} ${s.label.replace('{n}', 'X').replace('{el}', 'EL').slice(0, 52)}`] as [string, string]);
+                select(opts, String(Number(rec['Index'])), (v) => {
+                  const h = map.get(`${group}:${i}:idx`);
+                  commit(h ? [{ handle: h, value: Number(v) }] : []);
+                });
+              }
+            } else if (group === 'wpsk') {
+              const i = Number(a);
+              const rec = it.wpsk?.[i];
+              if (!rec) return;
+              if (b === 'n') {
+                numberInput(Number(rec['Number']) || 0, (v) => {
+                  const h = map.get(`wpsk:${i}:n`);
+                  commit(h ? [{ handle: h, value: v }] : []);
+                });
+              } else {
+                let dl = panel.querySelector<HTMLDataListElement>('#skill-names');
+                if (!dl) {
+                  dl = document.createElement('datalist');
+                  dl.id = 'skill-names';
+                  const nameCol = cat.skills.col('IndexName');
+                  dl.innerHTML = cat.skills.rows.map((r) => `<option value="${esc(r[nameCol])}">`).join('');
+                  panel.appendChild(dl);
+                }
+                const inp = document.createElement('input');
+                inp.type = 'text';
+                inp.setAttribute('list', 'skill-names');
+                inp.value = String(rec['IndexName'] ?? '');
+                inp.addEventListener('change', () => {
+                  const h = map.get(`wpsk:${i}:skill`);
+                  if (h && inp.value) commit([{ handle: h, value: inp.value }]);
+                });
+                mount(inp);
+              }
+            }
+          });
+        });
+      }
+
       function renderItemPanel(): void {
         const panel = host.querySelector<HTMLElement>('#item-panel');
         if (!panel) return;
@@ -348,13 +507,16 @@ export async function editorView(): Promise<View> {
         }
         const info = itemInfo(it);
         const editable = f.result.roundTrip;
+        const tooltipEditable = editable && it.kind === 'weapon';
         panel.innerHTML = `
-          ${R.saveTooltip(it, info, f.result.summary.equipment)}
+          ${R.saveTooltip(it, info, f.result.summary.equipment, tooltipEditable)}
+          ${tooltipEditable ? '<p class="dim tt-hint">Click any value, element, affix, skill or the quality above to change it.</p>' : ''}
           <section class="dcard"><h4>Edit fields</h4>
             <div id="item-fields">${it.leaves.map((l) => fieldRow(l, editable)).join('')}</div>
             <button id="deep" class="ghost">Show all fields (affixes, sockets, procs…)</button>
             <div id="item-deep"></div>
           </section>`;
+        if (tooltipEditable) bindTooltipEditing(panel, it, f);
         bindInputs(panel.querySelector<HTMLElement>('#item-fields')!);
         panel.querySelector('#deep')!.addEventListener('click', async () => {
           const leaves = await itemDetail(f.name, it.handle);

@@ -107,31 +107,47 @@ export function createCharacterRenderer(cat: Catalog, affixNames: AffixNames) {
     return fmt(n);
   }
 
-  function affixLine(pool: 'main' | 'dot', rec: Rec, skillName?: string): string {
+  /** One affix/DOT line. When `tok` is set (e.g. "main:2"), the value, the
+   *  element and the whole line become clickable edit tokens for the editor. */
+  function affixLine(pool: 'main' | 'dot', rec: Rec, skillName?: string, tok?: string): string {
     const index = Number(rec['Index']);
     const el = Number(rec['EL']) || 0;
     const n = Number(rec['number']) || 0;
+    const wrapAttr = (inner: string): string => tok
+      ? `<span class="tok tok-attr" data-tok="${tok}:idx" title="Click to change this affix">${inner}</span>`
+      : inner;
+    const elTok = (text: string): string => tok
+      ? `<span class="tok" data-tok="${tok}:el" title="Click to change the element">${text}</span>`
+      : text;
+    const nTok = (text: string): string => tok
+      ? `<span class="tok" data-tok="${tok}:n" title="Click to change the value">${text}</span>`
+      : text;
     // 3xxx/4xxx indexes are skill/companion affixes fed by the SK pool.
     const spec = affixNames[pool][String(index)]
       ?? (index >= 3000 ? affixNames.sk[String(index)] : undefined);
     if (spec && !spec.unmapped) {
-      let label = spec.elVariants?.[el] ?? spec.label;
-      label = label
-        .replace('{el}', ELEMENT_NAMES[el] ?? '')
-        .replace(/\{skill\}|\{target\}|\{link\}|\{mode\}/g, skillName ?? 'skill');
-      if (spec.bool) return esc(label);
+      // Escape the template FIRST, then substitute token HTML.
+      let label = esc(spec.elVariants?.[el] ?? spec.label);
       // Percent labels already carry their % sign after {n}.
       const v = fmtBy(n, spec.format) + (spec.percent && !label.includes('{n}%') ? '%' : '');
-      return esc(label.replace('{n}', v));
+      label = label
+        .replace('{el}', elTok(esc(ELEMENT_NAMES[el] ?? '')))
+        .replace(/\{skill\}|\{target\}|\{link\}|\{mode\}/g, esc(skillName ?? 'skill'));
+      if (spec.bool) return wrapAttr(label);
+      return wrapAttr(label.replace('{n}', nTok(v)));
     }
-    return `+${fmt(n)} <span class="dim">(#${index}${el ? ' ' + (ELEMENT_NAMES[el] ?? '') : ''})</span>`;
+    return wrapAttr(`+${nTok(fmt(n))} <span class="dim">(#${index}${el ? ' ' + elTok(esc(ELEMENT_NAMES[el] ?? '')) : ''})</span>`);
   }
 
   /** In-game tooltip rendered from the item's rolled values. `equipment` is
-   *  the full equipped list, used for set-piece/bonus activation dimming. */
-  function saveTooltip(it: ItemSummary, info: ItemVisual, equipment: ItemSummary[]): string {
+   *  the full equipped list, used for set-piece/bonus activation dimming.
+   *  With `editable`, values/elements/affixes/skills become click tokens the
+   *  editor binds to (data-tok attributes). */
+  function saveTooltip(it: ItemSummary, info: ItemVisual, equipment: ItemSummary[], editable = false): string {
     const leaves = new Map(it.leaves.map((l) => [l.name, l.value]));
     const lines: string[] = [];
+    const tok = (key: string, text: string, title = 'Click to edit'): string =>
+      editable ? `<span class="tok" data-tok="${key}" title="${title}">${text}</span>` : text;
 
     if (it.kind === 'weapon') {
       // Resolve {skill} for 3xxx/4xxx affixes from the template's SK pool.
@@ -148,16 +164,22 @@ export function createCharacterRenderer(cat: Catalog, affixNames: AffixNames) {
       const suffix = elementSuffix(it.charType);
       ELEMENT_NAMES.forEach((elName, el) => {
         const v = Number(leaves.get(elName)) || 0;
-        if (v) lines.push(`<p class="tt-line el-${el}">+${fmt(v)}% ${elName} ${suffix}</p>`);
+        if (v) {
+          lines.push(`<p class="tt-line el-${el}">+${tok(`elv:${el}`, `${fmt(v)}%`, 'Click to change the value')} ${tok(`elname:${el}`, elName, 'Click to change the element')} ${suffix}</p>`);
+        }
       });
-      for (const m of it.main ?? []) {
+      (it.main ?? []).forEach((m, i) => {
         const idx = Number(m['Index']);
-        lines.push(`<p class="tt-line mod">${affixLine('main', m, idx >= 3000 ? skNameFor(idx) : undefined)}</p>`);
-      }
-      for (const d of it.dot ?? []) lines.push(`<p class="tt-line el-${Number(d['EL']) || 0}">${affixLine('dot', d)}</p>`);
-      for (const sk of it.wpsk ?? []) {
-        if (sk['IndexName']) lines.push(`<p class="tt-line skill">+${fmt(Number(sk['Number']))} to ${esc(sk['IndexName'])}</p>`);
-      }
+        lines.push(`<p class="tt-line mod">${affixLine('main', m, idx >= 3000 ? skNameFor(idx) : undefined, editable ? `main:${i}` : undefined)}</p>`);
+      });
+      (it.dot ?? []).forEach((d, i) => {
+        lines.push(`<p class="tt-line el-${Number(d['EL']) || 0}">${affixLine('dot', d, undefined, editable ? `dot:${i}` : undefined)}</p>`);
+      });
+      (it.wpsk ?? []).forEach((sk, i) => {
+        if (sk['IndexName']) {
+          lines.push(`<p class="tt-line skill">+${tok(`wpsk:${i}:n`, fmt(Number(sk['Number'])), 'Click to change the points')} to ${tok(`wpsk:${i}:skill`, esc(sk['IndexName']), 'Click to change the skill')}</p>`);
+        }
+      });
       const sockets = it.aocao ?? [];
       if (sockets.length) {
         lines.push(`<p class="tt-line sockets">${sockets.map((a) => {
@@ -206,7 +228,7 @@ export function createCharacterRenderer(cat: Catalog, affixNames: AffixNames) {
       <div class="tt" style="--quality: var(--q${it.quality})">
         <i class="tt-rivet tl"></i><i class="tt-rivet tr"></i><i class="tt-rivet bl"></i><i class="tt-rivet br"></i>
         <h3 class="tt-name">${esc(info.name)}</h3>
-        <p class="tt-kind">${QUALITY_NAMES[it.quality] ?? `Q${it.quality}`} ${it.kind === 'weapon' ? SLOT_NAMES[it.charType] ?? '' : it.kind}</p>
+        <p class="tt-kind">${tok('q', QUALITY_NAMES[it.quality] ?? `Q${it.quality}`, 'Click to change the quality')} ${it.kind === 'weapon' ? SLOT_NAMES[it.charType] ?? '' : it.kind}</p>
         ${info.icon ? `<img class="tt-icon" src="${BASE + info.icon}" alt="" decoding="async">` : ''}
         <div class="tt-rule"></div>
         ${lines.join('')}
