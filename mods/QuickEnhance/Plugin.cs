@@ -27,7 +27,7 @@ public sealed class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "custom.quickenhance";
     public const string PluginName = "Quick Enhance";
-    public const string PluginVersion = "1.0.0";
+    public const string PluginVersion = "1.0.2";
 
     internal static ManualLogSource Log;
     internal static ConfigEntry<bool> Enabled;
@@ -260,6 +260,117 @@ public sealed class Plugin : BaseUnityPlugin
         {
             _featureReady = false;
             Log.LogWarning(reason);
+        }
+    }
+
+    // ---- Mod menu integration -------------------------------------------------------------
+    // Exposed so the shared "Mods" side menu can show whether the patch actually installed.
+    internal static bool FeatureReady
+    {
+        get { return _featureReady; }
+    }
+}
+
+// Shared contract consumed by the "Mods" side menu via reflection.
+// Type name, namespace-level visibility and method signature must stay EXACTLY as-is.
+//
+// Shift+click is a click modifier inside the enhance panel, not a global keyboard shortcut,
+// so it is unaffected by the hotkey removal and stays exactly as it was.
+public static class ModMenuProvider
+{
+    // Each row: new object[] { string id, Func<string> label, Func<bool> state, Action onClick,
+    //                          Func<string> description }
+    // The 5th element (hover tooltip text) is optional in the contract and, like label() and
+    // state(), may be evaluated every frame the menu is open - so it must never throw either.
+    public static object[][] GetMenuItems()
+    {
+        try
+        {
+            return new object[][]
+            {
+                new object[]
+                {
+                    "enhance.enabled",
+                    (Func<string>)EnabledLabel,
+                    (Func<bool>)EnabledState,
+                    (Action)EnabledClick,
+                    (Func<string>)EnabledDescription
+                }
+            };
+        }
+        catch
+        {
+            return new object[0][];
+        }
+    }
+
+    // Tracks the three label variants: unavailable, RequireShift=false (every click bursts), and
+    // the default Shift-click modifier - a tooltip promising Shift would be wrong in the middle case.
+    private static string EnabledDescription()
+    {
+        try
+        {
+            if (!Plugin.FeatureReady)
+            {
+                return "Repeated enhancing is unavailable: the forge's enhance methods could not be found, so each click enhances once as usual.";
+            }
+            if (Plugin.RequireShift != null && !Plugin.RequireShift.Value)
+            {
+                return "At the forge, every enhance click repeats until the item is maxed or you run out of budget or gold, instead of one level per click.";
+            }
+            return "At the forge, holding Shift while clicking enhance repeats until the item is maxed or you run out of budget or gold, not one level per click.";
+        }
+        catch
+        {
+            return "At the forge, Shift-clicking enhance repeats the enhancement instead of applying a single level.";
+        }
+    }
+
+    private static string EnabledLabel()
+    {
+        try
+        {
+            if (!Plugin.FeatureReady)
+            {
+                return "Max Enhance n/a";
+            }
+            // RequireShift=false makes EVERY enhance click burst, so don't claim "Shift=" then.
+            if (Plugin.RequireShift != null && !Plugin.RequireShift.Value)
+            {
+                return "Auto Max Enhance";
+            }
+            return "Shift=Max Enhance";
+        }
+        catch
+        {
+            return "Shift=Max Enhance";
+        }
+    }
+
+    private static bool EnabledState()
+    {
+        try
+        {
+            return Plugin.FeatureReady && Plugin.Enabled != null && Plugin.Enabled.Value;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static void EnabledClick()
+    {
+        try
+        {
+            if (Plugin.Enabled != null)
+            {
+                Plugin.Enabled.Value = !Plugin.Enabled.Value;
+            }
+        }
+        catch
+        {
+            // never propagate into the menu's draw loop
         }
     }
 }

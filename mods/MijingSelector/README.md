@@ -1,8 +1,9 @@
 # Mijing Floor Selector (MijingSelector)
 
-BepInEx 5 plugin for Shadow Dungeon. GUID `custom.mijingselector`, version 1.0.0.
+BepInEx 5 plugin for Shadow Dungeon. GUID `custom.mijingselector`, version 1.0.1.
 
-Press **F10** (configurable) to toggle an IMGUI window (window id 49313) that lets you jump
+Use the **Corrupted Realm** row in the floating *Mods* menu (docked to the right screen border)
+to toggle an IMGUI window (window id 49313) that lets you jump
 straight to any unlocked Mijing (秘境) floor without paging through the vanilla panel one
 step at a time, and optionally raise your unlocked-floor cap.
 
@@ -40,13 +41,12 @@ go higher you must first raise the cap explicitly via the confirmed button.
 
 | Section | Key | Default | Meaning |
 |---|---|---|---|
-| General | ToggleWindowHotkey | F10 | Toggles the selector window. |
 | General | AllowRaisingCap | true | Show the confirmed "Set unlocked cap to target" button. |
 
 ## Hotkeys
 
-- **F10** - toggle window (configurable). Reserved elsewhere: F6 Character Utilities,
-  F8 SummonCounter, F9 DpsMeter, F11 VfxReducer.
+None. The window is toggled from the *Mods* menu row **Corrupted Realm**; the former F10
+binding was removed. F6 (a third-party plugin) is the only hotkey still in use.
 
 ## Game methods used (no Harmony patches; all public API, verified against decompiled source)
 

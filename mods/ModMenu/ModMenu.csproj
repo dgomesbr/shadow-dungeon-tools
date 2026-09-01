@@ -1,29 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>ReadableNumbers</AssemblyName>
-    <RootNamespace>ReadableNumbers</RootNamespace>
+    <AssemblyName>ModMenu</AssemblyName>
+    <RootNamespace>ModMenu</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <Version>1.2.1</Version>
+    <Version>1.0.1</Version>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BepInEx">
       <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\BepInEx\core\BepInEx.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\BepInEx\core\0Harmony.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="FinkFramework.Runtime">
-      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\FinkFramework.Runtime.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">
@@ -34,16 +22,12 @@
       <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.UI.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

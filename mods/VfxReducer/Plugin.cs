@@ -16,7 +16,7 @@ public sealed class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "custom.vfxreducer";
     public const string PluginName = "VFX Reducer";
-    public const string PluginVersion = "1.0.0";
+    public const string PluginVersion = "1.0.2";
 
     internal enum VfxMode
     {
@@ -25,14 +25,9 @@ public sealed class Plugin : BaseUnityPlugin
         Minimal = 2
     }
 
-    // IMGUI window id (reserved range 49300-49399 for our plugins): 49312.
-    private const int ToastWindowId = 49312;
-    private const float ToastSeconds = 1.5f;
-
     internal static ManualLogSource Log;
     internal static ConfigEntry<int> ParticleBudgetPercent;
     internal static ConfigEntry<bool> MinimalAlsoDisablesTrails;
-    internal static ConfigEntry<KeyboardShortcut> CycleModeHotkey;
 
     // Current mode. Session state only; every game launch starts at Off.
     internal static VfxMode Mode = VfxMode.Off;
@@ -54,15 +49,12 @@ public sealed class Plugin : BaseUnityPlugin
     // never enemy effects or telegraphs, even though LeanPool.Spawn is shared.
     private static int _gunScopeDepth;
 
-    private static bool _patched;
-    private static bool _runtimeDisabled;
+    // internal, not private: ModMenuProvider reads both to decide whether the row is actionable.
+    internal static bool _patched;
+    internal static bool _runtimeDisabled;
     private static bool _spawnErrorLogged;
 
     private Harmony _harmony;
-    private GUI.WindowFunction _drawToast;
-    private Rect _toastRect = new Rect(0f, 80f, 320f, 52f);
-    private float _toastUntil = -1f;
-    private string _toastText = "";
 
     private void Awake()
     {
@@ -77,13 +69,9 @@ public sealed class Plugin : BaseUnityPlugin
         MinimalAlsoDisablesTrails = Config.Bind("Clamping", "MinimalAlsoDisablesTrails", true,
             "When true, Minimal mode also disables TrailRenderer components on player skill/companion objects. " +
             "Off and Reduced modes always restore trails to their original state.");
-        CycleModeHotkey = Config.Bind("Hotkeys", "CycleModeHotkey", new KeyboardShortcut(KeyCode.F11),
-            "Cycles the VFX clamp mode: Off -> Reduced -> Minimal -> Off. Shows a short on-screen toast with the new mode.");
-
         ParticleBudgetPercent.SettingChanged += OnClampSettingChanged;
         MinimalAlsoDisablesTrails.SettingChanged += OnClampSettingChanged;
 
-        _drawToast = DrawToast;
         _harmony = new Harmony(PluginGuid);
 
         try
@@ -98,7 +86,7 @@ public sealed class Plugin : BaseUnityPlugin
 
         if (_patched)
         {
-            Log.LogInfo("VFX Reducer loaded. Press " + CycleModeHotkey.Value + " to cycle Off / Reduced / Minimal.");
+            Log.LogInfo("VFX Reducer loaded. Use the 'VFX:' row in the Mods menu (right screen edge) to cycle Off / Reduced / Minimal.");
         }
     }
 
@@ -172,64 +160,60 @@ public sealed class Plugin : BaseUnityPlugin
         LiveMarkers.Clear();
     }
 
-    private void Update()
-    {
-        // Not KeyboardShortcut.IsDown(): that rejects the press while any other key is held
-        // (e.g. WASD movement), which makes a combat hotkey unusable in practice.
-        if (HotkeyPressed(CycleModeHotkey.Value))
-        {
-            if (!_patched || _runtimeDisabled)
-            {
-                ShowToast("VFX Reducer is disabled (see BepInEx log)");
-                return;
-            }
-            CycleMode();
-        }
-    }
+    // No Update(): this plugin owns no keyboard shortcut any more. The mode is cycled from the
+    // shared "Mods" menu row (see ModMenuProvider at the bottom of this file), so there is nothing
+    // left to poll and no HotkeyPressed helper to keep.
 
-    // Main key pressed this frame + all configured modifiers held; unlike
-    // KeyboardShortcut.IsDown() it does NOT fail when unrelated keys are held.
-    private static bool HotkeyPressed(KeyboardShortcut shortcut)
-    {
-        if (shortcut.MainKey == KeyCode.None || !Input.GetKeyDown(shortcut.MainKey))
-        {
-            return false;
-        }
-        foreach (KeyCode modifier in shortcut.Modifiers)
-        {
-            if (!Input.GetKey(modifier))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void CycleMode()
+    // internal static rather than a private instance method: the Mods-menu row invokes it directly
+    // and it no longer touches any per-instance state (the toast window is gone).
+    internal static void CycleMode()
     {
         try
         {
+            if (!_patched || _runtimeDisabled)
+            {
+                // Was a toast; now log-only. The menu row still reflects Mode, which stays Off.
+                // Log?. because the menu can in principle click before our Awake has run.
+                Log?.LogWarning("VFX Reducer is disabled (see the earlier error in this log) - mode unchanged.");
+                return;
+            }
             Mode = Mode == VfxMode.Minimal ? VfxMode.Off : Mode + 1;
             ReapplyToLiveMarkers();
-            switch (Mode)
-            {
-                case VfxMode.Off:
-                    ShowToast("VFX: Off (full effects)");
-                    break;
-                case VfxMode.Reduced:
-                    ShowToast("VFX: Reduced (" + ParticleBudgetPercent.Value + "% particle budget)");
-                    break;
-                default:
-                    ShowToast(MinimalAlsoDisablesTrails.Value
-                        ? "VFX: Minimal (10% emission, trails off)"
-                        : "VFX: Minimal (10% emission)");
-                    break;
-            }
-            Log.LogInfo("VFX Reducer mode: " + _toastText);
+            Log?.LogInfo("VFX Reducer mode: " + ModeDetail());
         }
         catch (Exception ex)
         {
-            Log.LogError(ex);
+            Log?.LogError(ex);
+        }
+    }
+
+    // Short row label for the Mods menu (kept inside the menu's ~22 character budget).
+    internal static string ModeLabel()
+    {
+        switch (Mode)
+        {
+            case VfxMode.Off:
+                return "VFX: Off";
+            case VfxMode.Reduced:
+                return "VFX: Reduced";
+            default:
+                return "VFX: Minimal";
+        }
+    }
+
+    // Long form, log only - this is the text the removed on-screen toast used to show.
+    private static string ModeDetail()
+    {
+        switch (Mode)
+        {
+            case VfxMode.Off:
+                return "Off (full effects)";
+            case VfxMode.Reduced:
+                return "Reduced (" + ParticleBudgetPercent.Value + "% particle budget)";
+            default:
+                return MinimalAlsoDisablesTrails.Value
+                    ? "Minimal (10% emission, trails off)"
+                    : "Minimal (10% emission)";
         }
     }
 
@@ -263,30 +247,9 @@ public sealed class Plugin : BaseUnityPlugin
         }
     }
 
-    private void ShowToast(string text)
-    {
-        _toastText = text;
-        _toastUntil = Time.unscaledTime + ToastSeconds;
-        _toastRect.x = (Screen.width - _toastRect.width) * 0.5f;
-        _toastRect.y = 80f;
-    }
-
-    private void OnGUI()
-    {
-        if (Time.unscaledTime >= _toastUntil)
-        {
-            return;
-        }
-        _toastRect = GUI.Window(ToastWindowId, _toastRect, _drawToast, PluginName);
-        _toastRect.x = Mathf.Clamp(_toastRect.x, 0f, Mathf.Max(0f, Screen.width - _toastRect.width));
-        _toastRect.y = Mathf.Clamp(_toastRect.y, 0f, Mathf.Max(0f, Screen.height - _toastRect.height));
-    }
-
-    private void DrawToast(int id)
-    {
-        // Pure toast: no controls, not draggable.
-        GUI.Label(new Rect(10f, 24f, _toastRect.width - 20f, 24f), _toastText);
-    }
+    // No ShowToast / OnGUI / DrawToast and no reserved window id 49312: the Mods-menu row shows the
+    // current mode continuously, so the transient toast window was redundant. Removed outright
+    // rather than left keyless, so this plugin now draws no IMGUI of its own at all.
 
     // ---- Harmony callbacks (all static, hot path: allocation-free after warmup) ----
 
@@ -449,5 +412,115 @@ public sealed class VfxClampMarker : MonoBehaviour
     private void OnDisable()
     {
         Plugin.LiveMarkers.Remove(this);
+    }
+}
+
+// Rows contributed to the shared "Mods" menu (docked to the right screen border). The menu finds
+// this type by reflection - the name, namespace, accessibility and GetMenuItems() signature are a
+// fixed contract, so do not rename any of them.
+//
+// Contract: every delegate must be total. label() and state() are called every frame while the menu
+// is visible, so a throw here would be a per-frame exception storm; every body is wrapped and
+// returns a safe fallback. Nothing in here touches the clamping hot path.
+public static class ModMenuProvider
+{
+    // Each row: new object[] { string id, Func<string> label, Func<bool> state, Action onClick,
+    //                          Func<string> description }
+    // The 5th element is the hover tooltip text; it is optional in the contract, and like label()
+    // and state() it may be called every frame while the menu is open, so it must never throw.
+    public static object[][] GetMenuItems()
+    {
+        try
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    "vfxreducer.mode",
+                    (Func<string>)ModeLabel,
+                    (Func<bool>)ModeActive,
+                    (Action)CycleClick,
+                    (Func<string>)ModeDescription
+                }
+            };
+        }
+        catch
+        {
+            return new object[0][];
+        }
+    }
+
+    private const string ModeDescriptionFallback =
+        "Cycles particle reduction (Off / Reduced / Minimal) for your own skill and companion effects. Enemy effects and telegraphs are never touched.";
+
+    // Explains the row AND what the mode it currently shows actually does, since the row label
+    // alone ("VFX: Reduced") does not say how much is being cut.
+    private static string ModeDescription()
+    {
+        try
+        {
+            if (!Plugin._patched || Plugin._runtimeDisabled)
+            {
+                return "VFX reduction is unavailable: the game's spawn methods could not be patched, or it switched itself off after an error. Effects stay at full quality.";
+            }
+            switch (Plugin.Mode)
+            {
+                case Plugin.VfxMode.Off:
+                    return "Cycles reduction of your own skill and companion particle effects to recover FPS. Off means full vanilla visuals; enemy effects are never touched.";
+                case Plugin.VfxMode.Reduced:
+                    return "Cuts your own skill and companion particles to recover FPS on crowded floors. Reduced keeps "
+                        + Plugin.ParticleBudgetPercent.Value + "% of the particle budget.";
+                default:
+                    return Plugin.MinimalAlsoDisablesTrails.Value
+                        ? "Cuts your own skill and companion particles hardest. Minimal uses "
+                            + Plugin.ParticleBudgetPercent.Value + "% of the budget, 10% emission, and turns trails off."
+                        : "Cuts your own skill and companion particles hardest. Minimal uses "
+                            + Plugin.ParticleBudgetPercent.Value + "% of the particle budget and drops emission to 10%.";
+            }
+        }
+        catch
+        {
+            return ModeDescriptionFallback;
+        }
+    }
+
+    private static string ModeLabel()
+    {
+        try
+        {
+            return Plugin.ModeLabel();
+        }
+        catch
+        {
+            return "VFX: Off";
+        }
+    }
+
+    // Lit whenever we are actually clamping something, i.e. any mode other than Off. Off is the
+    // vanilla-visuals state, so an unlit row means "the game looks untouched".
+    private static bool ModeActive()
+    {
+        try
+        {
+            return Plugin.Mode != Plugin.VfxMode.Off;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    // Plugin.CycleMode already wraps its own body and self-guards when the patches failed to
+    // install; this outer catch only exists to honour the never-throw contract.
+    private static void CycleClick()
+    {
+        try
+        {
+            Plugin.CycleMode();
+        }
+        catch (Exception ex)
+        {
+            Plugin.Log?.LogError("Mods menu: VFX mode row failed: " + ex);
+        }
     }
 }

@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>ReadableNumbers</AssemblyName>
-    <RootNamespace>ReadableNumbers</RootNamespace>
+    <AssemblyName>PerfPatches</AssemblyName>
+    <RootNamespace>PerfPatches</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <Version>1.2.1</Version>
+    <Version>1.0.2</Version>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <DebugType>none</DebugType>
   </PropertyGroup>
@@ -26,12 +26,32 @@
       <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\FinkFramework.Runtime.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="LeanPool">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\LeanPool.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="AstarPathfindingProject">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\AstarPathfindingProject.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
@@ -44,6 +64,18 @@
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

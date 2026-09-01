@@ -1,9 +1,9 @@
 import type { View } from '../router';
 
 const REPO = 'https://github.com/dgomesbr/shadow-dungeon-tools';
-const SUITE_RELEASE = `${REPO}/releases/download/mods-v1.1.0`;
-const SUITE_ZIP = `${SUITE_RELEASE}/ShadowDungeon-QoL-Plugins-1.1.0.zip`;
-const SUITE_SHA256 = '8DAA075E3725177A3F16EF56E63E906729FE3748195879B80569D28AAE5463CB';
+const SUITE_RELEASE = `${REPO}/releases/download/mods-v1.2.0`;
+const SUITE_ZIP = `${SUITE_RELEASE}/ShadowDungeon-QoL-Plugins-1.2.0.zip`;
+const SUITE_SHA256 = '55FD1FF683A5ED254B0E8A8593F869E64BD4D9A430320CA768A5DCE066D7858A';
 const F6_RELEASE = `${REPO}/releases/tag/mods-v1.0.0`;
 const F6_ZIP = `${REPO}/releases/download/mods-v1.0.0/ShadowDungeon-F6-Mods-1.0.0.zip`;
 const BEPINEX = 'https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5';
@@ -15,16 +15,17 @@ export async function modsView(): Promise<View> {
         <div class="mods">
           <section class="hero">
             <h1>QoL <span>plugin suite</span></h1>
-            <p class="tagline">Seven open-source BepInEx plugins, one DLL each — install only
-            what you want. An in-combat DPS meter, readable damage numbers
-            (<i>1.2&nbsp;Trillion</i> instead of digit soup), affix roll ranges and ground-loot
-            tooltips, an FPS-saving VFX reducer, Shift-click enhance-to-max, a Corrupted Realm
-            floor selector and one-click re-summoning.</p>
+            <p class="tagline">Nine open-source BepInEx plugins driven from one translucent
+            <b>Mods</b> panel docked to the screen edge, with no hotkeys to remember.
+            19 measured performance patches, an in-combat DPS meter, readable numbers
+            (<i>1.2&nbsp;Trillion</i> instead of digit soup), affix roll ranges, ground-loot
+            tooltips, a VFX reducer, Shift-click enhance-to-max, a Corrupted Realm floor selector
+            and one-click summon or dismiss.</p>
             <p>
-              <a class="big-btn" href="${SUITE_ZIP}">⬇ Download ShadowDungeon-QoL-Plugins-1.1.0.zip</a>
+              <a class="big-btn" href="${SUITE_ZIP}">⬇ Download ShadowDungeon-QoL-Plugins-1.2.0.zip</a>
             </p>
-            <p class="dim">63 KB · SHA-256 <code class="sha">${SUITE_SHA256}</code><br>
-            <a href="${REPO}/releases/tag/mods-v1.1.0" target="_blank" rel="noopener">release page</a> ·
+            <p class="dim">135 KB · SHA-256 <code class="sha">${SUITE_SHA256}</code><br>
+            <a href="${REPO}/releases/tag/mods-v1.2.0" target="_blank" rel="noopener">release page</a> ·
             <a href="${REPO}/tree/main/mods" target="_blank" rel="noopener">source &amp; docs</a> ·
             only install DLLs you trust — back up your saves first.</p>
           </section>
@@ -44,9 +45,10 @@ export async function modsView(): Promise<View> {
                 <li><b>Install the plugins.</b> Extract the zip above into the same game root
                   (it only adds DLLs into <code>BepInEx\\plugins\\</code>). Don't want one?
                   Delete its DLL.</li>
-                <li><b>Play.</b> <kbd>F9</kbd> DPS meter · <kbd>F10</kbd> floor selector ·
-                  <kbd>F11</kbd> VFX reducer · <kbd>Shift</kbd>+click at the forge ·
-                  <kbd>F6</kbd> Summon All.</li>
+                <li><b>Play.</b> Everything lives in the <b>Mods</b> panel on the right edge of
+                  the screen: click a row to toggle it, hover for a description. There are no
+                  hotkeys to learn. (<kbd>F6</kbd> still opens Character Utilities, a separate
+                  mod, and <kbd>Shift</kbd>+click is a click modifier at the forge.)</li>
               </ol>
               <h4>Verify &amp; troubleshoot</h4>
               <ul class="steps">
@@ -62,24 +64,32 @@ export async function modsView(): Promise<View> {
             </section>
 
             <section class="dcard">
-              <h4>What's in the suite <span class="dim">v1.1.0 —
+              <h4>What's in the suite <span class="dim">v1.2.0 —
                 <a href="${REPO}/tree/main/mods" target="_blank" rel="noopener">source in this repo</a></span></h4>
               <ul class="steps">
-                <li><b>Combat DPS Meter</b> (<kbd>F9</kbd>) — real dungeon DPS with per-source
-                  rows (you, each summon, DoTs), share %, peak; the vanilla meter only works on
-                  the training dummy.</li>
-                <li><b>Readable Numbers</b> — damage, DPS and gold at the nearest named scale:
-                  <i>510 Billion</i>, <i>1.2 Trillion</i>, <i>3.4 Quadrillion</i>…</li>
-                <li><b>Advanced Tooltips</b> — affix lines show <i>rolled X (min~max)</i>, and
-                  hovering ground loot shows its full tooltip without picking it up.</li>
-                <li><b>VFX Reducer</b> (<kbd>F11</kbd>) — Off / Reduced / Minimal particle
-                  budgets on your skills and summons for dense-floor FPS.</li>
-                <li><b>Quick Enhance</b> — hold <kbd>Shift</kbd> and click enhance: runs to
+                <li><b>Mod Menu</b> &mdash; the panel itself: translucent, docked to the right
+                  edge, one row per feature with an icon, live state and a hover description.</li>
+                <li><b>Performance Patches</b> &mdash; 19 independently toggleable patches for the
+                  hot paths behind the stutter (raycast caching, projectile targeting, AI tick
+                  staggering, damage-number merging), plus a frame-time overlay and a 60-second
+                  benchmark that writes a CSV.
+                  <a href="${REPO}/blob/main/docs/blog/where-shadow-dungeon-spends-its-frame-time.md" target="_blank" rel="noopener">Read the write-up</a>.</li>
+                <li><b>Combat DPS Meter</b> &mdash; real dungeon DPS with per-source rows (you,
+                  each summon, DoTs), share %, peak; the vanilla meter only works on the training
+                  dummy.</li>
+                <li><b>Readable Numbers</b> &mdash; damage, DPS, gold and the HP/mana readouts at
+                  the nearest named scale: <i>510 Billion</i>, <i>1.2 Trillion</i>,
+                  <i>3.4 Quadrillion</i>&hellip;</li>
+                <li><b>Advanced Tooltips</b> &mdash; affix lines show <i>rolled X (min~max)</i>,
+                  and hovering ground loot shows its full tooltip without picking it up.</li>
+                <li><b>VFX Reducer</b> &mdash; Off / Reduced / Minimal particle budgets on your
+                  skills and summons for dense-floor FPS.</li>
+                <li><b>Quick Enhance</b> &mdash; hold <kbd>Shift</kbd> and click enhance: runs to
                   +max / out of gold in one burst.</li>
-                <li><b>Mijing Floor Selector</b> (<kbd>F10</kbd>) — jump to any unlocked
-                  Corrupted Realm floor; optional confirm-gated cap raise.</li>
-                <li><b>Summon All</b> — the original: re-summon your whole army in one click
-                  from the F6 window, with an optional fair mode and hotkey.</li>
+                <li><b>Corrupted Realm Selector</b> &mdash; jump to any unlocked floor; optional
+                  confirm-gated cap raise.</li>
+                <li><b>Summon All</b> &mdash; summon or dismiss your whole army in one click, and
+                  the summon counter row sits above your skill bar.</li>
               </ul>
               <p class="mod-title">Character Utilities <span class="dim">v1.1.0 — by Max ·
                 <a href="${F6_RELEASE}" target="_blank" rel="noopener">separate download</a></span></p>

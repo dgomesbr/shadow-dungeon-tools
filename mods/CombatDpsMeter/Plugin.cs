@@ -22,7 +22,7 @@ public sealed class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "custom.dpsmeter";
     public const string PluginName = "Combat DPS Meter";
-    public const string PluginVersion = "1.0.0";
+    public const string PluginVersion = "1.0.2";
 
     // IMGUI window id (reserved range 49300-49399 for custom plugins): 49309.
     private const int WindowId = 49309;
@@ -37,7 +37,11 @@ public sealed class Plugin : BaseUnityPlugin
 
     internal static ManualLogSource Log;
 
-    private static ConfigEntry<KeyboardShortcut> ToggleHotkey;
+    // The live plugin instance. ModMenuProvider is static (the menu finds it by reflection) but
+    // the window state lives on the MonoBehaviour, so it needs this handle. Null before Awake and
+    // after OnDestroy - every menu delegate must null-check it.
+    internal static Plugin Instance;
+
     private static ConfigEntry<float> WindowSeconds;
 
     // ---- ring buffer (allocation-free after warmup) -------------------------------------
@@ -70,9 +74,10 @@ public sealed class Plugin : BaseUnityPlugin
     private float[] _dpsScratch = new float[16];
     private float _peakDps;
     private float _nextRefreshAt;
-    private string _hotkeyHint = "";
 
     private bool _visible;
+    // See OnGUI: the window must not make its first appearance on an input event.
+    private bool _layoutArmed;
     private Rect _rect = new Rect(40f, 80f, 300f, 0f);
     private GUIStyle _bigStyle;
 
@@ -83,16 +88,12 @@ public sealed class Plugin : BaseUnityPlugin
     private void Awake()
     {
         Log = base.Logger;
+        Instance = this;
 
-        ToggleHotkey = base.Config.Bind("Window", "ToggleHotkey",
-            new KeyboardShortcut(KeyCode.F9),
-            "Shows/hides the DPS meter window.");
         WindowSeconds = base.Config.Bind("Meter", "RollingWindowSeconds", 10f,
             new ConfigDescription(
                 "Length of the rolling DPS window in seconds. Damage older than this is dropped. Clamped to 1-120.",
                 new AcceptableValueRange<float>(1f, 120f)));
-
-        _hotkeyHint = "Toggle: " + ToggleHotkey.Value;
 
         _harmony = new Harmony(PluginGuid);
         try
@@ -106,7 +107,7 @@ public sealed class Plugin : BaseUnityPlugin
         }
 
         Log.LogInfo(_hooksOk
-            ? "Combat DPS Meter ready. Press " + ToggleHotkey.Value + " in a level."
+            ? "Combat DPS Meter ready. Open it from the 'Mods' menu on the right screen edge."
             : "Combat DPS Meter is DISABLED (hooks unavailable).");
     }
 
@@ -167,7 +168,25 @@ public sealed class Plugin : BaseUnityPlugin
 
     private void OnDestroy()
     {
+        if (ReferenceEquals(Instance, this))
+        {
+            Instance = null;
+        }
         _harmony?.UnpatchSelf();
+    }
+
+    // ---- Mods-menu surface (replaces the removed F9 hotkey) ------------------------------
+
+    /// <summary>Window visibility, for the shared "Mods" menu row state.</summary>
+    internal bool WindowVisible
+    {
+        get { return _visible; }
+    }
+
+    /// <summary>Shows/hides the meter window. Same effect the F9 hotkey had.</summary>
+    internal void ToggleWindow()
+    {
+        _visible = !_visible;
     }
 
     // ---- Harmony callbacks (per-hit hot path: allocation-free after warmup) -------------
@@ -336,12 +355,8 @@ public sealed class Plugin : BaseUnityPlugin
     {
         try
         {
-            // Not KeyboardShortcut.IsDown(): that rejects the press while any other key is held
-            // (e.g. WASD movement), which makes a combat overlay untogglable in practice.
-            if (HotkeyPressed(ToggleHotkey.Value))
-            {
-                _visible = !_visible;
-            }
+            // No key handling here: visibility is driven only by the floating "Mods" menu row
+            // (see ModMenuProvider -> ToggleWindow).
 
             // Auto-reset on level change: ACTbar is a scene-scoped SingletonMonoScope that is
             // recreated per level, so a reference change (including to/from null) means a new run.
@@ -461,24 +476,6 @@ public sealed class Plugin : BaseUnityPlugin
         }
     }
 
-    // Main key pressed this frame + all configured modifiers held; unlike
-    // KeyboardShortcut.IsDown() it does NOT fail when unrelated keys are held.
-    private static bool HotkeyPressed(KeyboardShortcut shortcut)
-    {
-        if (shortcut.MainKey == KeyCode.None || !Input.GetKeyDown(shortcut.MainKey))
-        {
-            return false;
-        }
-        foreach (KeyCode modifier in shortcut.Modifiers)
-        {
-            if (!Input.GetKey(modifier))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private void ResetMeter()
     {
         _head = 0;
@@ -499,7 +496,22 @@ public sealed class Plugin : BaseUnityPlugin
     {
         if (!_visible)
         {
+            _layoutArmed = false;
             return;
+        }
+        // The window is now opened from the Mods menu, i.e. from inside ANOTHER plugin's OnGUI
+        // pass, so _visible can flip in the middle of an input event and this window's very first
+        // draw would land on that event. GUILayout requires a window's first event to be
+        // EventType.Layout - otherwise it reads a layout cache that was never built and throws
+        // "Getting control 0's position in a group with only 0 controls". Wait for the Layout
+        // event (same frame, next OnGUI call), then draw normally from then on.
+        if (!_layoutArmed)
+        {
+            if (Event.current.type != EventType.Layout)
+            {
+                return;
+            }
+            _layoutArmed = true;
         }
         try
         {
@@ -556,7 +568,13 @@ public sealed class Plugin : BaseUnityPlugin
         {
             ResetMeter();
         }
-        GUILayout.Label(_hotkeyHint);
+        GUILayout.FlexibleSpace();
+        // No hotkey hint any more: the window is opened and closed from the "Mods" menu, and a
+        // Close button here keeps that reachable without hunting for the menu row again.
+        if (GUILayout.Button("Close", GUILayout.Width(70f)))
+        {
+            _visible = false;
+        }
         GUILayout.EndHorizontal();
         GUILayout.EndVertical();
 

@@ -1,4 +1,4 @@
-# Combat DPS Meter (custom.dpsmeter) v1.0.0
+# Combat DPS Meter (custom.dpsmeter) v1.0.1
 
 A real in-level DPS meter for Shadow Dungeon (BepInEx 5 plugin).
 
@@ -19,17 +19,14 @@ measures independently via Harmony hooks on the enemy damage-intake methods.
 - Manual **Reset** button, and automatic reset on level change (detected via the scene-scoped
   `SingletonMonoScope<ACTbar>` instance reference changing).
 
-## Hotkeys
+## Opening the window
 
-| Key | Action | Config |
-|-----|--------|--------|
-| F9 (default) | Show/hide the meter window | `Window / ToggleHotkey` |
-
-(F6, F8, F10, F11 are used by other local plugins and are left untouched.)
+No hotkey. The meter is shown/hidden from the **DPS Meter** row in the floating *Mods* menu
+docked to the right screen border; the window also has its own **Close** button. (The former
+F9 binding was removed — F6 belongs to a third-party plugin and is the only key left in use.)
 
 ## Config entries (BepInEx/config/custom.dpsmeter.cfg)
 
-- `Window / ToggleHotkey` (KeyboardShortcut, default `F9`) - shows/hides the DPS window.
 - `Meter / RollingWindowSeconds` (float, default `10`, range 1-120) - length of the rolling
   DPS window; damage older than this is dropped.
 

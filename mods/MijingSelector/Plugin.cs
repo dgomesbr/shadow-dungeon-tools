@@ -16,7 +16,7 @@ public sealed class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "custom.mijingselector";
     public const string PluginName = "Mijing Floor Selector";
-    public const string PluginVersion = "1.0.0";
+    public const string PluginVersion = "1.0.2";
 
     // Window id from the reserved 49300-49399 range: 49313 chosen for MijingSelector.
     private const int WindowId = 49313;
@@ -31,11 +31,17 @@ public sealed class Plugin : BaseUnityPlugin
     private const string ReasonNoIds = "Mijing level list not loaded yet (enter the home town once).";
 
     internal static ManualLogSource Log;
-    internal static ConfigEntry<KeyboardShortcut> Hotkey;
     internal static ConfigEntry<bool> AllowRaisingCap;
+
+    // The live plugin instance. ModMenuProvider must be static (the menu finds it by reflection)
+    // but the window state lives on the MonoBehaviour. Null before Awake / after OnDestroy, so
+    // every menu delegate null-checks it.
+    internal static Plugin Instance;
 
     private bool _show;
     private bool _broken; // set once if the Mijing API fails at runtime; window disabled from then on
+    // See OnGUI: the window must not make its first appearance on an input event.
+    private bool _layoutArmed;
     private Rect _rect = new Rect(40f, 40f, 340f, 100f);
 
     private int _targetFloor = 1;
@@ -53,63 +59,72 @@ public sealed class Plugin : BaseUnityPlugin
     private void Awake()
     {
         Log = base.Logger;
-        Hotkey = base.Config.Bind("General", "ToggleWindowHotkey", new KeyboardShortcut(KeyCode.F10),
-            "Toggles the Mijing Floor Selector window. The window only appears where the Mijing system exists (home town / Mijing floors).");
+        Instance = this;
         AllowRaisingCap = base.Config.Bind("General", "AllowRaisingCap", true,
             "Show the 'Set unlocked cap to target' button. It raises your highest unlocked Mijing floor for the CURRENT difficulty by calling the game's own MijingManager.SetUnlockedFloorByCurrentDifficultyMax - this writes save progression (it can only raise the cap, never lower it).");
-        Log.LogInfo("Mijing Floor Selector loaded. Press " + Hotkey.Value.ToString() + " to toggle the window.");
+        Log.LogInfo("Mijing Floor Selector loaded. Open it from the 'Mods' menu on the right screen "
+            + "edge; the window only appears where the Mijing system exists (home town / Mijing floors).");
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        // Not KeyboardShortcut.IsDown(): that rejects the press while any other key is held.
-        if (HotkeyPressed(Hotkey.Value))
+        if (ReferenceEquals(Instance, this))
         {
-            if (_broken)
-            {
-                // Let the hotkey recover from a one-frame hiccup instead of losing the
-                // tool for the whole session.
-                _broken = false;
-                Log.LogWarning("Mijing Floor Selector re-enabled after a previous error.");
-            }
-            _show = !_show;
-            if (_show)
-            {
-                _status = "";
-                _confirmCapRaise = false;
-                SyncTargetToCurrentFloor();
-            }
+            Instance = null;
         }
     }
 
-    // Main key pressed this frame + all configured modifiers held; unlike
-    // KeyboardShortcut.IsDown() it does NOT fail when unrelated keys are held.
-    private static bool HotkeyPressed(KeyboardShortcut shortcut)
+    // ---- Mods-menu surface (replaces the removed F10 hotkey) ------------------------------
+
+    /// <summary>Window visibility, for the "Mods" menu row state.</summary>
+    internal bool WindowVisible
     {
-        if (shortcut.MainKey == KeyCode.None || !Input.GetKeyDown(shortcut.MainKey))
+        get { return _show; }
+    }
+
+    /// <summary>
+    /// Shows/hides the window - byte-for-byte the behavior the F10 handler had: a toggle also
+    /// clears the one-shot _broken latch (so a single bad frame does not cost the tool for the
+    /// rest of the session), and showing resets the status line, un-ticks the cap-raise confirm
+    /// box and re-syncs the target floor to the floor you are standing on.
+    /// </summary>
+    internal void ToggleWindow()
+    {
+        if (_broken)
         {
-            return false;
+            _broken = false;
+            Log.LogWarning("Mijing Floor Selector re-enabled after a previous error.");
         }
-        foreach (KeyCode modifier in shortcut.Modifiers)
+        _show = !_show;
+        if (_show)
         {
-            if (!Input.GetKey(modifier))
-            {
-                return false;
-            }
+            _status = "";
+            _confirmCapRaise = false;
+            SyncTargetToCurrentFloor();
         }
-        return true;
     }
 
     private void OnGUI()
     {
-        if (!_show || _broken)
+        // The Mijing manager is scene-scoped: it only exists in the home town and inside levels.
+        if (!_show || _broken || !SingletonMonoScope<MijingManager>.HasInstance)
         {
+            _layoutArmed = false;
             return;
         }
-        // The Mijing manager is scene-scoped: it only exists in the home town and inside levels.
-        if (!SingletonMonoScope<MijingManager>.HasInstance)
+        // The window is now opened from the Mods menu, i.e. from inside ANOTHER plugin's OnGUI
+        // pass, so _show can flip in the middle of an input event and this window's very first
+        // draw would land on that event. GUILayout requires a window's first event to be
+        // EventType.Layout - otherwise it reads a layout cache that was never built and throws
+        // "Getting control 0's position in a group with only 0 controls". Wait for the Layout
+        // event (same frame, next OnGUI call), then draw normally from then on.
+        if (!_layoutArmed)
         {
-            return;
+            if (Event.current.type != EventType.Layout)
+            {
+                return;
+            }
+            _layoutArmed = true;
         }
         _rect = GUILayout.Window(WindowId, _rect, DrawWindow, "Mijing Floor Selector");
         _rect.x = Mathf.Clamp(_rect.x, 0f, Mathf.Max(0f, Screen.width - _rect.width));

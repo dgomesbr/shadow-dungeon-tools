@@ -5,13 +5,14 @@ BepInEx 5 plugin for Shadow Dungeon. Combat FPS rescue: clamps particle effects 
 Enemy effects and telegraphs are never touched.
 
 - GUID: `custom.vfxreducer`
-- Version: 1.0.0
+- Version: 1.0.1
 - Assembly: `VfxReducer.dll` (build with `dotnet build -c Release`, copy the DLL to `BepInEx\plugins\`)
 
 ## What it does
 
-Press the hotkey (default **F11**) to cycle three modes; a 1.5 s on-screen toast
-(IMGUI window id **49312**) shows the new mode:
+Click the **`VFX: ...`** row in the shared **Mods** menu (docked to the right screen
+border) to cycle three modes. The row itself shows the current mode and lights up
+whenever clamping is active, so there is no hotkey and no on-screen toast:
 
 | Mode | Effect on player skill/companion particle systems |
 |---|---|
@@ -31,11 +32,15 @@ captured the first time each pooled clone is seen.
 |---|---|---|
 | `[Clamping] ParticleBudgetPercent` | 40 (range 10-100) | Percent of original `maxParticles` + emission rate kept in Reduced mode (Minimal uses it for `maxParticles` only). Live-reapplies on change. |
 | `[Clamping] MinimalAlsoDisablesTrails` | true | Minimal mode also disables `TrailRenderer` components (restored in Off/Reduced). |
-| `[Hotkeys] CycleModeHotkey` | F11 | Cycles Off -> Reduced -> Minimal -> Off. |
+
+The `[Hotkeys] CycleModeHotkey` entry was removed in 1.0.1. An existing config file
+may still contain the orphaned line; BepInEx ignores it and rewrites the file
+without it on the next launch.
 
 ## Hotkeys
 
-- **F11** (configurable): cycle VFX mode, shows toast.
+None. This plugin owns no keyboard shortcut. Its single control is the
+`vfxreducer.mode` row in the Mods menu (`ModMenuProvider.GetMenuItems`).
 
 ## Exact game methods hooked (Harmony)
 

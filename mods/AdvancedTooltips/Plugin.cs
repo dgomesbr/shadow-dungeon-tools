@@ -19,7 +19,7 @@ public sealed class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "custom.advancedtooltips";
     public const string PluginName = "Advanced Tooltips";
-    public const string PluginVersion = "1.0.0";
+    public const string PluginVersion = "1.0.2";
 
     internal static ManualLogSource Log;
     internal static ConfigEntry<bool> ShowAffixRanges;
@@ -666,5 +666,168 @@ public sealed class Plugin : BaseUnityPlugin
         _miLayoutSingleTip.Invoke(gui, _layoutArgs);
 
         gui.WeaponCavA.alpha = 1f;
+    }
+
+    // ---- Mod menu integration -------------------------------------------------------------
+    // Exposed so the shared "Mods" side menu can read/flip these features without a hotkey.
+    internal static bool AffixFeatureLive
+    {
+        get { return _affixPatched && !_affixBroken; }
+    }
+
+    internal static bool HoverFeatureLive
+    {
+        get { return _hoverPatched && !_hoverBroken; }
+    }
+}
+
+// Shared contract consumed by the "Mods" side menu via reflection.
+// Type name, namespace-level visibility and method signature must stay EXACTLY as-is.
+public static class ModMenuProvider
+{
+    // Each row: new object[] { string id, Func<string> label, Func<bool> state, Action onClick,
+    //                          Func<string> description }
+    // The 5th element (hover tooltip text) is optional in the contract and, like label() and
+    // state(), may be evaluated every frame the menu is open - so it must never throw either.
+    public static object[][] GetMenuItems()
+    {
+        try
+        {
+            return new object[][]
+            {
+                new object[]
+                {
+                    "tooltips.rollranges",
+                    (Func<string>)RollRangesLabel,
+                    (Func<bool>)RollRangesState,
+                    (Action)RollRangesClick,
+                    (Func<string>)RollRangesDescription
+                },
+                new object[]
+                {
+                    "tooltips.groundloot",
+                    (Func<string>)GroundLootLabel,
+                    (Func<bool>)GroundLootState,
+                    (Action)GroundLootClick,
+                    (Func<string>)GroundLootDescription
+                }
+            };
+        }
+        catch
+        {
+            return new object[0][];
+        }
+    }
+
+    // Mirrors the "n/a" label variants: when the patches never installed (or a runtime error
+    // retired the feature) the tooltip has to say so, otherwise a dead row looks merely "off".
+    private static string RollRangesDescription()
+    {
+        try
+        {
+            if (!Plugin.AffixFeatureLive)
+            {
+                return "Roll ranges are unavailable: the game's tooltip or item-generation methods could not be found, so tooltips stay vanilla.";
+            }
+            return "Adds each rollable affix's possible minimum and maximum to item tooltips so you can judge a drop at a glance. Applies to the next tooltip you open.";
+        }
+        catch
+        {
+            return "Adds the possible minimum and maximum to each rollable affix line of an item tooltip.";
+        }
+    }
+
+    private static string GroundLootDescription()
+    {
+        try
+        {
+            if (!Plugin.HoverFeatureLive)
+            {
+                return "Ground-loot tooltips are unavailable: the game's hover method was not found, or the feature switched itself off after an error.";
+            }
+            return "Hovering an item lying on the ground shows its full tooltip without picking it up; the tooltip hides again when the cursor leaves.";
+        }
+        catch
+        {
+            return "Hovering an item on the ground shows its full tooltip without picking it up.";
+        }
+    }
+
+    private static string RollRangesLabel()
+    {
+        try
+        {
+            return Plugin.AffixFeatureLive ? "Roll Ranges" : "Roll Ranges n/a";
+        }
+        catch
+        {
+            return "Roll Ranges";
+        }
+    }
+
+    private static bool RollRangesState()
+    {
+        try
+        {
+            return Plugin.AffixFeatureLive && Plugin.ShowAffixRanges != null && Plugin.ShowAffixRanges.Value;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static void RollRangesClick()
+    {
+        try
+        {
+            if (Plugin.ShowAffixRanges != null)
+            {
+                Plugin.ShowAffixRanges.Value = !Plugin.ShowAffixRanges.Value;
+            }
+        }
+        catch
+        {
+            // never propagate into the menu's draw loop
+        }
+    }
+
+    private static string GroundLootLabel()
+    {
+        try
+        {
+            return Plugin.HoverFeatureLive ? "Loot Hover Tips" : "Loot Tips n/a";
+        }
+        catch
+        {
+            return "Loot Hover Tips";
+        }
+    }
+
+    private static bool GroundLootState()
+    {
+        try
+        {
+            return Plugin.HoverFeatureLive && Plugin.GroundLootTooltips != null && Plugin.GroundLootTooltips.Value;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static void GroundLootClick()
+    {
+        try
+        {
+            if (Plugin.GroundLootTooltips != null)
+            {
+                Plugin.GroundLootTooltips.Value = !Plugin.GroundLootTooltips.Value;
+            }
+        }
+        catch
+        {
+            // never propagate into the menu's draw loop
+        }
     }
 }

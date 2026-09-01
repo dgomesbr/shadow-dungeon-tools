@@ -1,6 +1,18 @@
 [
   {
     "date": "2026-09-01",
+    "title": "Mods panel, 19 performance patches, readable HP/mana",
+    "items": [
+      "New Mods panel: a translucent menu docked to the right edge of the screen with one row per feature, showing its icon, live state and a description when you hover it. Every keyboard shortcut the plugins used is gone - click a row instead. (F6 still belongs to Character Utilities.)",
+      "New Performance Patches plugin: 19 independently toggleable patches aimed at the stutter, not the average framerate - caching the line-of-sight raycasts the game fires every frame, replacing sorted projectile targeting with a nearest-target scan, spreading enemy AI decisions across frames instead of bunching them, merging damage numbers through a spatial hash, and coalescing health-bar writes.",
+      "Frame-time overlay and a 60-second benchmark that writes a CSV with median, p95, p99 and 1% low, so you can measure a patch instead of guessing. Turn vsync off first or the cap hides the difference.",
+      "The HP and mana readouts no longer show scientific notation: 1.035056E+11 now reads 103.5 Billion, and the numbers stop flickering between the two.",
+      "Summon All can now dismiss your whole army in one click, and the summon counter row sits above your skill bar instead of the top of the screen.",
+      "Write-up on where the game actually spends its frame time, with the measurements and the patches that came out of it, is in docs/blog in the repo."
+    ]
+  },
+  {
+    "date": "2026-09-01",
     "title": "QoL plugin suite v1.1.0 - seven plugins, one download",
     "items": [
       "New plugin pack on the Mods page: Combat DPS Meter (F9, real dungeon DPS split by you / each summon / DoTs), Readable Numbers (damage as 510 Billion / 1.2 Trillion instead of digit soup), Advanced Tooltips (affix roll ranges + hover ground loot without picking it up), VFX Reducer (F11, three particle-budget modes for dense-floor FPS), Quick Enhance (Shift+click runs the forge to +max), Mijing Floor Selector (F10, jump floors and raise your unlocked cap), and Summon All.",
