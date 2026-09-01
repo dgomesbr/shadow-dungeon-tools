@@ -247,27 +247,31 @@ def parse_tree_names(tm):
     return names
 
 
-def archetype_names(env):
-    """Start_FY localization TextAsset: player_type0..3, English column."""
-    fallback = ["Mage", "Paladin", "Ranger", "Necromancer"]
+def load_fy(env, name):
+    """A *_FY localization TextAsset as a dict (key -> per-language map)."""
     for obj in env.objects:
         if obj.type.name != "TextAsset":
             continue
         d = obj.read()
-        if d.m_Name != "Start_FY":
+        if d.m_Name != name:
             continue
         s = d.m_Script
         if isinstance(s, bytes):
             s = s.decode("utf-8-sig", errors="replace")
         try:
-            j = json.loads(s.lstrip("\ufeff"))
-            return [
-                j.get(f"player_type{i}", {}).get("English", fallback[i])
-                for i in range(4)
-            ]
-        except (ValueError, AttributeError):
+            return json.loads(s.lstrip("\ufeff"))
+        except ValueError:
             break
-    return fallback
+    return {}
+
+
+def archetype_names(env):
+    """Start_FY localization TextAsset: player_type0..3, English column."""
+    fallback = ["Mage", "Paladin", "Ranger", "Necromancer"]
+    j = load_fy(env, "Start_FY")
+    return [
+        j.get(f"player_type{i}", {}).get("English", fallback[i]) for i in range(4)
+    ]
 
 
 # ------------------------------------------------------------------ icons --
@@ -347,6 +351,7 @@ def main():
     df_rows = parse_df_table(tm)
     tree_names = parse_tree_names(tm)
     arch_names = archetype_names(env)
+    skill_fy = load_fy(env, "Skill_FY")  # English labels for DF choice keys
     skills_by_name = {}
     for s in skills:
         if s["name"] in skills_by_name:
@@ -472,7 +477,12 @@ def main():
         choices = []
         for lit in row["choices"]:
             icon = exp.export("df", lit["icon"])
-            choices.append({"name": lit["name"], "info": lit["info"], "icon": icon})
+            en = skill_fy.get(lit["name"], {}).get("English") or lit["name"]
+            desc = skill_fy.get(lit["info"], {}).get("English")
+            choice = {"name": lit["name"], "label": en, "info": lit["info"], "icon": icon}
+            if desc:
+                choice["desc"] = desc
+            choices.append(choice)
         icon = choices[0]["icon"] if choices else None
         if icon is None:
             missing_icon.append(f"DF_{row['index']}")

@@ -364,16 +364,21 @@ export function buildSummary(doc: OdinDocument, fileName: string): SaveSummary {
           const vi = pair.children.findIndex((n) => (n as AnyNode).name === '$v');
           const v = vi >= 0 ? (pair.children[vi] as AnyNode) : undefined;
           if (!v || !isContainer(v)) continue;
+          let entry: import('../worker/protocol').TalentSkill | null = null;
+          let selected: number | undefined;
           for (let l = 0; l < v.children.length; l++) {
             const leaf = v.children[l] as AnyNode;
-            if (leaf.name === 'Level_Base' && leaf.kind === 'prim') {
-              talents.push({
-                name: k.value,
-                level: typeof leaf.value === 'bigint' ? Number(leaf.value) : leaf.value,
-                handle: `${talent.handle}.${i}.${a}.${p}.${vi}.${l}`,
-              });
-              break;
+            if (leaf.kind !== 'prim') continue;
+            const val = typeof leaf.value === 'bigint' ? Number(leaf.value) : leaf.value;
+            if (leaf.name === 'Level_Base') {
+              entry = { name: k.value, level: val, handle: `${talent.handle}.${i}.${a}.${p}.${vi}.${l}` };
+            } else if (leaf.name === 'SelectedIndex') {
+              selected = val;
             }
+          }
+          if (entry) {
+            if (selected !== undefined) entry.selected = selected;
+            talents.push(entry);
           }
         }
       }

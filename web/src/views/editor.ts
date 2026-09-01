@@ -25,7 +25,12 @@ const REALM_TIERS = [
   ['easy', 'Normal'], ['medium', 'Hard'], ['hard', 'Nightmare'], ['master', 'Inferno'],
 ] as const;
 
-interface TreeNode { skill: string; x: number; y: number; icon: string; max: number; unlock: number }
+interface TreeChoice { name: string; label?: string; icon?: string; desc?: string }
+interface TreeNode {
+  skill: string; x: number; y: number; icon: string; max: number; unlock: number;
+  /** Divine Favor nodes: the up-to-3 selectable skills. */
+  choices?: TreeChoice[];
+}
 interface TalentTrees {
   archetypes: { name: string; classIds: number[] }[];
   trees: { xi: number; name: string; nodes: TreeNode[]; links?: [string, string][] }[];
@@ -592,18 +597,33 @@ export async function editorView(): Promise<View> {
             return `<line x1="${pa.x + NODE / 2}" y1="${pa.y + NODE / 2}" x2="${pb.x + NODE / 2}" y2="${pb.y + NODE / 2}"/>`;
           }).join('');
 
+          const talByName = new Map(s.talents.map((t) => [t.name, t]));
           html += `<div class="tree-canvas" style="width:${W}px;height:${H}px">
             <svg width="${W}" height="${H}">${linkSvg}</svg>
             ${tree.nodes.map((n) => {
-              const cur = lvl.get(n.skill) ?? 0;
+              const tal = talByName.get(n.skill);
+              const cur = tal?.level ?? 0;
               const locked = n.unlock > 0 && inv < n.unlock;
               const p = pos.get(n.skill)!;
+              // Divine Favor nodes display the picked choice (SelectedIndex),
+              // falling back to the first choice's English label.
+              let label = n.skill;
+              let icon = n.icon;
+              let choiceLines = '';
+              if (n.choices?.length) {
+                const sel = tal?.selected ?? -1;
+                const act = (sel >= 0 && n.choices[sel]) ? n.choices[sel] : n.choices[0];
+                label = act?.label ?? n.skill;
+                if (sel >= 0 && n.choices[sel]?.icon) icon = n.choices[sel]!.icon!;
+                choiceLines = '\n' + n.choices.map((c, i) =>
+                  `${i === sel ? '▶' : '·'} ${c.label ?? c.name}${c.desc ? ` — ${c.desc}` : ''}`).join('\n');
+              }
               return `<button class="tnode ${locked ? 'locked' : ''} ${cur > 0 ? 'has' : ''}"
                 style="left:${p.x}px;top:${p.y}px" data-skill="${esc(n.skill)}" data-max="${n.max}"
-                title="${esc(n.skill)} — ${cur}/${n.max}${locked ? ` · locked (needs ${n.unlock} pts in tree, has ${inv})` : ''}">
-                ${n.icon ? `<img src="${BASE + n.icon}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
+                title="${esc(label)} — ${cur}/${n.max}${locked ? ` · locked (needs ${n.unlock} pts in tree, has ${inv})` : ''}${esc(choiceLines)}">
+                ${icon ? `<img src="${BASE + icon}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
                 <span class="tn-badge">${cur}/${n.max}</span>
-                <span class="tn-name">${esc(n.skill)}</span>
+                <span class="tn-name">${esc(label)}</span>
               </button>`;
             }).join('')}
           </div>`;

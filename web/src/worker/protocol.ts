@@ -83,6 +83,8 @@ export interface TalentSkill {
   level: number;
   /** Handle of the Level_Base leaf. */
   handle: string;
+  /** Divine Favor nodes: which of the up-to-3 choices is picked (SelectedIndex). */
+  selected?: number;
 }
 
 export interface SaveSummary {

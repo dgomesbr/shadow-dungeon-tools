@@ -5602,18 +5602,24 @@
      "choices": [
       {
        "name": "DFA47",
+       "label": "Devastator",
        "info": "InfoA_DF47",
-       "icon": "icons/skills/df_59.png"
+       "icon": "icons/skills/df_59.png",
+       "desc": "Critical damage"
       },
       {
        "name": "DFB47",
+       "label": "Undead Rage",
        "info": "InfoB_DF47",
-       "icon": "icons/skills/df_60.png"
+       "icon": "icons/skills/df_60.png",
+       "desc": "Summon damage"
       },
       {
        "name": "DFC47",
+       "label": "Relic enhancement",
        "info": "InfoC_DF47",
-       "icon": "icons/skills/df_61.png"
+       "icon": "icons/skills/df_61.png",
+       "desc": "Accessory damage"
       }
      ]
     },
@@ -5635,18 +5641,24 @@
      "choices": [
       {
        "name": "DFA48",
+       "label": "Extremely fast spellcasting",
        "info": "InfoA_DF48",
-       "icon": "icons/skills/df_62.png"
+       "icon": "icons/skills/df_62.png",
+       "desc": "Cooldown reduction"
       },
       {
        "name": "DFB48",
+       "label": "Endless Legion",
        "info": "InfoB_DF48",
-       "icon": "icons/skills/df_63.png"
+       "icon": "icons/skills/df_63.png",
+       "desc": "Total summons"
       },
       {
        "name": "DFC48",
+       "label": "death erosion",
        "info": "InfoC_DF48",
-       "icon": "icons/skills/df_64.png"
+       "icon": "icons/skills/df_64.png",
+       "desc": "Negative effect damage"
       }
      ]
     },
@@ -5667,18 +5679,24 @@
      "choices": [
       {
        "name": "DFA49",
+       "label": "power of spirits",
        "info": "InfoA_DF49",
-       "icon": "icons/skills/df_65.png"
+       "icon": "icons/skills/df_65.png",
+       "desc": "Increased damage per elf"
       },
       {
        "name": "DFB49",
+       "label": "Lucky vibes",
        "info": "InfoB_DF49",
-       "icon": "icons/skills/df_66.png"
+       "icon": "icons/skills/df_66.png",
+       "desc": "Each elf increases the treasure drop rate"
       },
       {
        "name": "DFC49",
+       "label": "a",
        "info": "InfoC_DF49",
-       "icon": "icons/skills/df_67.png"
+       "icon": "icons/skills/df_67.png",
+       "desc": "a"
       }
      ]
     },
@@ -5698,18 +5716,24 @@
      "choices": [
       {
        "name": "DFA39",
+       "label": "multiple curses",
        "info": "InfoA_DF39",
-       "icon": "icons/skills/df_51.png"
+       "icon": "icons/skills/df_51.png",
+       "desc": "Negative damage stack count"
       },
       {
        "name": "DFB39",
+       "label": "multiple curses",
        "info": "InfoB_DF39",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Negative damage stack count"
       },
       {
        "name": "DFC39",
+       "label": "multiple curses",
        "info": "InfoC_DF39",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Negative damage stack count"
       }
      ]
     },
@@ -5729,18 +5753,24 @@
      "choices": [
       {
        "name": "DFA40",
+       "label": "Wind combo",
        "info": "InfoA_DF40",
-       "icon": "icons/skills/df_52.png"
+       "icon": "icons/skills/df_52.png",
+       "desc": "Attack speed"
       },
       {
        "name": "DFB40",
+       "label": "Wind combo",
        "info": "InfoB_DF40",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Attack speed"
       },
       {
        "name": "DFC40",
+       "label": "Wind combo",
        "info": "InfoC_DF40",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Attack speed"
       }
      ]
     },
@@ -5760,18 +5790,24 @@
      "choices": [
       {
        "name": "DFA41",
+       "label": "kill",
        "info": "InfoA_DF41",
-       "icon": "icons/skills/df_53.png"
+       "icon": "icons/skills/df_53.png",
+       "desc": "Damage"
       },
       {
        "name": "DFB41",
+       "label": "kill",
        "info": "InfoB_DF41",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Damage"
       },
       {
        "name": "DFC41",
+       "label": "kill",
        "info": "InfoC_DF41",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Damage"
       }
      ]
     },
@@ -5791,18 +5827,24 @@
      "choices": [
       {
        "name": "DFA42",
+       "label": "powerful curse",
        "info": "InfoA_DF42",
-       "icon": "icons/skills/df_54.png"
+       "icon": "icons/skills/df_54.png",
+       "desc": "Negative effect damage"
       },
       {
        "name": "DFB42",
+       "label": "powerful curse",
        "info": "InfoB_DF42",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Negative effect damage"
       },
       {
        "name": "DFC42",
+       "label": "powerful curse",
        "info": "InfoC_DF42",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Negative effect damage"
       }
      ]
     },
@@ -5822,18 +5864,24 @@
      "choices": [
       {
        "name": "DFA43",
+       "label": "Summon Mastery",
        "info": "InfoA_DF43",
-       "icon": "icons/skills/df_55.png"
+       "icon": "icons/skills/df_55.png",
+       "desc": "Summon health"
       },
       {
        "name": "DFB43",
+       "label": "Summon Mastery",
        "info": "InfoB_DF43",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon health"
       },
       {
        "name": "DFC43",
+       "label": "Summon Mastery",
        "info": "InfoC_DF43",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon health"
       }
      ]
     },
@@ -5853,18 +5901,24 @@
      "choices": [
       {
        "name": "DFA44",
+       "label": "death will",
        "info": "InfoA_DF44",
-       "icon": "icons/skills/df_56.png"
+       "icon": "icons/skills/df_56.png",
+       "desc": "Summon damage"
       },
       {
        "name": "DFB44",
+       "label": "death will",
        "info": "InfoB_DF44",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon damage"
       },
       {
        "name": "DFC44",
+       "label": "death will",
        "info": "InfoC_DF44",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon damage"
       }
      ]
     },
@@ -5884,18 +5938,24 @@
      "choices": [
       {
        "name": "DFA45",
+       "label": "Forge Master",
        "info": "InfoA_DF45",
-       "icon": "icons/skills/df_57.png"
+       "icon": "icons/skills/df_57.png",
+       "desc": "The blacksmith's damage ratio increases each time he enhances the weapon."
       },
       {
        "name": "DFB45",
+       "label": "Forge Master",
        "info": "InfoB_DF45",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "The blacksmith's damage ratio increases each time he enhances the weapon."
       },
       {
        "name": "DFC45",
+       "label": "Forge Master",
        "info": "InfoC_DF45",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "The blacksmith's damage ratio increases each time he enhances the weapon."
       }
      ]
     },
@@ -5915,18 +5975,24 @@
      "choices": [
       {
        "name": "DFA46",
+       "label": "Fountain of Light",
        "info": "InfoA_DF46",
-       "icon": "icons/skills/df_58.png"
+       "icon": "icons/skills/df_58.png",
+       "desc": "Increased % health regeneration per temple"
       },
       {
        "name": "DFB46",
+       "label": "Fountain of Light",
        "info": "InfoB_DF46",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Increased % health regeneration per temple"
       },
       {
        "name": "DFC46",
+       "label": "Fountain of Light",
        "info": "InfoC_DF46",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Increased % health regeneration per temple"
       }
      ]
     },
@@ -5948,18 +6014,24 @@
      "choices": [
       {
        "name": "DFA36",
+       "label": "Holy grace lasts forever",
        "info": "InfoA_DF36",
-       "icon": "icons/skills/df_43.png"
+       "icon": "icons/skills/df_43.png",
+       "desc": "Shrine duration"
       },
       {
        "name": "DFB36",
+       "label": "time transcends",
        "info": "InfoB_DF36",
-       "icon": "icons/skills/df_44.png"
+       "icon": "icons/skills/df_44.png",
+       "desc": "Cooldown reduction cap"
       },
       {
        "name": "DFC36",
+       "label": "Fatal Strike",
        "info": "InfoC_DF36",
-       "icon": "icons/skills/df_45.png"
+       "icon": "icons/skills/df_45.png",
+       "desc": "Critical chance"
       }
      ]
     },
@@ -5981,18 +6053,24 @@
      "choices": [
       {
        "name": "DFA37",
+       "label": "Potion Master",
        "info": "InfoA_DF37",
-       "icon": "icons/skills/df_46.png"
+       "icon": "icons/skills/df_46.png",
+       "desc": "Potion duration"
       },
       {
        "name": "DFB37",
+       "label": "Absolute Defense",
        "info": "InfoB_DF37",
-       "icon": "icons/skills/df_47.png"
+       "icon": "icons/skills/df_47.png",
+       "desc": "Block chance cap"
       },
       {
        "name": "DFC37",
+       "label": "extraordinary physique",
        "info": "InfoC_DF37",
-       "icon": "icons/skills/df_48.png"
+       "icon": "icons/skills/df_48.png",
+       "desc": "Damage reduction cap"
       }
      ]
     },
@@ -6013,18 +6091,24 @@
      "choices": [
       {
        "name": "DFA38",
+       "label": "Blessed by the God of War",
        "info": "InfoA_DF38",
-       "icon": "icons/skills/df_49.png"
+       "icon": "icons/skills/df_49.png",
+       "desc": "Additional damage per temple"
       },
       {
        "name": "DFB38",
+       "label": "Wild blessings",
        "info": "InfoB_DF38",
-       "icon": "icons/skills/df_50.png"
+       "icon": "icons/skills/df_50.png",
+       "desc": "Each temple increases attack speed"
       },
       {
        "name": "DFC38",
+       "label": "a",
        "info": "InfoC_DF38",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "a"
       }
      ]
     },
@@ -6044,18 +6128,24 @@
      "choices": [
       {
        "name": "DFA28",
+       "label": "Flame Mastery",
        "info": "InfoA_DF28",
-       "icon": "icons/skills/df_35.png"
+       "icon": "icons/skills/df_35.png",
+       "desc": "Fire penetration"
       },
       {
        "name": "DFB28",
+       "label": "Flame Mastery",
        "info": "InfoB_DF28",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Fire penetration"
       },
       {
        "name": "DFC28",
+       "label": "Flame Mastery",
        "info": "InfoC_DF28",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Fire penetration"
       }
      ]
     },
@@ -6075,18 +6165,24 @@
      "choices": [
       {
        "name": "DFA29",
+       "label": "Frost Mastery",
        "info": "InfoA_DF29",
-       "icon": "icons/skills/df_36.png"
+       "icon": "icons/skills/df_36.png",
+       "desc": "Frost penetration"
       },
       {
        "name": "DFB29",
+       "label": "Frost Mastery",
        "info": "InfoB_DF29",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Frost penetration"
       },
       {
        "name": "DFC29",
+       "label": "Frost Mastery",
        "info": "InfoC_DF29",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Frost penetration"
       }
      ]
     },
@@ -6106,18 +6202,24 @@
      "choices": [
       {
        "name": "DFA30",
+       "label": "Lightning Control",
        "info": "InfoA_DF30",
-       "icon": "icons/skills/df_37.png"
+       "icon": "icons/skills/df_37.png",
+       "desc": "Lightning penetration"
       },
       {
        "name": "DFB30",
+       "label": "Lightning Control",
        "info": "InfoB_DF30",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Lightning penetration"
       },
       {
        "name": "DFC30",
+       "label": "Lightning Control",
        "info": "InfoC_DF30",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Lightning penetration"
       }
      ]
     },
@@ -6137,18 +6239,24 @@
      "choices": [
       {
        "name": "DFA31",
+       "label": "Toxin control",
        "info": "InfoA_DF31",
-       "icon": "icons/skills/df_38.png"
+       "icon": "icons/skills/df_38.png",
+       "desc": "Poison penetration"
       },
       {
        "name": "DFB31",
+       "label": "Toxin control",
        "info": "InfoB_DF31",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Poison penetration"
       },
       {
        "name": "DFC31",
+       "label": "Toxin control",
        "info": "InfoC_DF31",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Poison penetration"
       }
      ]
     },
@@ -6168,18 +6276,24 @@
      "choices": [
       {
        "name": "DFA32",
+       "label": "physical control",
        "info": "InfoA_DF32",
-       "icon": "icons/skills/df_39.png"
+       "icon": "icons/skills/df_39.png",
+       "desc": "Physical penetration"
       },
       {
        "name": "DFB32",
+       "label": "physical control",
        "info": "InfoB_DF32",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Physical penetration"
       },
       {
        "name": "DFC32",
+       "label": "physical control",
        "info": "InfoC_DF32",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Physical penetration"
       }
      ]
     },
@@ -6199,18 +6313,24 @@
      "choices": [
       {
        "name": "DFA33",
+       "label": "Shadow Mastery",
        "info": "InfoA_DF33",
-       "icon": "icons/skills/df_40.png"
+       "icon": "icons/skills/df_40.png",
+       "desc": "Shadow penetration"
       },
       {
        "name": "DFB33",
+       "label": "Shadow Mastery",
        "info": "InfoB_DF33",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Shadow penetration"
       },
       {
        "name": "DFC33",
+       "label": "Shadow Mastery",
        "info": "InfoC_DF33",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Shadow penetration"
       }
      ]
     },
@@ -6230,18 +6350,24 @@
      "choices": [
       {
        "name": "DFA34",
+       "label": "Craftsmanship",
        "info": "InfoA_DF34",
-       "icon": "icons/skills/df_41.png"
+       "icon": "icons/skills/df_41.png",
+       "desc": "The blacksmith's forging cost is reduced"
       },
       {
        "name": "DFB34",
+       "label": "Craftsmanship",
        "info": "InfoB_DF34",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "The blacksmith's forging cost is reduced"
       },
       {
        "name": "DFC34",
+       "label": "Craftsmanship",
        "info": "InfoC_DF34",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "The blacksmith's forging cost is reduced"
       }
      ]
     },
@@ -6261,18 +6387,24 @@
      "choices": [
       {
        "name": "DFA35",
+       "label": "gold mining",
        "info": "InfoA_DF35",
-       "icon": "icons/skills/df_42.png"
+       "icon": "icons/skills/df_42.png",
+       "desc": "Gold gained by elves from dismantling weapons"
       },
       {
        "name": "DFB35",
+       "label": "gold mining",
        "info": "InfoB_DF35",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Gold gained by elves from dismantling weapons"
       },
       {
        "name": "DFC35",
+       "label": "gold mining",
        "info": "InfoC_DF35",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Gold gained by elves from dismantling weapons"
       }
      ]
     },
@@ -6293,18 +6425,24 @@
      "choices": [
       {
        "name": "DFA24",
+       "label": "Conqueror",
        "info": "InfoA_DF24",
-       "icon": "icons/skills/df_27.png"
+       "icon": "icons/skills/df_27.png",
+       "desc": "Damage"
       },
       {
        "name": "DFB24",
+       "label": "giant killer",
        "info": "InfoB_DF24",
-       "icon": "icons/skills/df_28.png"
+       "icon": "icons/skills/df_28.png",
+       "desc": "Damage to bosses and elite monsters"
       },
       {
        "name": "DFC24",
+       "label": "a",
        "info": "InfoC_DF24",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "a"
       }
      ]
     },
@@ -6325,18 +6463,24 @@
      "choices": [
       {
        "name": "DFA25",
+       "label": "Furious",
        "info": "InfoA_DF25",
-       "icon": "icons/skills/df_29.png"
+       "icon": "icons/skills/df_29.png",
+       "desc": "Critical damage"
       },
       {
        "name": "DFB25",
+       "label": "Curse of Pain",
        "info": "InfoB_DF25",
-       "icon": "icons/skills/df_30.png"
+       "icon": "icons/skills/df_30.png",
+       "desc": "Negative effect damage"
       },
       {
        "name": "DFC25",
+       "label": "a",
        "info": "InfoC_DF25",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "a"
       }
      ]
     },
@@ -6357,18 +6501,24 @@
      "choices": [
       {
        "name": "DFA26",
+       "label": "Power Strike",
        "info": "InfoA_DF26",
-       "icon": "icons/skills/df_31.png"
+       "icon": "icons/skills/df_31.png",
+       "desc": "Attack speed"
       },
       {
        "name": "DFB26",
+       "label": "Urgent travel",
        "info": "InfoB_DF26",
-       "icon": "icons/skills/df_32.png"
+       "icon": "icons/skills/df_32.png",
+       "desc": "Movement speed"
       },
       {
        "name": "DFC26",
+       "label": "a",
        "info": "InfoC_DF26",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "a"
       }
      ]
     },
@@ -6389,18 +6539,24 @@
      "choices": [
       {
        "name": "DFA27",
+       "label": "Elven Blessing",
        "info": "InfoA_DF27",
-       "icon": "icons/skills/df_33.png"
+       "icon": "icons/skills/df_33.png",
+       "desc": "The time between elf launching skills is reduced"
       },
       {
        "name": "DFB27",
+       "label": "lucky wishes",
        "info": "InfoB_DF27",
-       "icon": "icons/skills/df_34.png"
+       "icon": "icons/skills/df_34.png",
+       "desc": "Drop rate"
       },
       {
        "name": "DFC27",
+       "label": "a",
        "info": "InfoC_DF27",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "a"
       }
      ]
     },
@@ -6420,18 +6576,24 @@
      "choices": [
       {
        "name": "DFA16",
+       "label": "Summoning Mastery",
        "info": "InfoA_DF16",
-       "icon": "icons/skills/df_19.png"
+       "icon": "icons/skills/df_19.png",
+       "desc": "Summon health"
       },
       {
        "name": "DFB16",
+       "label": "Summoning Mastery",
        "info": "InfoB_DF16",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon health"
       },
       {
        "name": "DFC16",
+       "label": "Summoning Mastery",
        "info": "InfoC_DF16",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon health"
       }
      ]
     },
@@ -6451,18 +6613,24 @@
      "choices": [
       {
        "name": "DFA17",
+       "label": "Summon Rage",
        "info": "InfoA_DF17",
-       "icon": "icons/skills/df_20.png"
+       "icon": "icons/skills/df_20.png",
+       "desc": "Summon attack speed"
       },
       {
        "name": "DFB17",
+       "label": "Summon Rage",
        "info": "InfoB_DF17",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon attack speed"
       },
       {
        "name": "DFC17",
+       "label": "Summon Rage",
        "info": "InfoC_DF17",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon attack speed"
       }
      ]
     },
@@ -6482,18 +6650,24 @@
      "choices": [
       {
        "name": "DFA18",
+       "label": "Swift Spirit",
        "info": "InfoA_DF18",
-       "icon": "icons/skills/df_21.png"
+       "icon": "icons/skills/df_21.png",
+       "desc": "Summon movement speed"
       },
       {
        "name": "DFB18",
+       "label": "Swift Spirit",
        "info": "InfoB_DF18",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon movement speed"
       },
       {
        "name": "DFC18",
+       "label": "Swift Spirit",
        "info": "InfoC_DF18",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon movement speed"
       }
      ]
     },
@@ -6513,18 +6687,24 @@
      "choices": [
       {
        "name": "DFA19",
+       "label": "strong spirit",
        "info": "InfoA_DF19",
-       "icon": "icons/skills/df_22.png"
+       "icon": "icons/skills/df_22.png",
+       "desc": "Summon all resistance"
       },
       {
        "name": "DFB19",
+       "label": "strong spirit",
        "info": "InfoB_DF19",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon all resistance"
       },
       {
        "name": "DFC19",
+       "label": "strong spirit",
        "info": "InfoC_DF19",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon all resistance"
       }
      ]
     },
@@ -6544,18 +6724,24 @@
      "choices": [
       {
        "name": "DFA20",
+       "label": "Summoning Power",
        "info": "InfoA_DF20",
-       "icon": "icons/skills/df_23.png"
+       "icon": "icons/skills/df_23.png",
+       "desc": "Summon damage"
       },
       {
        "name": "DFB20",
+       "label": "Summoning Power",
        "info": "InfoB_DF20",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon damage"
       },
       {
        "name": "DFC20",
+       "label": "Summoning Power",
        "info": "InfoC_DF20",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Summon damage"
       }
      ]
     },
@@ -6575,18 +6761,24 @@
      "choices": [
       {
        "name": "DFA21",
+       "label": "magic resistance",
        "info": "InfoA_DF21",
-       "icon": "icons/skills/df_24.png"
+       "icon": "icons/skills/df_24.png",
+       "desc": "negative time relief"
       },
       {
        "name": "DFB21",
+       "label": "magic resistance",
        "info": "InfoB_DF21",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "negative time relief"
       },
       {
        "name": "DFC21",
+       "label": "magic resistance",
        "info": "InfoC_DF21",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "negative time relief"
       }
      ]
     },
@@ -6606,18 +6798,24 @@
      "choices": [
       {
        "name": "DFA22",
+       "label": "crystal clear",
        "info": "InfoA_DF22",
-       "icon": "icons/skills/df_25.png"
+       "icon": "icons/skills/df_25.png",
+       "desc": "gem effect"
       },
       {
        "name": "DFB22",
+       "label": "crystal clear",
        "info": "InfoB_DF22",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "gem effect"
       },
       {
        "name": "DFC22",
+       "label": "crystal clear",
        "info": "InfoC_DF22",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "gem effect"
       }
      ]
     },
@@ -6637,18 +6835,24 @@
      "choices": [
       {
        "name": "DFA23",
+       "label": "Weapons Master",
        "info": "InfoA_DF23",
-       "icon": "icons/skills/df_26.png"
+       "icon": "icons/skills/df_26.png",
+       "desc": "Weapon-attached skill damage"
       },
       {
        "name": "DFB23",
+       "label": "Weapons Master",
        "info": "InfoB_DF23",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Weapon-attached skill damage"
       },
       {
        "name": "DFC23",
+       "label": "Weapons Master",
        "info": "InfoC_DF23",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Weapon-attached skill damage"
       }
      ]
     },
@@ -6668,18 +6872,24 @@
      "choices": [
       {
        "name": "DFA8",
+       "label": "Fire damage increased",
        "info": "InfoA_DF8",
-       "icon": "icons/skills/df_11.png"
+       "icon": "icons/skills/df_11.png",
+       "desc": "Fire damage"
       },
       {
        "name": "DFB8",
+       "label": "Fire damage increased",
        "info": "InfoB_DF8",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Fire damage"
       },
       {
        "name": "DFC8",
+       "label": "Fire damage increased",
        "info": "InfoC_DF8",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Fire damage"
       }
      ]
     },
@@ -6699,18 +6909,24 @@
      "choices": [
       {
        "name": "DFA9",
+       "label": "Frost damage increased",
        "info": "InfoA_DF9",
-       "icon": "icons/skills/df_12.png"
+       "icon": "icons/skills/df_12.png",
+       "desc": "Frost damage"
       },
       {
        "name": "DFB9",
+       "label": "Frost damage increased",
        "info": "InfoB_DF9",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Frost damage"
       },
       {
        "name": "DFC9",
+       "label": "Frost damage increased",
        "info": "InfoC_DF9",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Frost damage"
       }
      ]
     },
@@ -6730,18 +6946,24 @@
      "choices": [
       {
        "name": "DFA10",
+       "label": "Lightning damage increased",
        "info": "InfoA_DF10",
-       "icon": "icons/skills/df_13.png"
+       "icon": "icons/skills/df_13.png",
+       "desc": "Lightning damage"
       },
       {
        "name": "DFB10",
+       "label": "Lightning damage increased",
        "info": "InfoB_DF10",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Lightning damage"
       },
       {
        "name": "DFC10",
+       "label": "Lightning damage increased",
        "info": "InfoC_DF10",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Lightning damage"
       }
      ]
     },
@@ -6761,18 +6983,24 @@
      "choices": [
       {
        "name": "DFA11",
+       "label": "Poison damage increased",
        "info": "InfoA_DF11",
-       "icon": "icons/skills/df_14.png"
+       "icon": "icons/skills/df_14.png",
+       "desc": "Poison damage"
       },
       {
        "name": "DFB11",
+       "label": "Poison damage increased",
        "info": "InfoB_DF11",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Poison damage"
       },
       {
        "name": "DFC11",
+       "label": "Poison damage increased",
        "info": "InfoC_DF11",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Poison damage"
       }
      ]
     },
@@ -6792,18 +7020,24 @@
      "choices": [
       {
        "name": "DFA12",
+       "label": "Physical damage enhancement",
        "info": "InfoA_DF12",
-       "icon": "icons/skills/df_15.png"
+       "icon": "icons/skills/df_15.png",
+       "desc": "Physical damage"
       },
       {
        "name": "DFB12",
+       "label": "Physical damage enhancement",
        "info": "InfoB_DF12",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Physical damage"
       },
       {
        "name": "DFC12",
+       "label": "Physical damage enhancement",
        "info": "InfoC_DF12",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Physical damage"
       }
      ]
     },
@@ -6823,18 +7057,24 @@
      "choices": [
       {
        "name": "DFA13",
+       "label": "Shadow damage increased",
        "info": "InfoA_DF13",
-       "icon": "icons/skills/df_16.png"
+       "icon": "icons/skills/df_16.png",
+       "desc": "Shadow damage"
       },
       {
        "name": "DFB13",
+       "label": "Shadow damage increased",
        "info": "InfoB_DF13",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Shadow damage"
       },
       {
        "name": "DFC13",
+       "label": "Shadow damage increased",
        "info": "InfoC_DF13",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Shadow damage"
       }
      ]
     },
@@ -6854,18 +7094,24 @@
      "choices": [
       {
        "name": "DFA14",
+       "label": "life blessings",
        "info": "InfoA_DF14",
-       "icon": "icons/skills/df_17.png"
+       "icon": "icons/skills/df_17.png",
+       "desc": "Maximum health"
       },
       {
        "name": "DFB14",
+       "label": "life blessings",
        "info": "InfoB_DF14",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Maximum health"
       },
       {
        "name": "DFC14",
+       "label": "life blessings",
        "info": "InfoC_DF14",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Maximum health"
       }
      ]
     },
@@ -6885,18 +7131,24 @@
      "choices": [
       {
        "name": "DFA15",
+       "label": "magic blessing",
        "info": "InfoA_DF15",
-       "icon": "icons/skills/df_18.png"
+       "icon": "icons/skills/df_18.png",
+       "desc": "Maximum mana"
       },
       {
        "name": "DFB15",
+       "label": "magic blessing",
        "info": "InfoB_DF15",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Maximum mana"
       },
       {
        "name": "DFC15",
+       "label": "magic blessing",
        "info": "InfoC_DF15",
-       "icon": "icons/skills/df_0.png"
+       "icon": "icons/skills/df_0.png",
+       "desc": "Maximum mana"
       }
      ]
     },
@@ -6916,18 +7168,24 @@
      "choices": [
       {
        "name": "DFA0",
+       "label": "Increased health",
        "info": "InfoA_DF0",
-       "icon": "icons/skills/df_8.png"
+       "icon": "icons/skills/df_8.png",
+       "desc": "Health"
       },
       {
        "name": "DFB0",
+       "label": "Increased mana",
        "info": "InfoB_DF0",
-       "icon": "icons/skills/df_9.png"
+       "icon": "icons/skills/df_9.png",
+       "desc": "Mana"
       },
       {
        "name": "DFC0",
+       "label": "Damage enhancement",
        "info": "InfoC_DF0",
-       "icon": "icons/skills/df_10.png"
+       "icon": "icons/skills/df_10.png",
+       "desc": "Damage"
       }
      ]
     },
@@ -6947,18 +7205,24 @@
      "choices": [
       {
        "name": "DFA1",
+       "label": "Increased health",
        "info": "InfoA_DF1",
-       "icon": "icons/skills/df_8.png"
+       "icon": "icons/skills/df_8.png",
+       "desc": "Health"
       },
       {
        "name": "DFB1",
+       "label": "Increased mana",
        "info": "InfoB_DF1",
-       "icon": "icons/skills/df_9.png"
+       "icon": "icons/skills/df_9.png",
+       "desc": "Mana"
       },
       {
        "name": "DFC1",
+       "label": "Damage enhancement",
        "info": "InfoC_DF1",
-       "icon": "icons/skills/df_10.png"
+       "icon": "icons/skills/df_10.png",
+       "desc": "Damage"
       }
      ]
     },
@@ -6978,18 +7242,24 @@
      "choices": [
       {
        "name": "DFA2",
+       "label": "Increased health",
        "info": "InfoA_DF2",
-       "icon": "icons/skills/df_8.png"
+       "icon": "icons/skills/df_8.png",
+       "desc": "Health"
       },
       {
        "name": "DFB2",
+       "label": "Increased mana",
        "info": "InfoB_DF2",
-       "icon": "icons/skills/df_9.png"
+       "icon": "icons/skills/df_9.png",
+       "desc": "Mana"
       },
       {
        "name": "DFC2",
+       "label": "Damage enhancement",
        "info": "InfoC_DF2",
-       "icon": "icons/skills/df_10.png"
+       "icon": "icons/skills/df_10.png",
+       "desc": "Damage"
       }
      ]
     },
@@ -7009,18 +7279,24 @@
      "choices": [
       {
        "name": "DFA3",
+       "label": "Increased health",
        "info": "InfoA_DF3",
-       "icon": "icons/skills/df_8.png"
+       "icon": "icons/skills/df_8.png",
+       "desc": "Health"
       },
       {
        "name": "DFB3",
+       "label": "Increased mana",
        "info": "InfoB_DF3",
-       "icon": "icons/skills/df_9.png"
+       "icon": "icons/skills/df_9.png",
+       "desc": "Mana"
       },
       {
        "name": "DFC3",
+       "label": "Damage enhancement",
        "info": "InfoC_DF3",
-       "icon": "icons/skills/df_10.png"
+       "icon": "icons/skills/df_10.png",
+       "desc": "Damage"
       }
      ]
     },
@@ -7040,18 +7316,24 @@
      "choices": [
       {
        "name": "DFA4",
+       "label": "Increased health",
        "info": "InfoA_DF4",
-       "icon": "icons/skills/df_8.png"
+       "icon": "icons/skills/df_8.png",
+       "desc": "Health"
       },
       {
        "name": "DFB4",
+       "label": "Increased mana",
        "info": "InfoB_DF4",
-       "icon": "icons/skills/df_9.png"
+       "icon": "icons/skills/df_9.png",
+       "desc": "Mana"
       },
       {
        "name": "DFC4",
+       "label": "Damage enhancement",
        "info": "InfoC_DF4",
-       "icon": "icons/skills/df_10.png"
+       "icon": "icons/skills/df_10.png",
+       "desc": "Damage"
       }
      ]
     },
@@ -7071,18 +7353,24 @@
      "choices": [
       {
        "name": "DFA5",
+       "label": "Increased health",
        "info": "InfoA_DF5",
-       "icon": "icons/skills/df_8.png"
+       "icon": "icons/skills/df_8.png",
+       "desc": "Health"
       },
       {
        "name": "DFB5",
+       "label": "Increased mana",
        "info": "InfoB_DF5",
-       "icon": "icons/skills/df_9.png"
+       "icon": "icons/skills/df_9.png",
+       "desc": "Mana"
       },
       {
        "name": "DFC5",
+       "label": "Damage enhancement",
        "info": "InfoC_DF5",
-       "icon": "icons/skills/df_10.png"
+       "icon": "icons/skills/df_10.png",
+       "desc": "Damage"
       }
      ]
     },
@@ -7102,18 +7390,24 @@
      "choices": [
       {
        "name": "DFA6",
+       "label": "Increased health",
        "info": "InfoA_DF6",
-       "icon": "icons/skills/df_8.png"
+       "icon": "icons/skills/df_8.png",
+       "desc": "Health"
       },
       {
        "name": "DFB6",
+       "label": "Increased mana",
        "info": "InfoB_DF6",
-       "icon": "icons/skills/df_9.png"
+       "icon": "icons/skills/df_9.png",
+       "desc": "Mana"
       },
       {
        "name": "DFC6",
+       "label": "Damage enhancement",
        "info": "InfoC_DF6",
-       "icon": "icons/skills/df_10.png"
+       "icon": "icons/skills/df_10.png",
+       "desc": "Damage"
       }
      ]
     },
@@ -7133,18 +7427,24 @@
      "choices": [
       {
        "name": "DFA7",
+       "label": "Increased health",
        "info": "InfoA_DF7",
-       "icon": "icons/skills/df_8.png"
+       "icon": "icons/skills/df_8.png",
+       "desc": "Health"
       },
       {
        "name": "DFB7",
+       "label": "Increased mana",
        "info": "InfoB_DF7",
-       "icon": "icons/skills/df_9.png"
+       "icon": "icons/skills/df_9.png",
+       "desc": "Mana"
       },
       {
        "name": "DFC7",
+       "label": "Damage enhancement",
        "info": "InfoC_DF7",
-       "icon": "icons/skills/df_10.png"
+       "icon": "icons/skills/df_10.png",
+       "desc": "Damage"
       }
      ]
     }
