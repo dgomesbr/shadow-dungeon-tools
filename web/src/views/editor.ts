@@ -23,6 +23,8 @@ interface State {
   page: number;
   selected: ItemSummary | null;
   pending: Map<string, SetOp>;
+  /** Recompose mode: apply edits to every loaded file, not just the active one. */
+  mirror: boolean;
 }
 
 export async function editorView(): Promise<View> {
@@ -35,8 +37,11 @@ export async function editorView(): Promise<View> {
     mount(container) {
       const st: State = {
         files: new Map(), active: null, container: 'inventory', page: 0,
-        selected: null, pending: new Map(),
+        selected: null, pending: new Map(), mirror: true,
       };
+      // Deep-handle maps per file+item; index paths are stable across value
+      // edits, so entries stay valid until files are (re)loaded.
+      const hmapCache = new Map<string, Promise<Map<string, string>>>();
 
       container.innerHTML = `<div class="ed"></div>`;
       const host = container.firstElementChild as HTMLElement;
@@ -52,9 +57,30 @@ export async function editorView(): Promise<View> {
             alert(`${f.name}: not a valid save (${e instanceof Error ? e.message : e})`);
           }
         }
+        hmapCache.clear();
         st.selected = null;
         st.pending.clear();
         render();
+      }
+
+      /** slot_N.sav / slot_N_auto.sav / slot_N_exit.sav that are not loaded
+       *  yet, for any slot the user has started loading. The game silently
+       *  falls back across the three, so edits must land in all of them. */
+      function missingSlotFiles(): string[] {
+        const names = [...st.files.keys()].map((n) => n.toLowerCase());
+        const slots = new Set<string>();
+        for (const n of names) {
+          const m = /^slot_(\d+)(?:_auto|_exit)?\.sav$/.exec(n);
+          if (m) slots.add(m[1]!);
+        }
+        const missing: string[] = [];
+        for (const s of slots) {
+          for (const suffix of ['', '_auto', '_exit']) {
+            const want = `slot_${s}${suffix}.sav`;
+            if (!names.includes(want)) missing.push(want);
+          }
+        }
+        return missing;
       }
 
       function active(): OpenFile | null {
@@ -76,8 +102,7 @@ export async function editorView(): Promise<View> {
         // The game falls back silently across slot/auto/exit backups, so
         // character-level edits should hit every loaded file. Handles are
         // per-file, so mirror by FIELD NAME (player fields, money, talents).
-        const mirror = host.querySelector<HTMLInputElement>('#mirror')?.checked;
-        if (mirror) {
+        if (st.mirror) {
           const src = f.result.summary;
           const nameOf = new Map<string, string>(); // handle → semantic key
           for (const l of src.player) nameOf.set(l.handle, `p:${l.name}`);
@@ -164,12 +189,19 @@ export async function editorView(): Promise<View> {
             </div>
             <div class="ed-actions">
               <span class="dim">v${esc(s.gameVersion)} · ${(f.size / 1024 / 1024).toFixed(2)} MB</span>
+              ${st.files.size > 1 ? `<label class="dim mirror-lbl" title="Recompose: every edit is applied to all loaded files so the game can't fall back to an unedited backup">
+                <input type="checkbox" id="mirror" ${st.mirror ? 'checked' : ''}> apply to all ${st.files.size} files</label>` : ''}
               <button id="share" title="Copy a compact build link (fits in a Discord message)">Share build</button>
-              <button id="dl" ${f.result.roundTrip ? '' : 'disabled title="round-trip check failed — editing disabled"'}>Download</button>
-              ${st.files.size > 1 ? '<button id="dl-all">Download all</button>' : ''}
+              ${st.files.size > 1
+                ? `<button id="dl">Download ${esc(f.name)}</button><button id="dl-all" class="primary">Download all ${st.files.size}</button>`
+                : `<button id="dl" class="primary" ${f.result.roundTrip ? '' : 'disabled title="round-trip check failed — editing disabled"'}>Download</button>`}
             </div>
           </div>
           ${f.result.roundTrip ? '' : `<p class="ed-warn">⚠ This file did not re-encode byte-identically (first difference at byte ${f.result.firstDiff}). Editing is disabled to protect your save — please report this on GitHub.</p>`}
+          ${missingSlotFiles().length ? `<p class="ed-missing">⚠ The game keeps <b>three</b> copies of every slot and silently falls back to the <code>_auto</code>/<code>_exit</code> backups —
+            load them all so your character is recomposed consistently. Missing:
+            ${missingSlotFiles().map((n) => `<b>${esc(n)}</b>`).join(', ')}
+            <label class="ed-add-inline">+ add them<input type="file" accept=".sav" multiple hidden></label></p>` : ''}
           <div class="ed-hero">
             <h2>${esc(p.get('PlayerName') ?? '—')}</h2>
             <span class="ed-hero-stat"><b>${esc(p.get('Level') ?? '?')}</b> level</span>
@@ -199,16 +231,19 @@ export async function editorView(): Promise<View> {
           </div>
           <div class="ed-pending" id="pending" hidden>
             <span id="pending-n"></span>
-            ${st.files.size > 1 ? `<label class="dim"><input type="checkbox" id="mirror" checked>
-              mirror character/talent edits to all ${st.files.size} files</label>` : ''}
+            <span id="pending-scope" class="dim"></span>
             <button id="apply">Apply</button>
             <button id="discard">Discard</button>
           </div>`;
 
         host.querySelectorAll<HTMLButtonElement>('.ed-tab').forEach((b) =>
           b.addEventListener('click', () => { st.active = b.dataset['file']!; st.selected = null; st.pending.clear(); render(); }));
-        host.querySelector<HTMLInputElement>('.ed-add input')!
-          .addEventListener('change', (e) => void loadFiles((e.target as HTMLInputElement).files!));
+        host.querySelectorAll<HTMLInputElement>('.ed-add input, .ed-add-inline input').forEach((inp) =>
+          inp.addEventListener('change', (e) => void loadFiles((e.target as HTMLInputElement).files!)));
+        host.querySelector<HTMLInputElement>('#mirror')?.addEventListener('change', (e) => {
+          st.mirror = (e.target as HTMLInputElement).checked;
+          renderPendingBar();
+        });
         host.querySelector('#share')!.addEventListener('click', () => void share());
         host.querySelector('#dl')!.addEventListener('click', () => void download(false));
         host.querySelector('#dl-all')?.addEventListener('click', () => void download(true));
@@ -361,8 +396,44 @@ export async function editorView(): Promise<View> {
         return m;
       }
 
-      async function applyTooltipEdit(f: OpenFile, sets: SetOp[]): Promise<void> {
-        f.result.summary = await applySets(f.name, sets);
+      function handleMapFor(fileName: string, item: ItemSummary): Promise<Map<string, string>> {
+        const key = `${fileName}::${item.handle}`;
+        let p = hmapCache.get(key);
+        if (!p) {
+          p = itemDetail(fileName, item.handle).then((deep) => buildHandleMap(item, deep));
+          hmapCache.set(key, p);
+        }
+        return p;
+      }
+
+      /** Apply semantic token edits ([tokenKey, value] pairs) to the active
+       *  file's item — and, in recompose mode, to the same equipped item
+       *  (matched by slot + GlobalID) in every other loaded file, so the game
+       *  can't fall back to a backup with the old item. */
+      async function applyTokenEdits(
+        f: OpenFile, it: ItemSummary, edits: [string, number | string][],
+      ): Promise<void> {
+        const resolve = async (fileName: string, item: ItemSummary): Promise<SetOp[]> => {
+          const map = await handleMapFor(fileName, item);
+          const sets: SetOp[] = [];
+          for (const [k, v] of edits) {
+            const h = map.get(k);
+            if (h) sets.push({ handle: h, value: v });
+          }
+          return sets;
+        };
+        const sets = await resolve(f.name, it);
+        if (sets.length) f.result.summary = await applySets(f.name, sets);
+        if (st.mirror && it.slot >= 0) {
+          for (const other of st.files.values()) {
+            if (other.name === f.name || !other.result.roundTrip) continue;
+            const twin = other.result.summary.equipment
+              .find((e) => e.slot === it.slot && e.globalId === it.globalId);
+            if (!twin) continue;
+            const osets = await resolve(other.name, twin);
+            if (osets.length) other.result.summary = await applySets(other.name, osets);
+          }
+        }
         const sel = st.selected?.handle;
         const s = f.result.summary;
         st.selected = sel
@@ -372,20 +443,16 @@ export async function editorView(): Promise<View> {
       }
 
       function bindTooltipEditing(panel: HTMLElement, it: ItemSummary, f: OpenFile): void {
-        let hmapP: Promise<Map<string, string>> | null = null;
-        const hmap = (): Promise<Map<string, string>> =>
-          (hmapP ??= itemDetail(f.name, it.handle).then((deep) => buildHandleMap(it, deep)));
         const leafVal = (name: string): number =>
           Number(it.leaves.find((l) => l.name === name)?.value) || 0;
 
         panel.querySelectorAll<HTMLElement>('.tt .tok').forEach((tokEl) => {
-          tokEl.addEventListener('click', async (ev) => {
+          tokEl.addEventListener('click', (ev) => {
             ev.stopPropagation();
             if (tokEl.querySelector('select, input')) return; // already editing
-            const map = await hmap();
             const [group, a, b] = tokEl.dataset['tok']!.split(':');
-            const commit = (sets: SetOp[]): void => {
-              if (sets.length) void applyTooltipEdit(f, sets);
+            const commit = (edits: [string, number | string][]): void => {
+              if (edits.length) void applyTokenEdits(f, it, edits);
             };
             const restore = (): void => renderItemPanel();
             const mount = (ctrl: HTMLElement): void => {
@@ -415,26 +482,20 @@ export async function editorView(): Promise<View> {
             if (group === 'q') {
               // Quality stays ≤ 6 — the game's own maximum (higher crashes tooltips).
               select(QUALITY_NAMES.slice(0, 7).map((n, i) => [String(i), n] as [string, string]), String(it.quality),
-                (v) => { const h = map.get('q'); commit(h ? [{ handle: h, value: Number(v) }] : []); });
+                (v) => commit([['q', Number(v)]]));
             } else if (group === 'elv') {
               const el = Number(a);
-              numberInput(leafVal(ELEMENT_NAMES[el]!), (v) => {
-                const h = map.get(`el:${el}`);
-                commit(h ? [{ handle: h, value: v }] : []);
-              });
+              numberInput(leafVal(ELEMENT_NAMES[el]!), (v) => commit([[`el:${el}`, v]]));
             } else if (group === 'elname') {
               const el = Number(a);
               select(ELEMENT_NAMES.map((n, i) => [String(i), n] as [string, string]), String(el), (v) => {
                 const t = Number(v);
                 if (t === el) { restore(); return; }
-                const hOld = map.get(`el:${el}`);
-                const hNew = map.get(`el:${t}`);
-                if (!hOld || !hNew) { restore(); return; }
                 // Swap the two elemental leaves: moves this line to the new
                 // element, preserving any roll the target element already had.
                 commit([
-                  { handle: hOld, value: leafVal(ELEMENT_NAMES[t]!) },
-                  { handle: hNew, value: leafVal(ELEMENT_NAMES[el]!) },
+                  [`el:${el}`, leafVal(ELEMENT_NAMES[t]!)],
+                  [`el:${t}`, leafVal(ELEMENT_NAMES[el]!)],
                 ]);
               });
             } else if (group === 'main' || group === 'dot') {
@@ -442,15 +503,10 @@ export async function editorView(): Promise<View> {
               const rec = (group === 'main' ? it.main : it.dot)?.[i];
               if (!rec) return;
               if (b === 'n') {
-                numberInput(Number(rec['number']) || 0, (v) => {
-                  const h = map.get(`${group}:${i}:n`);
-                  commit(h ? [{ handle: h, value: v }] : []);
-                });
+                numberInput(Number(rec['number']) || 0, (v) => commit([[`${group}:${i}:n`, v]]));
               } else if (b === 'el') {
-                select(ELEMENT_NAMES.map((n, ix) => [String(ix), n] as [string, string]), String(Number(rec['EL']) || 0), (v) => {
-                  const h = map.get(`${group}:${i}:el`);
-                  commit(h ? [{ handle: h, value: Number(v) }] : []);
-                });
+                select(ELEMENT_NAMES.map((n, ix) => [String(ix), n] as [string, string]), String(Number(rec['EL']) || 0),
+                  (v) => commit([[`${group}:${i}:el`, Number(v)]]));
               } else {
                 const pool = group === 'main' ? affixNames.main : affixNames.dot;
                 const opts = Object.entries(pool)
@@ -458,20 +514,14 @@ export async function editorView(): Promise<View> {
                   .sort((x, y) => Number(x[0]) - Number(y[0]))
                   .map(([idx, s]) =>
                     [idx, `#${idx} ${s.label.replace('{n}', 'X').replace('{el}', 'EL').slice(0, 52)}`] as [string, string]);
-                select(opts, String(Number(rec['Index'])), (v) => {
-                  const h = map.get(`${group}:${i}:idx`);
-                  commit(h ? [{ handle: h, value: Number(v) }] : []);
-                });
+                select(opts, String(Number(rec['Index'])), (v) => commit([[`${group}:${i}:idx`, Number(v)]]));
               }
             } else if (group === 'wpsk') {
               const i = Number(a);
               const rec = it.wpsk?.[i];
               if (!rec) return;
               if (b === 'n') {
-                numberInput(Number(rec['Number']) || 0, (v) => {
-                  const h = map.get(`wpsk:${i}:n`);
-                  commit(h ? [{ handle: h, value: v }] : []);
-                });
+                numberInput(Number(rec['Number']) || 0, (v) => commit([[`wpsk:${i}:n`, v]]));
               } else {
                 let dl = panel.querySelector<HTMLDataListElement>('#skill-names');
                 if (!dl) {
@@ -486,8 +536,7 @@ export async function editorView(): Promise<View> {
                 inp.setAttribute('list', 'skill-names');
                 inp.value = String(rec['IndexName'] ?? '');
                 inp.addEventListener('change', () => {
-                  const h = map.get(`wpsk:${i}:skill`);
-                  if (h && inp.value) commit([{ handle: h, value: inp.value }]);
+                  if (inp.value) commit([[`wpsk:${i}:skill`, inp.value]]);
                 });
                 mount(inp);
               }
@@ -533,16 +582,27 @@ export async function editorView(): Promise<View> {
         bar.hidden = st.pending.size === 0;
         const n = host.querySelector<HTMLElement>('#pending-n');
         if (n) n.textContent = `${st.pending.size} pending change${st.pending.size === 1 ? '' : 's'}`;
+        const scope = host.querySelector<HTMLElement>('#pending-scope');
+        if (scope) {
+          scope.textContent = st.files.size > 1
+            ? (st.mirror ? `— will be applied to all ${st.files.size} files` : `— ${st.active ?? ''} only`)
+            : '';
+        }
       }
 
       function renderDropzone(): void {
         host.innerHTML = `
           <div class="ed-drop" id="drop">
-            <h2>Drop your save files here</h2>
-            <p>slot_1.sav, slot_1_auto.sav, slot_1_exit.sav — from<br>
-            <code>%USERPROFILE%\\AppData\\LocalLow\\OO Cat\\Shadow Dungeon\\</code></p>
-            <p class="dim">Load all three slot files and apply the same edits to each — the game silently
-            falls back to older backups. Close the game before editing. Nothing is uploaded.</p>
+            <h2>Drop all <u>three</u> save files here</h2>
+            <p class="file-chips">
+              <code>slot_1.sav</code><code>slot_1_auto.sav</code><code>slot_1_exit.sav</code>
+            </p>
+            <p>from <code>%USERPROFILE%\\AppData\\LocalLow\\OO Cat\\Shadow Dungeon\\</code><br>
+            <span class="dim">(select all three at once — Ctrl+click or Ctrl+A in the file picker)</span></p>
+            <p class="dim">The game keeps three copies of your character and silently falls back to the
+            <code>_auto</code>/<code>_exit</code> backups, so the editor recomposes your edits into every
+            file and you download all three back. Close the game before editing. Nothing is uploaded —
+            everything happens in your browser.</p>
             <label class="big-btn">Choose files<input type="file" accept=".sav" multiple hidden></label>
           </div>`;
         const drop = host.querySelector<HTMLElement>('#drop')!;
