@@ -1,0 +1,45 @@
+[
+  {
+    "date": "2026-09-01",
+    "title": "Skill trees, story & Corrupted Realm unlocks, mods page",
+    "items": [
+      "Skill Trees panel in the Save Editor: all 12 class trees plus Divine Favor, laid out with the game's real node positions, icons and connection lines. Left-click adds a point, right-click removes one; point pools and row-unlock gating stay consistent.",
+      "Trees follow your character — only your class's tabs are enabled, and Divine Favor unlocks at level 100.",
+      "Divine Favor nodes show the English name and icon of the choice you picked; hovering lists all three options with their effects.",
+      "Unlock story…: a chapter-by-chapter checklist of all 130 levels, with 💀 marking the 60 boss levels. Applies to every loaded file.",
+      "Unlock Corrupted Realm…: pick Normal / Hard / Nightmare / Inferno and a floor — and it unlocks the full story at the same time.",
+      "New Mods page: download the in-game F6 menu plugins (Character Utilities by Max + SummonAll) with a 3-step install guide.",
+      "Release notes now live right here on the home page and are updated with every change.",
+      "Fixed: empty skill sockets no longer render as \"+0 to 0\"; one-decimal affix values now format like the game; docs refreshed with diagrams."
+    ]
+  },
+  {
+    "date": "2026-08-31",
+    "title": "Build sharing, three-file recompose, click-to-edit tooltips",
+    "items": [
+      "Share build: your character (equipment with rolled affixes + talents) packed into a ~1 KB link that fits a free Discord message; opens read-only at #/build. Nothing touches a server — the payload lives in the link itself.",
+      "Three-file recompose: the editor asks for slot_N / _auto / _exit together, warns which are missing, mirrors every edit across the trio, and Download all returns them as a set.",
+      "Click-to-edit tooltips: click any value, element name, affix line, socketed skill or the quality word directly in the item tooltip and pick a replacement — the item re-renders instantly (Fire → Poison turns the line green).",
+      "Game-faithful affix text: every affix line renders with the game's own wording, extracted from the game code with 100% coverage.",
+      "Build id in the top-right corner, so a stale cached version is obvious at a glance."
+    ]
+  },
+  {
+    "date": "2026-08-31",
+    "title": "Character-view editor",
+    "items": [
+      "The editor became a character screen: hero strip (name, level, divine favor, gold, playtime), the in-game paper-doll, inventory and Global Chest grids, and a talents panel with search-to-invest.",
+      "Item tooltips render from your save's actual rolled values — elemental lines, affixes, DOTs, skill sockets, gem sockets, and set sections with worn/unworn dimming.",
+      "Safety: a file is only editable after it re-encodes byte-for-byte identically, and edited saves pass the game's own load checks."
+    ]
+  },
+  {
+    "date": "2026-08-31",
+    "title": "First release",
+    "items": [
+      "Item library: 3,725 weapons, armor pieces, accessories, gems, consumables and sets — searchable and filterable, with game-style tooltips and 5,197 extracted icons.",
+      "Save editor core: parse, edit and download your saves entirely in the browser. Nothing is uploaded, ever.",
+      "The OdinSerializer save format ported to TypeScript with byte-identical round-trips, plus full documentation: the wire format, the save data model, and a BepInEx modding guide crediting Max's Character Utilities."
+    ]
+  }
+]

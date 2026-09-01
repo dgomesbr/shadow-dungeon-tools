@@ -1,4 +1,11 @@
 import type { View } from '../router';
+import { loadJSON } from '../data/coltable';
+
+interface Release { date: string; title: string; items: string[] }
+
+function esc(s: unknown): string {
+  return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+}
 
 export async function homeView(): Promise<View> {
   return {
@@ -38,11 +45,29 @@ export async function homeView(): Promise<View> {
               <span class="cta">View repository →</span>
             </a>
           </section>
+          <section class="whats-new" id="whats-new" hidden>
+            <h2>What's new</h2>
+            <div id="releases"></div>
+          </section>
           <footer class="home-foot">
             Unofficial fan tooling for Shadow Dungeon (OO Cat). Modding patterns inspired by
             Max's Character Utilities plugin from the community Discord.
           </footer>
         </div>`;
+
+      // Release notes load lazily and never block first paint.
+      void loadJSON<Release[]>('changelog.json').then((releases) => {
+        const section = container.querySelector<HTMLElement>('#whats-new');
+        const host = container.querySelector<HTMLElement>('#releases');
+        if (!section || !host || !releases.length) return;
+        host.innerHTML = releases.map((r, i) => `
+          <details class="release" ${i === 0 ? 'open' : ''}>
+            <summary><b>${esc(r.title)}</b><span class="dim">${esc(r.date)}</span></summary>
+            <ul>${r.items.map((it) => `<li>${esc(it)}</li>`).join('')}</ul>
+          </details>`).join('');
+        section.hidden = false;
+      }).catch(() => {});
+
       return () => {};
     },
   };
