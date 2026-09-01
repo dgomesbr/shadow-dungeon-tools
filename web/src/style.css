@@ -36,6 +36,20 @@ a { color: var(--accent-hi); text-decoration: none; }
 .brand span { color: var(--accent-hi); }
 .topbar nav { display: flex; gap: 1.25rem; }
 .topbar .build { margin-left: auto; color: var(--fg-dim); font-size: 0.72rem; font-family: monospace; cursor: help; }
+.gh-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  color: var(--fg-dim); font-size: 0.85rem; white-space: nowrap;
+  padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 6px;
+}
+.gh-link:hover { color: var(--fg); border-color: var(--accent); }
+
+.card-ic { display: inline-flex; width: 22px; height: 22px; color: var(--accent-hi); vertical-align: -3px; }
+.card-ic svg { width: 100%; height: 100%; }
+.home-card h2 { display: flex; align-items: center; gap: 0.55rem; }
+.whats-new.latest .release { border-color: rgb(180 138 60 / 0.5); }
+.whats-new.latest .release summary { pointer-events: none; }
+.whats-new.latest .release summary::-webkit-details-marker,
+.whats-new.latest .release summary::marker { content: ''; display: none; }
 .topbar nav a { color: var(--fg-dim); padding: 0.35rem 0; border-bottom: 2px solid transparent; }
 .topbar nav a.active, .topbar nav a:hover { color: var(--fg); border-bottom-color: var(--accent); }
 

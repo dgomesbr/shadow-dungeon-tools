@@ -9,7 +9,7 @@
       "Unlock story…: a chapter-by-chapter checklist of all 130 levels, with 💀 marking the 60 boss levels. Applies to every loaded file.",
       "Unlock Corrupted Realm…: pick Normal / Hard / Nightmare / Inferno and a floor — and it unlocks the full story at the same time.",
       "New Mods page: download the in-game F6 menu plugins (Character Utilities by Max + SummonAll) with a 3-step install guide.",
-      "Release notes now live right here on the home page and are updated with every change.",
+      "Home page redesign: the latest release sits right under the tagline, the three feature cards got icons (Item Library, Save Game Editor, Mods), GitHub moved to the top bar, and a full Release history lives below the cards.",
       "Fixed: empty skill sockets no longer render as \"+0 to 0\"; one-decimal affix values now format like the game; docs refreshed with diagrams."
     ]
   },
