@@ -25,15 +25,25 @@ const REALM_TIERS = [
   ['easy', 'Normal'], ['medium', 'Hard'], ['hard', 'Nightmare'], ['master', 'Inferno'],
 ] as const;
 
+interface TreeNode { skill: string; x: number; y: number; icon: string; max: number; unlock: number }
+interface TalentTrees {
+  archetypes: { name: string; classIds: number[] }[];
+  trees: { xi: number; name: string; nodes: TreeNode[]; links?: [string, string][] }[];
+  synthesized?: boolean;
+}
+
 interface State {
   files: Map<string, OpenFile>;
   active: string | null;
-  container: 'inventory' | 'chest';
+  container: 'inventory' | 'chest' | 'talents';
   page: number;
   selected: ItemSummary | null;
   pending: Map<string, SetOp>;
   /** Recompose mode: apply edits to every loaded file, not just the active one. */
   mirror: boolean;
+  /** Skill-tree tabs: archetype index (archetypes.length = Divine Favor) and tree xi. */
+  talentArch: number;
+  talentXi: number;
 }
 
 export async function editorView(): Promise<View> {
@@ -47,6 +57,7 @@ export async function editorView(): Promise<View> {
       const st: State = {
         files: new Map(), active: null, container: 'inventory', page: 0,
         selected: null, pending: new Map(), mirror: true,
+        talentArch: 0, talentXi: -1,
       };
       // Deep-handle maps per file+item; index paths are stable across value
       // edits, so entries stay valid until files are (re)loaded.
@@ -359,9 +370,12 @@ export async function editorView(): Promise<View> {
               <div class="ed-inv-head">
                 <button class="seg ${st.container === 'inventory' ? 'on' : ''}" data-cont="inventory">Inventory</button>
                 <button class="seg ${st.container === 'chest' ? 'on' : ''}" data-cont="chest">Global Chest</button>
+                <button class="seg ${st.container === 'talents' ? 'on' : ''}" data-cont="talents">Skill Trees</button>
                 <span id="pages"></span>
               </div>
-              <div class="ed-grid" id="grid" style="width:${GRID_W * CELL}px;height:${GRID_H * CELL}px"></div>
+              ${st.container === 'talents'
+                ? '<div id="talent-trees"><p class="hint">Loading skill trees…</p></div>'
+                : `<div class="ed-grid" id="grid" style="width:${GRID_W * CELL}px;height:${GRID_H * CELL}px"></div>`}
             </section>
             <aside class="ed-item" id="item-panel"><p class="hint">Select an item — its in-game tooltip renders here.</p></aside>
           </div>
@@ -393,7 +407,8 @@ export async function editorView(): Promise<View> {
         renderChar(s, f.result.roundTrip);
         renderTalents(s, f.result.roundTrip);
         renderDoll(s);
-        renderGrid(s);
+        if (st.container === 'talents') void renderTalentTrees(s, f);
+        else renderGrid(s);
         renderItemPanel();
         renderPendingBar();
       }
@@ -471,6 +486,152 @@ export async function editorView(): Promise<View> {
         el.innerHTML = R.dollHTML(s.equipment, st.selected?.handle);
         el.querySelectorAll<HTMLButtonElement>('.eq-slot[data-h]').forEach((b) =>
           b.addEventListener('click', () => selectItem(b.dataset['h']!)));
+      }
+
+      // ---- skill trees (talent view) ---------------------------------------
+      let treesCache: Promise<TalentTrees | null> | null = null;
+      const treesData = (): Promise<TalentTrees | null> =>
+        (treesCache ??= loadJSON<TalentTrees>('talent-trees.json').catch(() => null));
+
+      /** Add/subtract talent points. Adjusts the matching pool (P_Used or
+       *  P_Used_DF — class trees cost 1 point/level and the game trusts the
+       *  saved P_Used; P_Used_DF is recomputed on load but kept in sync for
+       *  display). Mirrors additively to other files by skill name. */
+      async function applyTalentEdit(f: OpenFile, skillName: string, xi: number, delta: number, max: number): Promise<void> {
+        const cap = max > 0 ? max : 999;
+        const poolName = xi === 12 ? 'P_Used_DF' : 'P_Used';
+        const mkSets = (sum: SaveSummary): SetOp[] => {
+          const t = sum.talents.find((x) => x.name === skillName);
+          if (!t) return [];
+          const newLevel = Math.max(0, Math.min(cap, t.level + delta));
+          const d = newLevel - t.level;
+          if (!d) return [];
+          const sets: SetOp[] = [{ handle: t.handle, value: newLevel }];
+          const pool = sum.talentPoints.find((l) => l.name === poolName);
+          if (pool) sets.push({ handle: pool.handle, value: Math.max(0, Number(pool.value) + d) });
+          return sets;
+        };
+        const sets = mkSets(f.result.summary);
+        if (!sets.length) return;
+        f.result.summary = await applySets(f.name, sets);
+        if (st.mirror) {
+          for (const other of st.files.values()) {
+            if (other.name === f.name || !other.result.roundTrip) continue;
+            const osets = mkSets(other.result.summary);
+            if (osets.length) other.result.summary = await applySets(other.name, osets);
+          }
+        }
+        renderChar(f.result.summary, f.result.roundTrip);
+        renderTalents(f.result.summary, f.result.roundTrip);
+        await renderTalentTrees(f.result.summary, f);
+      }
+
+      async function renderTalentTrees(s: SaveSummary, f: OpenFile): Promise<void> {
+        const el = host.querySelector<HTMLElement>('#talent-trees');
+        if (!el) return;
+        const data = await treesData();
+        if (!data) {
+          el.innerHTML = '<p class="hint">Skill-tree layout data is not available in this build.</p>';
+          return;
+        }
+        const lvl = new Map(s.talents.map((t) => [t.name, t.level]));
+        const tp = new Map(s.talentPoints.map((l) => [l.name, Number(l.value) || 0]));
+        const pBase = tp.get('P_Base') ?? 0;
+        const pUsed = tp.get('P_Used') ?? 0;
+        const pDF = tp.get('P_Used_DF') ?? 0;
+        const nArch = data.archetypes.length;
+        const isDF = st.talentArch >= nArch;
+        if (st.talentXi < 0) st.talentXi = isDF ? 12 : data.archetypes[st.talentArch]?.classIds[0] ?? 0;
+        const curXi = isDF ? 12 : st.talentXi;
+        const tree = data.trees.find((t) => t.xi === curXi);
+        const investedIn = (t: { nodes: TreeNode[] }): number =>
+          t.nodes.reduce((a, n) => a + (lvl.get(n.skill) ?? 0), 0);
+
+        let html = `
+          <div class="tt-head">
+            <span class="ed-hero-stat"><b>${pBase}</b> total</span>
+            <span class="ed-hero-stat"><b>${pUsed}</b> class trees</span>
+            <span class="ed-hero-stat"><b>${pDF}</b> divine favor</span>
+            <span class="ed-hero-stat"><b>${pBase - pUsed - pDF}</b> available</span>
+            <span class="dim">click +1 · right-click or Shift+click −1</span>
+          </div>
+          <div class="tt-tabs">
+            ${data.archetypes.map((a, i) =>
+              `<button class="seg ${!isDF && st.talentArch === i ? 'on' : ''}" data-arch="${i}">${esc(a.name)}</button>`).join('')}
+            <button class="seg ${isDF ? 'on' : ''}" data-arch="${nArch}">Divine Favor</button>
+          </div>`;
+        if (!isDF) {
+          const arch = data.archetypes[st.talentArch];
+          html += `<div class="tt-tabs sub">${(arch?.classIds ?? []).map((xi) => {
+            const t = data.trees.find((x) => x.xi === xi);
+            return `<button class="seg ${st.talentXi === xi ? 'on' : ''}" data-xi="${xi}">
+              ${esc(t?.name ?? `Tree ${xi}`)} <span class="dim">${t ? investedIn(t) : 0}</span></button>`;
+          }).join('')}</div>`;
+        }
+
+        if (!tree || !tree.nodes.length) {
+          el.innerHTML = `${html}<p class="hint">No nodes in this tree.</p>`;
+        } else {
+          const inv = investedIn(tree);
+          const xs = tree.nodes.map((n) => n.x);
+          const ys = tree.nodes.map((n) => n.y);
+          const minX = Math.min(...xs), maxX = Math.max(...xs);
+          const minY = Math.min(...ys), maxY = Math.max(...ys);
+          const NODE = 52, W = 680;
+          const spanX = Math.max(1, maxX - minX);
+          const spanY = Math.max(1, maxY - minY);
+          const innerW = W - NODE - 24;
+          const H = Math.min(1600, Math.max(340, (spanY / spanX) * innerW + NODE + 44));
+          const px = (x: number): number => 12 + ((x - minX) / spanX) * innerW;
+          const py = (y: number): number => 8 + ((y - minY) / spanY) * (H - NODE - 40);
+          const pos = new Map(tree.nodes.map((n) => [n.skill, { x: px(n.x), y: py(n.y) }]));
+
+          const linkSvg = (tree.links ?? []).map(([a, b]) => {
+            const pa = pos.get(a), pb = pos.get(b);
+            if (!pa || !pb) return '';
+            return `<line x1="${pa.x + NODE / 2}" y1="${pa.y + NODE / 2}" x2="${pb.x + NODE / 2}" y2="${pb.y + NODE / 2}"/>`;
+          }).join('');
+
+          html += `<div class="tree-canvas" style="width:${W}px;height:${H}px">
+            <svg width="${W}" height="${H}">${linkSvg}</svg>
+            ${tree.nodes.map((n) => {
+              const cur = lvl.get(n.skill) ?? 0;
+              const locked = n.unlock > 0 && inv < n.unlock;
+              const p = pos.get(n.skill)!;
+              return `<button class="tnode ${locked ? 'locked' : ''} ${cur > 0 ? 'has' : ''}"
+                style="left:${p.x}px;top:${p.y}px" data-skill="${esc(n.skill)}" data-max="${n.max}"
+                title="${esc(n.skill)} — ${cur}/${n.max}${locked ? ` · locked (needs ${n.unlock} pts in tree, has ${inv})` : ''}">
+                ${n.icon ? `<img src="${BASE + n.icon}" alt="" loading="lazy" onerror="this.style.display='none'">` : ''}
+                <span class="tn-badge">${cur}/${n.max}</span>
+                <span class="tn-name">${esc(n.skill)}</span>
+              </button>`;
+            }).join('')}
+          </div>`;
+          el.innerHTML = html;
+
+          const editable = f.result.roundTrip;
+          el.querySelectorAll<HTMLButtonElement>('.tnode').forEach((b) => {
+            const doEdit = (delta: number): void => {
+              if (!editable) return;
+              const locked = b.classList.contains('locked');
+              if (delta > 0 && locked) return;
+              void applyTalentEdit(f, b.dataset['skill']!, curXi, delta, Number(b.dataset['max']));
+            };
+            b.addEventListener('click', (e) => doEdit(e.shiftKey ? -1 : 1));
+            b.addEventListener('contextmenu', (e) => { e.preventDefault(); doEdit(-1); });
+          });
+        }
+        el.querySelectorAll<HTMLButtonElement>('[data-arch]').forEach((b) =>
+          b.addEventListener('click', () => {
+            st.talentArch = Number(b.dataset['arch']);
+            st.talentXi = st.talentArch >= nArch ? 12 : data.archetypes[st.talentArch]?.classIds[0] ?? 0;
+            void renderTalentTrees(active()!.result.summary, active()!);
+          }));
+        el.querySelectorAll<HTMLButtonElement>('[data-xi]').forEach((b) =>
+          b.addEventListener('click', () => {
+            st.talentXi = Number(b.dataset['xi']);
+            void renderTalentTrees(active()!.result.summary, active()!);
+          }));
       }
 
       function renderGrid(s: SaveSummary): void {

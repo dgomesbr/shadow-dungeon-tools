@@ -280,6 +280,40 @@ kbd {
 .modal-foot #m-status { margin-right: auto; }
 .realm-tiers { display: grid; gap: 0.4rem; margin: 0.6rem 0 0.8rem; }
 .realm-tier { display: flex; gap: 0.5rem; align-items: baseline; cursor: pointer; }
+
+/* ---- skill trees ---- */
+#talent-trees { padding-bottom: 2rem; }
+.tt-head { display: flex; gap: 1.4rem; align-items: baseline; flex-wrap: wrap; padding: 0.3rem 0 0.6rem; }
+.tt-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.tt-tabs.sub .seg { font-size: 0.85rem; }
+.tree-canvas {
+  position: relative; background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgb(180 138 60 / 0.06), transparent), #0a0a0e;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.tree-canvas svg { position: absolute; inset: 0; pointer-events: none; }
+.tree-canvas svg line { stroke: #4a3d26; stroke-width: 2; }
+.tnode {
+  position: absolute; width: 52px; height: 52px; padding: 2px;
+  display: grid; place-items: center;
+  background: #141018; border: 2px solid var(--border); border-radius: 8px;
+}
+.tnode img { max-width: 40px; max-height: 40px; object-fit: contain; }
+.tnode.has { border-color: var(--accent); box-shadow: 0 0 10px rgb(180 138 60 / 0.35); }
+.tnode.locked { filter: grayscale(0.9) brightness(0.55); }
+.tnode:hover { border-color: var(--accent-hi); filter: none; z-index: 3; }
+.tn-badge {
+  position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
+  background: var(--bg-panel); border: 1px solid var(--border); border-radius: 6px;
+  font-size: 0.62rem; padding: 0 4px; white-space: nowrap;
+}
+.tnode.has .tn-badge { color: var(--accent-hi); border-color: var(--accent); }
+.tn-name {
+  position: absolute; top: 54px; left: 50%; transform: translateX(-50%);
+  width: 92px; font-size: 0.58rem; color: var(--fg-dim); line-height: 1.1;
+  pointer-events: none; display: none;
+}
+.tnode:hover .tn-name { display: block; z-index: 4; }
 .build-cols { grid-template-columns: 1fr 380px; max-width: 60rem; margin: 0 auto; width: 100%; }
 .build-talents { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.2rem; }
 .build-talents .frow b { color: var(--accent-hi); }
