@@ -6,7 +6,7 @@ have learned with one click (or one hotkey). Written as a companion to Max's
 a **Summon All** button at the top of its F6 window; when it is not, SummonAll shows
 its own small F6 window instead.
 
-- **GUID:** `dgome.summonall` &nbsp;|&nbsp; **Version:** 1.0.0
+- **GUID:** `custom.summonall` &nbsp;|&nbsp; **Version:** 1.0.0
 - **Soft dependency:** `max.characterutilities` (works fine without it)
 
 ## What it does
@@ -22,7 +22,7 @@ the data table's `Summon_count`) and the companions currently alive in the skill
 | Free (default) | `RespectCooldownAndMana = false` | Instantly spawns each missing companion via `Gun.SpawnCompanionInstant`, scattered around the player — same code path the game uses for its own after-death auto-resummon. |
 | Fair | `RespectCooldownAndMana = true` | Casts each deficient summon skill once through the normal pipeline (`ACTbar.TryReleaseSkillDirect`), paying mana and starting the cooldown; skipped skills are reported with the reason. |
 
-Config lives in `BepInEx\config\dgome.summonall.cfg` after first run. An optional
+Config lives in `BepInEx\config\custom.summonall.cfg` after first run. An optional
 `SummonAllHotkey` (e.g. `F7`) triggers the summon without opening any window.
 
 ## Build

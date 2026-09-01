@@ -1,6 +1,16 @@
 [
   {
     "date": "2026-09-01",
+    "title": "QoL plugin suite v1.1.0 - seven plugins, one download",
+    "items": [
+      "New plugin pack on the Mods page: Combat DPS Meter (F9, real dungeon DPS split by you / each summon / DoTs), Readable Numbers (damage as 510 Billion / 1.2 Trillion instead of digit soup), Advanced Tooltips (affix roll ranges + hover ground loot without picking it up), VFX Reducer (F11, three particle-budget modes for dense-floor FPS), Quick Enhance (Shift+click runs the forge to +max), Mijing Floor Selector (F10, jump floors and raise your unlocked cap), and Summon All.",
+      "Each plugin is its own DLL - install only what you want; every one fails soft if a game patch changes something.",
+      "All plugin GUIDs and configs now use a neutral custom.* prefix; full source and per-plugin docs live in mods/ in the repo.",
+      "Character Utilities by Max remains available from the mods-v1.0.0 release; the suite's Summon All button still embeds into its F6 window."
+    ]
+  },
+  {
+    "date": "2026-09-01",
     "title": "Skill trees, story & Corrupted Realm unlocks, mods page",
     "items": [
       "Skill Trees panel in the Save Editor: all 12 class trees plus Divine Favor, laid out with the game's real node positions, icons and connection lines. Left-click adds a point, right-click removes one; point pools and row-unlock gating stay consistent.",

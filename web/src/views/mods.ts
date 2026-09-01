@@ -1,10 +1,12 @@
 import type { View } from '../router';
 
-const RELEASE = 'https://github.com/dgomesbr/shadow-dungeon-tools/releases/download/mods-v1.0.0';
-const ZIP = `${RELEASE}/ShadowDungeon-F6-Mods-1.0.0.zip`;
-const ZIP_SHA256 = 'D9CD729BF5A1D8C6AEA4E3921FEC4EC89C5BBBD3E311E619AD50AD59465E0756';
-const BEPINEX = 'https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5';
 const REPO = 'https://github.com/dgomesbr/shadow-dungeon-tools';
+const SUITE_RELEASE = `${REPO}/releases/download/mods-v1.1.0`;
+const SUITE_ZIP = `${SUITE_RELEASE}/ShadowDungeon-QoL-Plugins-1.1.0.zip`;
+const SUITE_SHA256 = '8DAA075E3725177A3F16EF56E63E906729FE3748195879B80569D28AAE5463CB';
+const F6_RELEASE = `${REPO}/releases/tag/mods-v1.0.0`;
+const F6_ZIP = `${REPO}/releases/download/mods-v1.0.0/ShadowDungeon-F6-Mods-1.0.0.zip`;
+const BEPINEX = 'https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5';
 
 export async function modsView(): Promise<View> {
   return {
@@ -12,16 +14,19 @@ export async function modsView(): Promise<View> {
       container.innerHTML = `
         <div class="mods">
           <section class="hero">
-            <h1>The in-game <span>F6 menu</span></h1>
-            <p class="tagline">Two BepInEx plugins that add a utility window inside the game —
-            press <kbd>F6</kbd> and move gold between characters, copy story progress,
-            auto-aim your Auto Cast, replay bosses and re-summon your whole army in one click.</p>
+            <h1>QoL <span>plugin suite</span></h1>
+            <p class="tagline">Seven open-source BepInEx plugins, one DLL each — install only
+            what you want. An in-combat DPS meter, readable damage numbers
+            (<i>1.2&nbsp;Trillion</i> instead of digit soup), affix roll ranges and ground-loot
+            tooltips, an FPS-saving VFX reducer, Shift-click enhance-to-max, a Corrupted Realm
+            floor selector and one-click re-summoning.</p>
             <p>
-              <a class="big-btn" href="${ZIP}">⬇ Download ShadowDungeon-F6-Mods-1.0.0.zip</a>
+              <a class="big-btn" href="${SUITE_ZIP}">⬇ Download ShadowDungeon-QoL-Plugins-1.1.0.zip</a>
             </p>
-            <p class="dim">20 KB · SHA-256 <code class="sha">${ZIP_SHA256}</code><br>
-            <a href="${REPO}/releases/tag/mods-v1.0.0" target="_blank" rel="noopener">release page</a> ·
-            individual DLLs and notes there. Only install DLLs you trust — back up your saves first.</p>
+            <p class="dim">63 KB · SHA-256 <code class="sha">${SUITE_SHA256}</code><br>
+            <a href="${REPO}/releases/tag/mods-v1.1.0" target="_blank" rel="noopener">release page</a> ·
+            <a href="${REPO}/tree/main/mods" target="_blank" rel="noopener">source &amp; docs</a> ·
+            only install DLLs you trust — back up your saves first.</p>
           </section>
 
           <div class="mods-cols">
@@ -36,59 +41,65 @@ export async function modsView(): Promise<View> {
                   You should end up with <code>winhttp.dll</code>, <code>doorstop_config.ini</code>
                   and a <code>BepInEx\\</code> folder <i>next to</i> the exe.
                   Start the game once and quit — this creates <code>BepInEx\\plugins\\</code>.</li>
-                <li><b>Install the mods.</b> Extract the zip above into the same game root
-                  (it only adds <code>ShadowDungeonPlus.dll</code> and <code>SummonAll.dll</code>
-                  into <code>BepInEx\\plugins\\</code>).</li>
-                <li><b>Play.</b> Launch the game and press <kbd>F6</kbd>.</li>
+                <li><b>Install the plugins.</b> Extract the zip above into the same game root
+                  (it only adds DLLs into <code>BepInEx\\plugins\\</code>). Don't want one?
+                  Delete its DLL.</li>
+                <li><b>Play.</b> <kbd>F9</kbd> DPS meter · <kbd>F10</kbd> floor selector ·
+                  <kbd>F11</kbd> VFX reducer · <kbd>Shift</kbd>+click at the forge ·
+                  <kbd>F6</kbd> Summon All.</li>
               </ol>
               <h4>Verify &amp; troubleshoot</h4>
               <ul class="steps">
-                <li>After one launch, <code>BepInEx\\LogOutput.log</code> should list
-                  <i>Character Utilities</i> and <i>Summon All</i>.</li>
-                <li>Nothing on F6? Make sure <code>winhttp.dll</code> sits next to the exe
+                <li>After one launch, <code>BepInEx\\LogOutput.log</code> lists every loaded plugin.</li>
+                <li>Nothing happens? Make sure <code>winhttp.dll</code> sits next to the exe
                   (not inside a leftover <code>BepInEx_win_x64…\\</code> folder from a lazy extract).</li>
-                <li>Disable all mods temporarily: <code>enabled = false</code> in
-                  <code>doorstop_config.ini</code>. Full uninstall: delete
-                  <code>winhttp.dll</code>, <code>doorstop_config.ini</code> and <code>BepInEx\\</code>.</li>
+                <li>Each plugin's settings live in <code>BepInEx\\config\\custom.&lt;plugin&gt;.cfg</code>
+                  (hotkeys are rebindable). Disable all mods temporarily:
+                  <code>enabled = false</code> in <code>doorstop_config.ini</code>.</li>
+                <li>Every plugin fails soft: if a game update breaks a hook it logs one warning
+                  and turns itself off instead of breaking the game.</li>
               </ul>
             </section>
 
             <section class="dcard">
-              <h4>What the F6 menu can do today</h4>
-              <p class="mod-title">Character Utilities <span class="dim">v1.1.0 — by Max</span></p>
+              <h4>What's in the suite <span class="dim">v1.1.0 —
+                <a href="${REPO}/tree/main/mods" target="_blank" rel="noopener">source in this repo</a></span></h4>
               <ul class="steps">
-                <li><b>Gold transfer</b> between your save slots, plus <b>export / import</b>
-                  gold through a file (<code>BepInEx\\config\\CharacterUtilities\\gold_transfer.json</code>).</li>
-                <li><b>Story-progress copy</b> from one slot to another — bring an alt straight
-                  to your main's campaign unlocks.</li>
-                <li><b>Auto Aim</b> — while the game's own <i>Auto Cast</i> is enabled, your casts
-                  aim at the auto-lock target instead of your facing direction (toggle in config).</li>
-                <li><b>Replay Boss</b> — after a boss dies, a second portal spawns that restarts
-                  the fight for another run at the loot.</li>
-                <li class="dim">Config: <code>BepInEx\\config\\max.characterutilities.cfg</code></li>
+                <li><b>Combat DPS Meter</b> (<kbd>F9</kbd>) — real dungeon DPS with per-source
+                  rows (you, each summon, DoTs), share %, peak; the vanilla meter only works on
+                  the training dummy.</li>
+                <li><b>Readable Numbers</b> — damage, DPS and gold at the nearest named scale:
+                  <i>510 Billion</i>, <i>1.2 Trillion</i>, <i>3.4 Quadrillion</i>…</li>
+                <li><b>Advanced Tooltips</b> — affix lines show <i>rolled X (min~max)</i>, and
+                  hovering ground loot shows its full tooltip without picking it up.</li>
+                <li><b>VFX Reducer</b> (<kbd>F11</kbd>) — Off / Reduced / Minimal particle
+                  budgets on your skills and summons for dense-floor FPS.</li>
+                <li><b>Quick Enhance</b> — hold <kbd>Shift</kbd> and click enhance: runs to
+                  +max / out of gold in one burst.</li>
+                <li><b>Mijing Floor Selector</b> (<kbd>F10</kbd>) — jump to any unlocked
+                  Corrupted Realm floor; optional confirm-gated cap raise.</li>
+                <li><b>Summon All</b> — the original: re-summon your whole army in one click
+                  from the F6 window, with an optional fair mode and hotkey.</li>
               </ul>
-              <p class="mod-title">SummonAll <span class="dim">v1.0.0 —
-                <a href="${REPO}/tree/main/mods/SummonAll" target="_blank" rel="noopener">source in this repo</a></span></p>
+              <p class="mod-title">Character Utilities <span class="dim">v1.1.0 — by Max ·
+                <a href="${F6_RELEASE}" target="_blank" rel="noopener">separate download</a></span></p>
               <ul class="steps">
-                <li><b>Summon All</b> button at the top of the F6 window — re-summons every
-                  companion your talents allow, in one click (after death, zone change, …).</li>
-                <li><b>Fair mode</b> (<code>RespectCooldownAndMana</code>) makes it pay normal
-                  cooldowns and mana instead of summoning instantly.</li>
-                <li><b>Hotkey</b> — optionally bind a key so you don't even open the menu.</li>
-                <li>Works standalone: if Character Utilities isn't installed, it opens its own
-                  small F6 window.</li>
-                <li class="dim">Config: <code>BepInEx\\config\\dgome.summonall.cfg</code></li>
+                <li>The original F6 window: <b>gold transfer</b> between slots, <b>story-progress
+                  copy</b>, <b>Auto Aim</b> for Auto Cast, <b>Replay Boss</b> portals.
+                  Get it from the <a href="${F6_ZIP}">mods-v1.0.0 pack</a> — the suite embeds its
+                  Summon All button into that window when both are installed.</li>
               </ul>
             </section>
           </div>
 
           <footer class="home-foot">
-            The F6 window and its features are the work of <b>Max</b> from the Shadow Dungeon
-            community Discord (#qol-mod) — redistributed here with attribution, and removed on request.
-            Want to build your own plugin? The full modding guide (game internals, Harmony patterns,
-            plugin walkthrough) lives in
+            The suite is unaffiliated fan work (MIT, full source in
+            <a href="${REPO}/tree/main/mods" target="_blank" rel="noopener">mods/</a>).
+            Character Utilities is the work of <b>Max</b> from the Shadow Dungeon community
+            Discord (#qol-mod) — redistributed with attribution, removed on request.
+            Want to build your own plugin? The full modding guide lives in
             <a href="${REPO}/tree/main/docs/modding" target="_blank" rel="noopener">docs/modding</a>.
-            Unaffiliated fan work — plugins run code inside the game process; install at your own risk.
+            Plugins run code inside the game process — install at your own risk.
           </footer>
         </div>`;
       return () => {};

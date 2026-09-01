@@ -14,7 +14,7 @@ namespace SummonAll;
 [BepInDependency("max.characterutilities", BepInDependency.DependencyFlags.SoftDependency)]
 public sealed class Plugin : BaseUnityPlugin
 {
-    public const string PluginGuid = "dgome.summonall";
+    public const string PluginGuid = "custom.summonall";
     public const string PluginName = "Summon All";
     public const string PluginVersion = "1.0.0";
 
