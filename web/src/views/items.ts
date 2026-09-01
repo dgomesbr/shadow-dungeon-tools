@@ -208,7 +208,10 @@ function renderDetail(host: HTMLElement, it: CatalogEntry, cat: Catalog): void {
       lines.push(ttLine(affixLabel('main', i, el, nb), 'mod'));
     }
     const sockets = (w['Sockets'] as [string, number][] | undefined) ?? [];
-    for (const [sk, pts] of sockets) lines.push(ttLine(`+${pts} to ${esc(sk)}`, 'skill'));
+    for (const [sk, pts] of sockets) {
+      // Empty socket slots come through as 0/"0" — skip them.
+      if (sk && String(sk) !== '0') lines.push(ttLine(`+${pts} to ${esc(sk)}`, 'skill'));
+    }
     const aocao = Number(w['CurAocaoCount']) || 0;
     if (aocao) lines.push(ttLine(`◆ ${aocao} socket slot${aocao > 1 ? 's' : ''}`, 'sockets'));
     const spc = w['SPC'] as number;

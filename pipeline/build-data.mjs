@@ -12,6 +12,7 @@
 // the strings actually referenced by the emitted data.
 
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import zlib from "node:zlib";
 import { fileURLToPath } from "node:url";
@@ -21,7 +22,7 @@ import { parseTable, coerce } from "./lib/csv.mjs";
 
 const SOURCE_DIR =
   process.env.SD_EXTRACTED_DIR ??
-  "C:\\Users\\dgome\\AppData\\LocalLow\\OO Cat\\ShadowDungeonSaveTool\\assets\\extracted";
+  path.join(os.homedir(), "AppData", "LocalLow", "OO Cat", "ShadowDungeonSaveTool", "assets", "extracted");
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.resolve(__dirname, "..", "web", "public", "data");

@@ -176,8 +176,10 @@ export function createCharacterRenderer(cat: Catalog, affixNames: AffixNames) {
         lines.push(`<p class="tt-line el-${Number(d['EL']) || 0}">${affixLine('dot', d, undefined, editable ? `dot:${i}` : undefined)}</p>`);
       });
       (it.wpsk ?? []).forEach((sk, i) => {
-        if (sk['IndexName']) {
-          lines.push(`<p class="tt-line skill">+${tok(`wpsk:${i}:n`, fmt(Number(sk['Number'])), 'Click to change the points')} to ${tok(`wpsk:${i}:skill`, esc(sk['IndexName']), 'Click to change the skill')}</p>`);
+        // Empty socket slots are stored as IndexName "0" — don't render them.
+        const nm = String(sk['IndexName'] ?? '');
+        if (nm && nm !== '0') {
+          lines.push(`<p class="tt-line skill">+${tok(`wpsk:${i}:n`, fmt(Number(sk['Number'])), 'Click to change the points')} to ${tok(`wpsk:${i}:skill`, esc(nm), 'Click to change the skill')}</p>`);
         }
       });
       const sockets = it.aocao ?? [];

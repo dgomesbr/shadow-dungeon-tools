@@ -260,7 +260,8 @@ export function buildFromSummary(s: SaveSummary): ShareBuild {
       elements: ELEMENT_NAMES.map((n) => leafNum(it.leaves, n)),
       main: (it.main ?? []).map((m) => [Number(m['Index']), Number(m['EL']) || 0, Number(m['number']) || 0] as [number, number, number]),
       dot: (it.dot ?? []).map((m) => [Number(m['Index']), Number(m['EL']) || 0, Number(m['number']) || 0] as [number, number, number]),
-      wpsk: (it.wpsk ?? []).filter((w) => w['IndexName'])
+      // Empty socket slots are stored as IndexName "0" — drop them from shares.
+      wpsk: (it.wpsk ?? []).filter((w) => w['IndexName'] && String(w['IndexName']) !== '0')
         .map((w) => ({ name: String(w['IndexName']), points: Number(w['Number']) || 0 })),
       aocaoTypes: (it.aocao ?? []).map((a) => Number(a['Type']) || 0),
       setIndex: leafNum(it.leaves, 'Set_Index'),

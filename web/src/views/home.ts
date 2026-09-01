@@ -24,6 +24,13 @@ export async function homeView(): Promise<View> {
               verified against the game's own format.</p>
               <span class="cta">Open editor →</span>
             </a>
+            <a class="home-card" href="#/mods">
+              <h2>Mods — F6 Menu</h2>
+              <p>Drop-in BepInEx plugins that add an in-game utility window:
+              gold transfer, story-progress copy, auto-aim, boss replay and
+              one-click Summon All. Download + install guide.</p>
+              <span class="cta">Get the mods →</span>
+            </a>
             <a class="home-card" href="https://github.com/dgomesbr/shadow-dungeon-tools" target="_blank" rel="noopener">
               <h2>GitHub</h2>
               <p>Open source: the save-format spec, data pipeline, BepInEx modding

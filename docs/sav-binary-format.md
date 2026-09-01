@@ -9,7 +9,7 @@ Sirenix OdinSerializer), against the game's own save/load code
 2,234,290-byte `slot_1.sav` with zero slack bytes and balanced nesting.
 
 Decompiled sources used (kept for reference):
-`C:\Users\dgome\Dev\shadow-dungeon-tools\.tmp\odin-decomp\` (`BinaryDataWriter.cs`,
+`.tmp\odin-decomp\` (`BinaryDataWriter.cs`,
 `BinaryDataReader.cs`, `BinaryEntryType.cs`, `ComplexTypeSerializer.cs`,
 `ProperBitConverter.cs`, `SerializationContext.cs`, `DeserializationContext.cs`,
 `DictionaryFormatter.cs`, `ListFormatter.cs`, `HashSetFormatter.cs`,
@@ -25,7 +25,7 @@ TeamSirenix/odin-serializer repo for comparison).
 
 ### 1.1 Which files use this format
 
-Save root: `C:\Users\dgome\AppData\LocalLow\OO Cat\Shadow Dungeon\`
+Save root: `%USERPROFILE%\AppData\LocalLow\OO Cat\Shadow Dungeon\`
 
 | File | Root type serialized | Notes |
 |---|---|---|
@@ -522,7 +522,7 @@ note the divergence.
   UTF-16LE.
 - Mono specifics that leak into bytes: `mscorlib` / `System.Core` assembly names and
   `InternalStringComparer` (Mono-internal type) inside type-name strings. The
-  companion SaveTool (`C:\Users\dgome\AppData\LocalLow\OO Cat\ShadowDungeonSaveTool\SaveTool\Program.cs`)
+  companion SaveTool (`%USERPROFILE%\AppData\LocalLow\OO Cat\ShadowDungeonSaveTool\SaveTool\Program.cs`)
   runs on .NET 8 and needs a custom binder purely to translate
   `System.Private.CoreLib` ↔ `mscorlib` and
   ``GenericEqualityComparer`1[[System.String…]]`` ↔ `InternalStringComparer` so its

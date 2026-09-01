@@ -1,11 +1,11 @@
 # Shadow Dungeon — Save Data Model
 
 Complete C# data model of the OdinSerializer `.sav` payload, traced from the decompiled game code at
-`C:\Users\dgome\AppData\LocalLow\OO Cat\ShadowDungeonSaveTool\decompiled\Assembly-CSharp\`
+`%USERPROFILE%\AppData\LocalLow\OO Cat\ShadowDungeonSaveTool\decompiled\Assembly-CSharp\`
 (all `file:line` references below are relative to that folder). Root type: **`Data.SaveData.SaveData`**.
 
 Game version: Unity 2019.4 Mono, Steam appid 4423580. Saves in
-`C:\Users\dgome\AppData\LocalLow\OO Cat\Shadow Dungeon\` — no encryption, no content checksums.
+`%USERPROFILE%\AppData\LocalLow\OO Cat\Shadow Dungeon\` — no encryption, no content checksums.
 
 ## 1. Containment tree
 

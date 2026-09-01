@@ -4,9 +4,9 @@ How the game turns a save-file affix tuple into a tooltip line, and the schema o
 `web/public/data/affix-names.json` (generated from the decompiled code + localization).
 
 Decompiled sources under
-`C:\Users\dgome\AppData\LocalLow\OO Cat\ShadowDungeonSaveTool\decompiled\Assembly-CSharp\`;
+`%USERPROFILE%\AppData\LocalLow\OO Cat\ShadowDungeonSaveTool\decompiled\Assembly-CSharp\`;
 localization (English column) from
-`C:\Users\dgome\AppData\LocalLow\OO Cat\ShadowDungeonSaveTool\assets\extracted\Main_FY.json`
+`%USERPROFILE%\AppData\LocalLow\OO Cat\ShadowDungeonSaveTool\assets\extracted\Main_FY.json`
 and `MainDisplay_FY.json`.
 
 ## Where the mapping lives in code

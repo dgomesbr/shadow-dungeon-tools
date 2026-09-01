@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import json
 import os
+import pathlib
 import struct
 import sys
 import time
@@ -37,7 +38,7 @@ from UnityPy.helpers.TypeTreeGenerator import TypeTreeGenerator
 
 GAME_DATA = r"F:\SteamLibrary\steamapps\common\Shadow Dungeon\Shadow Dungeon_Data"
 GAME_ROOT = os.path.dirname(GAME_DATA)
-OUT_ROOT = r"C:\Users\dgome\Dev\shadow-dungeon-tools\web\public\icons"
+OUT_ROOT = str(pathlib.Path(__file__).resolve().parent.parent / "web" / "public" / "icons")
 UNITY_VERSION = "2019.4.40f1"
 
 # Files needed: level1 hosts the ItemManager scene object, sharedassets1
