@@ -195,6 +195,36 @@ affix Index → English tooltip-template map the web app uses to render
 game-faithful affix lines. Schema and provenance in
 [affix-mapping.md](affix-mapping.md).
 
+## levels.json — 7 chapters, 130 levels
+
+Produced by `pipeline/build-levels.mjs` (not `build-data.mjs`) from
+`LevelData.json` + `Level_FY.json`. The story-level catalog behind the
+"Unlock Story levels" dialog:
+
+```json
+{"chapters":[{"id":1,"name":"Chapter 1","levels":[
+  {"id":"01_01","name":"Misty Plains","boss":false,"final":false}, ...]}]}
+```
+
+* `chapters[].id` — 1–7, the ints in the save's `UnlockedChapterIds`.
+  `name` is the in-game display name (`Level_FY["Chapter"+id]`, English) —
+  the game names chapters "Chapter 1"…"Chapter 7" in every language.
+* `levels[]` — mainline levels only (LevelType Normal/Boss), ordered by the
+  `NN` in the `CC_NN` id; `CC` = chapter id (how `LevelManager` derives it).
+  The `Home` hub and the Challenge (`C0xx`) / Mijing (`M0xx`) levels are
+  excluded. `name` = `Level_FY[LocalName].English` (falls back to the id).
+* `boss` — `LevelData.Type == Boss(1)`; only these ids can appear in the
+  save's `DefeatedBossLevelIds` (60 total; each chapter's last level is one).
+* `final` — `LevelData.IsFinal`; true only for `07_19` (game-final boss,
+  triggers the Mijing unlock).
+
+Unlock semantics (decompiled `TeleportStation`/`TeleportPanel`/
+`BossLevelManager`): a level is reachable iff its id is in
+`UnlockedLevelIds` **and** its chapter int is in `UnlockedChapterIds`;
+beating the boss of a chapter's last level adds the next chapter id and its
+first level (`CC+1`, `"CC+1_01"`). An unlock editor should add all three
+save fields consistently (`DefeatedBossLevelIds` only for `boss` levels).
+
 ## Join keys at a glance
 
 | Key | From → To |

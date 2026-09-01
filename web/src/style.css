@@ -243,6 +243,43 @@ kbd {
   background: var(--bg-panel); border: 1px solid var(--border); border-bottom-width: 2px;
   border-radius: 4px; padding: 0.05rem 0.4rem; font-family: monospace;
 }
+
+/* ---- modals + unlock dialogs ---- */
+.tab-act { font-size: 0.85rem; color: var(--accent-hi); border-color: var(--border); }
+.tab-act:hover { border-color: var(--accent); }
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
+  background: rgb(0 0 0 / 0.6); backdrop-filter: blur(2px);
+}
+.modal {
+  width: min(680px, 92vw); max-height: 84vh; display: flex; flex-direction: column;
+  background: var(--bg-raise); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: 0 18px 60px rgb(0 0 0 / 0.6);
+}
+.modal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.7rem 1rem; border-bottom: 1px solid var(--border);
+}
+.modal-head h3 { margin: 0; font-size: 1.05rem; color: var(--accent-hi); }
+.modal-x { border: none; background: none; color: var(--fg-dim); font-size: 1rem; }
+.modal-x:hover { color: var(--fg); }
+.modal-body { padding: 0.9rem 1rem; overflow-y: auto; }
+.modal-body details { margin-bottom: 0.5rem; }
+.modal-body summary { cursor: pointer; padding: 0.25rem 0; }
+.lvl-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.15rem 1rem;
+  padding: 0.4rem 0 0.4rem 1.4rem; font-size: 0.9rem;
+}
+.lvl { display: flex; gap: 0.4rem; align-items: baseline; }
+.lvl input:disabled + * , .lvl:has(input:disabled) { color: var(--fg-dim); }
+.boss-ic { font-size: 0.8em; }
+.modal-foot {
+  display: flex; gap: 0.8rem; align-items: center; justify-content: flex-end;
+  margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);
+}
+.modal-foot #m-status { margin-right: auto; }
+.realm-tiers { display: grid; gap: 0.4rem; margin: 0.6rem 0 0.8rem; }
+.realm-tier { display: flex; gap: 0.5rem; align-items: baseline; cursor: pointer; }
 .build-cols { grid-template-columns: 1fr 380px; max-width: 60rem; margin: 0 auto; width: 100%; }
 .build-talents { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.2rem; }
 .build-talents .frow b { color: var(--accent-hi); }

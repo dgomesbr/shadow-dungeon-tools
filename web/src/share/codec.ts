@@ -314,5 +314,9 @@ export function summaryFromBuild(b: ShareBuild): SaveSummary {
       leaf('P_Base', b.pBase), leaf('P_Used', b.pUsed), leaf('P_Used_DF', b.pUsedDF),
     ],
     talents,
+    unlockedChapters: [],
+    unlockedLevels: [],
+    defeatedBossLevels: [],
+    mijing: { unlocked: false, easy: 0, medium: 0, hard: 0, master: 0 },
   };
 }

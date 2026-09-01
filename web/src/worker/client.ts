@@ -58,6 +58,14 @@ export async function itemDetail(fileName: string, handle: string): Promise<Leaf
   return r.leaves;
 }
 
+export async function applyUnlock(
+  fileName: string, unlock: import('./protocol').UnlockOp,
+): Promise<{ summary: SaveSummary; added: { chapters: number; levels: number; bossLevels: number } }> {
+  const r = await call<Extract<WorkerResponse, { op: 'unlock' }>>(
+    { id: nextId++, op: 'unlock', fileName, unlock }, []);
+  return { summary: r.summary, added: r.added };
+}
+
 export async function encodeSave(fileName: string): Promise<ArrayBuffer> {
   const r = await call<Extract<WorkerResponse, { op: 'encode' }>>(
     { id: nextId++, op: 'encode', fileName }, []);

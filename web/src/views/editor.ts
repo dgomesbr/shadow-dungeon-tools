@@ -1,7 +1,8 @@
 import type { View } from '../router';
-import { applySets, encodeSave, itemDetail, parseSave, type ParseResult } from '../worker/client';
-import type { ItemSummary, Leaf, SaveSummary, SetOp } from '../worker/protocol';
+import { applySets, applyUnlock, encodeSave, itemDetail, parseSave, type ParseResult } from '../worker/client';
+import type { ItemSummary, Leaf, SaveSummary, SetOp, UnlockOp } from '../worker/protocol';
 import { loadCatalog, ELEMENT_NAMES, QUALITY_NAMES, SLOT_NAMES } from '../data/catalog';
+import { loadJSON } from '../data/coltable';
 import { createCharacterRenderer, esc, loadAffixNames } from '../ui/character';
 import { buildFromSummary, encodeShare } from '../share/codec';
 
@@ -15,6 +16,14 @@ interface OpenFile {
   size: number;
   result: ParseResult;
 }
+
+interface LevelEntry { id: string; name: string; boss: boolean; final?: boolean }
+interface LevelsFile { chapters: { id: number; name: string; levels: LevelEntry[] }[] }
+
+// Display names of the four Corrupted Realm tiers (save fields easy…master).
+const REALM_TIERS = [
+  ['easy', 'Normal'], ['medium', 'Hard'], ['hard', 'Nightmare'], ['master', 'Inferno'],
+] as const;
 
 interface State {
   files: Map<string, OpenFile>;
@@ -135,6 +144,131 @@ export async function editorView(): Promise<View> {
         render();
       }
 
+      // ---- unlock modals ---------------------------------------------------
+      let levelsCache: Promise<LevelsFile | null> | null = null;
+      const levelsData = (): Promise<LevelsFile | null> =>
+        (levelsCache ??= loadJSON<LevelsFile>('levels.json').catch(() => null));
+
+      function openModal(title: string): { body: HTMLElement; close: () => void } {
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.innerHTML = `<div class="modal">
+          <div class="modal-head"><h3>${esc(title)}</h3><button class="modal-x" title="Close">✕</button></div>
+          <div class="modal-body"></div>
+        </div>`;
+        document.body.appendChild(overlay);
+        const close = (): void => overlay.remove();
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+        overlay.querySelector('.modal-x')!.addEventListener('click', close);
+        return { body: overlay.querySelector<HTMLElement>('.modal-body')!, close };
+      }
+
+      /** Apply an unlock op to every loaded round-trip-safe file. */
+      async function unlockAll(op: UnlockOp): Promise<string> {
+        let files = 0, levels = 0, chapters = 0;
+        for (const o of st.files.values()) {
+          if (!o.result.roundTrip) continue;
+          const r = await applyUnlock(o.name, op);
+          o.result.summary = r.summary;
+          files++;
+          levels += r.added.levels;
+          chapters += r.added.chapters;
+        }
+        const sel = st.selected?.handle;
+        const s = active()?.result.summary;
+        st.selected = sel && s
+          ? [...s.equipment, ...s.inventory, ...s.chest].find((i) => i.handle === sel) ?? null
+          : null;
+        render();
+        return `Added ${levels} level unlock(s), ${chapters} chapter(s) across ${files} file(s).`;
+      }
+
+      async function openStoryModal(): Promise<void> {
+        const f = active();
+        if (!f) return;
+        const data = await levelsData();
+        const m = openModal('Unlock story levels');
+        if (!data) {
+          m.body.innerHTML = `<p class="dim">Level catalog (levels.json) is not available in this build.</p>`;
+          return;
+        }
+        const unlocked = new Set(f.result.summary.unlockedLevels);
+        m.body.innerHTML = `
+          <p class="dim">Tick the levels to unlock — applies to all loaded files.
+          Already-unlocked levels are checked and locked. 💀 marks a boss level.</p>
+          ${data.chapters.map((ch) => {
+            const done = ch.levels.filter((l) => unlocked.has(l.id)).length;
+            return `<details ${done < ch.levels.length ? 'open' : ''}>
+              <summary><label><input type="checkbox" class="ch-all" data-ch="${ch.id}">
+                <b>${esc(ch.name)}</b> <span class="dim">(${done}/${ch.levels.length} unlocked · ends at ${esc(ch.levels[ch.levels.length - 1]?.name ?? '')})</span></label></summary>
+              <div class="lvl-grid">${ch.levels.map((l) => `
+                <label class="lvl"><input type="checkbox" data-lvl="${esc(l.id)}" data-ch="${ch.id}"
+                  ${unlocked.has(l.id) ? 'checked disabled' : ''}>
+                  ${esc(l.name)}${l.boss ? ' <span class="boss-ic" title="Boss level">(💀)</span>' : ''}</label>`).join('')}
+              </div></details>`;
+          }).join('')}
+          <div class="modal-foot">
+            <button id="m-all">Select all</button>
+            <span id="m-status" class="dim"></span>
+            <button id="m-apply" class="primary">Unlock selected</button>
+          </div>`;
+        m.body.querySelectorAll<HTMLInputElement>('.ch-all').forEach((cb) =>
+          cb.addEventListener('change', () => {
+            m.body.querySelectorAll<HTMLInputElement>(`input[data-lvl][data-ch="${cb.dataset['ch']}"]:not(:disabled)`)
+              .forEach((l) => { l.checked = cb.checked; });
+          }));
+        m.body.querySelector('#m-all')!.addEventListener('click', () => {
+          m.body.querySelectorAll<HTMLInputElement>('input[data-lvl]:not(:disabled)').forEach((l) => { l.checked = true; });
+        });
+        m.body.querySelector('#m-apply')!.addEventListener('click', async () => {
+          const boxes = [...m.body.querySelectorAll<HTMLInputElement>('input[data-lvl]:not(:disabled)')]
+            .filter((b) => b.checked);
+          if (!boxes.length) { m.close(); return; }
+          const levels = boxes.map((b) => b.dataset['lvl']!);
+          const chapters = [...new Set(boxes.map((b) => Number(b.dataset['ch'])))];
+          const status = m.body.querySelector<HTMLElement>('#m-status')!;
+          status.textContent = 'Applying…';
+          status.textContent = await unlockAll({ chapters, levels, bossLevels: [] });
+          setTimeout(m.close, 1400);
+        });
+      }
+
+      async function openRealmModal(): Promise<void> {
+        const f = active();
+        if (!f) return;
+        const data = await levelsData();
+        const mj = f.result.summary.mijing;
+        const m = openModal('Unlock Corrupted Realm');
+        m.body.innerHTML = `
+          <p class="dim">Pick a difficulty and the floor to unlock up to. Floors are never lowered.
+          Unlocking the Corrupted Realm also unlocks <b>all story chapters and levels</b>${data ? '' : ' (unavailable: level catalog missing)'} — applies to all loaded files.</p>
+          <div class="realm-tiers">${REALM_TIERS.map(([key, label], i) => `
+            <label class="realm-tier"><input type="radio" name="tier" value="${key}" ${i === 3 ? 'checked' : ''}>
+              <b>${label}</b> <span class="dim">currently floor ${esc(mj[key])}</span></label>`).join('')}
+          </div>
+          <label class="frow" style="max-width:260px"><span>Unlock up to floor</span>
+            <input id="m-floor" type="number" min="1" step="1" value="${Math.max(mj.master, 1)}"></label>
+          <div class="modal-foot">
+            <span id="m-status" class="dim"></span>
+            <button id="m-apply" class="primary">Unlock</button>
+          </div>`;
+        m.body.querySelector('#m-apply')!.addEventListener('click', async () => {
+          const tier = m.body.querySelector<HTMLInputElement>('input[name="tier"]:checked')!.value as
+            'easy' | 'medium' | 'hard' | 'master';
+          const floor = Math.max(1, Math.trunc(Number(m.body.querySelector<HTMLInputElement>('#m-floor')!.value) || 1));
+          const op: UnlockOp = {
+            chapters: data ? data.chapters.map((c) => c.id) : [],
+            levels: data ? data.chapters.flatMap((c) => c.levels.map((l) => l.id)) : [],
+            bossLevels: [],
+            mijing: { [tier]: floor },
+          };
+          const status = m.body.querySelector<HTMLElement>('#m-status')!;
+          status.textContent = 'Applying…';
+          status.textContent = await unlockAll(op);
+          setTimeout(m.close, 1400);
+        });
+      }
+
       function saveBlob(buf: ArrayBuffer, name: string): void {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([buf], { type: 'application/octet-stream' }));
@@ -186,6 +320,8 @@ export async function editorView(): Promise<View> {
                 ${esc(o.name)} ${o.result.roundTrip ? '<span class="ok">✓</span>' : '<span class="bad">✗</span>'}
               </button>`).join('')}
               <label class="ed-add">+ add file<input type="file" accept=".sav" multiple hidden></label>
+              <button class="tab-act" id="unlock-story">Unlock story…</button>
+              <button class="tab-act" id="unlock-realm">Unlock Corrupted Realm…</button>
             </div>
             <div class="ed-actions">
               <span class="dim">v${esc(s.gameVersion)} · ${(f.size / 1024 / 1024).toFixed(2)} MB</span>
@@ -244,6 +380,8 @@ export async function editorView(): Promise<View> {
           st.mirror = (e.target as HTMLInputElement).checked;
           renderPendingBar();
         });
+        host.querySelector('#unlock-story')!.addEventListener('click', () => void openStoryModal());
+        host.querySelector('#unlock-realm')!.addEventListener('click', () => void openRealmModal());
         host.querySelector('#share')!.addEventListener('click', () => void share());
         host.querySelector('#dl')!.addEventListener('click', () => void download(false));
         host.querySelector('#dl-all')?.addEventListener('click', () => void download(true));

@@ -1,7 +1,7 @@
 /// <reference lib="webworker" />
 import { parseOdin } from '../odin/reader';
 import { writeOdin } from '../odin/writer';
-import { applySet, buildSummary, deepLeaves, resolveHandle } from '../save/summary';
+import { applySet, applyUnlock, buildSummary, deepLeaves, resolveHandle } from '../save/summary';
 import type { OdinDocument } from '../odin/tree';
 import type { WorkerRequest, WorkerResponse } from './protocol';
 
@@ -51,6 +51,15 @@ function handle(req: WorkerRequest): { res: WorkerResponse; transfer: Transferab
       const node = resolveHandle(f.doc, req.handle);
       return {
         res: { id: req.id, ok: true, op: 'detail', leaves: deepLeaves(node, req.handle) },
+        transfer: [],
+      };
+    }
+    case 'unlock': {
+      const f = files.get(req.fileName);
+      if (!f) throw new Error(`${req.fileName} not loaded`);
+      const added = applyUnlock(f.doc, req.unlock);
+      return {
+        res: { id: req.id, ok: true, op: 'unlock', summary: buildSummary(f.doc, req.fileName), added },
         transfer: [],
       };
     }

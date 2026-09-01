@@ -196,6 +196,93 @@ function wrappersToItems(listNode: AnyNode, listHandle: string): ItemSummary[] {
   return out;
 }
 
+// ---- unlock sets (UnlockedChapterIds / UnlockedLevelIds / …) -----------------
+
+/** The array node inside a serialized HashSet/List root child, or null. */
+function setArray(root: AnyNode, name: string): Extract<AnyNode, { kind: 'array' }> | null {
+  const holder = child(root, name);
+  if (!holder || !isContainer(holder)) return null;
+  for (const c of holder.children) {
+    if ((c as AnyNode).kind === 'array') return c as Extract<AnyNode, { kind: 'array' }>;
+  }
+  return null;
+}
+
+function setValues(root: AnyNode, name: string): (number | string)[] {
+  const arr = setArray(root, name);
+  if (!arr) return [];
+  const out: (number | string)[] = [];
+  for (const c of arr.children) {
+    const n = c as AnyNode;
+    if (n.kind === 'prim' && typeof n.value !== 'bigint') out.push(n.value);
+    else if (n.kind === 'string') out.push(n.value);
+  }
+  return out;
+}
+
+/** Append missing entries to the sets and raise mijing floors. Additive only. */
+export function applyUnlock(doc: OdinDocument, opts: import('../worker/protocol').UnlockOp):
+  { chapters: number; levels: number; bossLevels: number } {
+  const root = doc.root[0]!;
+  if (!isContainer(root)) throw new Error('unexpected root node');
+
+  const addInts = (name: string, values: number[]): number => {
+    if (!values.length) return 0;
+    const arr = setArray(root, name);
+    if (!arr) throw new Error(`${name} is not present in this save yet — enter the game world once first`);
+    const have = new Set(arr.children.map((c) => (c as AnyNode).kind === 'prim' ? Number((c as AnyNode & { value: unknown }).value) : NaN));
+    let added = 0;
+    for (const v of values) {
+      if (have.has(v)) continue;
+      arr.children.push({ kind: 'prim', prim: 'int', value: v });
+      have.add(v);
+      added++;
+    }
+    arr.length = BigInt(arr.children.length);
+    return added;
+  };
+  const addStrings = (name: string, values: string[]): number => {
+    if (!values.length) return 0;
+    const arr = setArray(root, name);
+    if (!arr) throw new Error(`${name} is not present in this save yet — enter the game world once first`);
+    const have = new Set(arr.children.map((c) => (c as AnyNode).kind === 'string' ? (c as AnyNode & { value: string }).value : ''));
+    let added = 0;
+    for (const v of values) {
+      if (have.has(v)) continue;
+      arr.children.push({ kind: 'string', value: v, wide: true });
+      have.add(v);
+      added++;
+    }
+    arr.length = BigInt(arr.children.length);
+    return added;
+  };
+
+  const added = {
+    chapters: addInts('UnlockedChapterIds', opts.chapters),
+    levels: addStrings('UnlockedLevelIds', opts.levels),
+    bossLevels: addStrings('DefeatedBossLevelIds', opts.bossLevels),
+  };
+
+  if (opts.mijing) {
+    const floors: [string, number | undefined][] = [
+      ['mijingFloor_easy', opts.mijing.easy],
+      ['mijingFloor_medium', opts.mijing.medium],
+      ['mijingFloor_hard', opts.mijing.hard],
+      ['mijingFloor_master', opts.mijing.master],
+    ];
+    for (const [name, floor] of floors) {
+      if (floor === undefined) continue;
+      const n = child(root, name);
+      if (!n || n.kind !== 'prim') throw new Error(`${name} missing from save`);
+      const cur = typeof n.value === 'bigint' ? Number(n.value) : n.value;
+      if (floor > cur) n.value = Math.trunc(floor);
+    }
+    const um = child(root, 'UnlockedMijing');
+    if (um && um.kind === 'bool') um.value = true;
+  }
+  return added;
+}
+
 export function buildSummary(doc: OdinDocument, fileName: string): SaveSummary {
   const root = doc.root[0]!;
   if (!isContainer(root)) throw new Error('unexpected root node');
@@ -293,6 +380,7 @@ export function buildSummary(doc: OdinDocument, fileName: string): SaveSummary {
     }
   }
 
+  const umNode = child(root, 'UnlockedMijing');
   return {
     fileName,
     gameVersion: gv?.kind === 'string' ? gv.value : '',
@@ -305,5 +393,15 @@ export function buildSummary(doc: OdinDocument, fileName: string): SaveSummary {
     chest,
     talentPoints,
     talents,
+    unlockedChapters: setValues(root, 'UnlockedChapterIds').map(Number),
+    unlockedLevels: setValues(root, 'UnlockedLevelIds').map(String),
+    defeatedBossLevels: setValues(root, 'DefeatedBossLevelIds').map(String),
+    mijing: {
+      unlocked: umNode?.kind === 'bool' ? umNode.value : false,
+      easy: num(root, 'mijingFloor_easy'),
+      medium: num(root, 'mijingFloor_medium'),
+      hard: num(root, 'mijingFloor_hard'),
+      master: num(root, 'mijingFloor_master'),
+    },
   };
 }

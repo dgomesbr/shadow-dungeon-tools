@@ -5,7 +5,27 @@ export type WorkerRequest =
   | { id: number; op: 'parse'; buffer: ArrayBuffer; fileName: string }
   | { id: number; op: 'set'; fileName: string; sets: SetOp[] }
   | { id: number; op: 'detail'; fileName: string; handle: string }
+  | { id: number; op: 'unlock'; fileName: string; unlock: UnlockOp }
   | { id: number; op: 'encode'; fileName: string };
+
+export interface UnlockOp {
+  /** Chapter ids to add to UnlockedChapterIds (existing ones are skipped). */
+  chapters: number[];
+  /** Level ids to add to UnlockedLevelIds. */
+  levels: string[];
+  /** Level ids to add to DefeatedBossLevelIds (normally empty — unlocking ≠ defeating). */
+  bossLevels: string[];
+  /** Raise mijing floors (never lowers) and set UnlockedMijing=true. */
+  mijing?: { easy?: number; medium?: number; hard?: number; master?: number };
+}
+
+export interface MijingState {
+  unlocked: boolean;
+  easy: number;
+  medium: number;
+  hard: number;
+  master: number;
+}
 
 export interface SetOp {
   handle: string;
@@ -16,6 +36,7 @@ export type WorkerResponse =
   | { id: number; ok: true; op: 'parse'; summary: SaveSummary; roundTrip: boolean; firstDiff: number }
   | { id: number; ok: true; op: 'set'; summary: SaveSummary }
   | { id: number; ok: true; op: 'detail'; leaves: Leaf[] }
+  | { id: number; ok: true; op: 'unlock'; summary: SaveSummary; added: { chapters: number; levels: number; bossLevels: number } }
   | { id: number; ok: true; op: 'encode'; buffer: ArrayBuffer }
   | { id: number; ok: false; error: string };
 
@@ -79,4 +100,9 @@ export interface SaveSummary {
   talentPoints: Leaf[];
   /** All_Skill_Datas entries (every skill, invested or not). */
   talents: TalentSkill[];
+  /** Story/realm unlock state (root-level fields). */
+  unlockedChapters: number[];
+  unlockedLevels: string[];
+  defeatedBossLevels: string[];
+  mijing: MijingState;
 }
