@@ -43,18 +43,18 @@ export async function homeView(): Promise<View> {
             <div id="latest-release"></div>
           </section>
           <section class="home-cards">
-            <a class="home-card" href="#/items">
-              <h2><span class="card-ic">${ICONS.items}</span>Item Library</h2>
-              <p>Every weapon, armor piece, accessory, gem, consumable and set —
-              searchable, filterable, with game-faithful tooltips and icons.</p>
-              <span class="cta">Browse items →</span>
-            </a>
             <a class="home-card" href="#/editor">
               <h2><span class="card-ic">${ICONS.editor}</span>Save Game Editor</h2>
               <p>Upload your <code>slot_*.sav</code>, edit character stats, gold,
               items, equipment, skill trees and unlocks, then download the modified
               saves. Byte-exact, verified against the game's own format.</p>
               <span class="cta">Open editor →</span>
+            </a>
+            <a class="home-card" href="#/items">
+              <h2><span class="card-ic">${ICONS.items}</span>Item Library</h2>
+              <p>Every weapon, armor piece, accessory, gem, consumable and set —
+              searchable, filterable, with game-faithful tooltips and icons.</p>
+              <span class="cta">Browse items →</span>
             </a>
             <a class="home-card" href="#/mods">
               <h2><span class="card-ic">${ICONS.mods}</span>Mods</h2>
@@ -80,7 +80,21 @@ export async function homeView(): Promise<View> {
         const latest = container.querySelector<HTMLElement>('#latest-release');
         const latestSection = container.querySelector<HTMLElement>('#whats-new');
         if (latest && latestSection) {
-          latest.innerHTML = releaseBlock(releases[0]!, true);
+          const r = releases[0]!;
+          const PREVIEW = 3;
+          const head = r.items.slice(0, PREVIEW);
+          const rest = r.items.slice(PREVIEW);
+          latest.innerHTML = `<div class="release latest-card">
+            <div class="release-title"><b>${esc(r.title)}</b><span class="dim">${esc(r.date)}</span></div>
+            <ul>${head.map((it) => `<li>${esc(it)}</li>`).join('')}</ul>
+            ${rest.length ? `
+              <ul id="latest-more" hidden>${rest.map((it) => `<li>${esc(it)}</li>`).join('')}</ul>
+              <button class="link-btn" id="latest-toggle">Click here to view ${rest.length} more…</button>` : ''}
+          </div>`;
+          latest.querySelector('#latest-toggle')?.addEventListener('click', function (this: HTMLElement) {
+            latest.querySelector<HTMLElement>('#latest-more')!.hidden = false;
+            this.remove();
+          });
           latestSection.hidden = false;
         }
         const history = container.querySelector<HTMLElement>('#releases');

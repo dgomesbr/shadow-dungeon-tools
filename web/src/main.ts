@@ -5,8 +5,8 @@ app.innerHTML = `
   <header class="topbar">
     <a class="brand" href="#/">Shadow<span>Dungeon</span>Tools</a>
     <nav>
-      <a href="#/items">Item Library</a>
       <a href="#/editor">Save Game Editor</a>
+      <a href="#/items">Item Library</a>
       <a href="#/mods">Mods</a>
     </nav>
     <span class="build" title="Build ${__BUILD_ID__} — if a new feature is missing, hard-refresh (Ctrl+F5)">${__BUILD_ID__}</span>
