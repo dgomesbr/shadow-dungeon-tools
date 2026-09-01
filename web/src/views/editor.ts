@@ -571,7 +571,6 @@ export async function editorView(): Promise<View> {
             <span class="ed-hero-stat"><b>${pUsed}</b> class trees</span>
             <span class="ed-hero-stat"><b>${pDF}</b> divine favor</span>
             <span class="ed-hero-stat"><b>${pBase - pUsed - pDF}</b> available</span>
-            <span class="dim">click +1 · right-click or Shift+click −1</span>
           </div>
           <div class="tt-tabs">
             ${data.archetypes.map((a, i) => {
@@ -615,7 +614,22 @@ export async function editorView(): Promise<View> {
           }).join('');
 
           const talByName = new Map(s.talents.map((t) => [t.name, t]));
-          html += `<div class="tree-canvas" style="width:${W}px;height:${H}px">
+          // Mouse glyph with the pressed button highlighted.
+          const mouse = (side: 'l' | 'r'): string => `<svg class="mouse-ic" viewBox="0 0 14 20" width="13" height="18" aria-hidden="true">
+            <rect x="1" y="1" width="12" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <path d="${side === 'l'
+              ? 'M7 1.7 A5.3 5.3 0 0 0 1.7 7 L1.7 9 L7 9 Z'
+              : 'M7 1.7 A5.3 5.3 0 0 1 12.3 7 L12.3 9 L7 9 Z'}" fill="var(--accent-hi)" stroke="none"/>
+            <line x1="7" y1="1.5" x2="7" y2="9" stroke="currentColor" stroke-width="1"/>
+            <line x1="1.5" y1="9" x2="12.5" y2="9" stroke="currentColor" stroke-width="1"/>
+          </svg>`;
+          html += `<div class="tree-wrap" style="width:${W}px">
+            <div class="tree-controls">
+              <span>${mouse('l')} add point</span>
+              <span>${mouse('r')} remove point</span>
+              <span class="dim">(Shift+click also removes)</span>
+            </div>
+            <div class="tree-canvas" style="width:${W}px;height:${H}px">
             <svg width="${W}" height="${H}">${linkSvg}</svg>
             ${tree.nodes.map((n) => {
               const tal = talByName.get(n.skill);
@@ -643,7 +657,7 @@ export async function editorView(): Promise<View> {
                 <span class="tn-name">${esc(label)}</span>
               </button>`;
             }).join('')}
-          </div>`;
+          </div></div>`;
           el.innerHTML = html;
 
           const editable = f.result.roundTrip;

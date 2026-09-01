@@ -287,11 +287,20 @@ kbd {
 .tt-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
 .tt-tabs .seg:disabled { opacity: 0.4; cursor: not-allowed; }
 .tt-tabs.sub .seg { font-size: 0.85rem; }
+.tree-controls {
+  display: flex; gap: 1.4rem; align-items: center;
+  padding: 0.4rem 0.8rem;
+  background: var(--bg-panel); border: 1px solid var(--border); border-bottom: none;
+  border-radius: 8px 8px 0 0; font-size: 0.85rem; color: var(--fg);
+}
+.tree-controls span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.mouse-ic { color: var(--fg-dim); flex: none; }
 .tree-canvas {
   position: relative; background:
     radial-gradient(ellipse 70% 40% at 50% 0%, rgb(180 138 60 / 0.06), transparent), #0a0a0e;
   border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
 }
+.tree-wrap .tree-canvas { border-radius: 0 0 8px 8px; }
 .tree-canvas svg { position: absolute; inset: 0; pointer-events: none; }
 .tree-canvas svg line { stroke: #4a3d26; stroke-width: 2; }
 .tnode {
