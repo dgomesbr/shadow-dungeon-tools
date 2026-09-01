@@ -1,0 +1,7422 @@
+{
+ "generatedBy": "pipeline/extract-talents.py",
+ "source": "Shadow Dungeon_Data/level1: TalentManager (XiCAV/DFXiCAV tree containers, skillTA CSV tables) + SkillBT/SKillBT_DF scene nodes; icons from iconDT[Xi]/SPCA IconData (sharedassets1.assets)",
+ "synthesized": false,
+ "coordinateSpace": "x,y: pixels from the tree's top-left node (y grows downward); rawX,rawY: Unity scene-local position relative to the Tree (N) container GameObject (y grows upward)",
+ "archetypes": [
+  {
+   "name": "Mage",
+   "classIds": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "Paladin",
+   "classIds": [
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "Ranger",
+   "classIds": [
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "name": "Necromancer",
+   "classIds": [
+    9,
+    10,
+    11
+   ]
+  }
+ ],
+ "trees": [
+  {
+   "xi": 0,
+   "name": "Hell Messenger",
+   "nodes": [
+    {
+     "skill": "Inferno",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi00_23.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Burst Shot",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi00_24.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Flame Core",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi00_25.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Pyroblast",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi00_33.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Flame Wave",
+     "type": "compS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi00_10.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Hell Bomb",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi00_22.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Heatwave",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi00_21.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Flame Web",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi00_32.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Resonance",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi00_17.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Meteor Explosion",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi00_14.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Preheat",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi00_20.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Eternal Flames",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi00_31.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Flame Throw",
+     "type": "compS",
+     "x": 0.0,
+     "y": 480.0,
+     "rawX": -378.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi00_9.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Flame Weakening",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi00_16.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Burning Sacrifice",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi00_13.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Tectonic Movement",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi00_19.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Oxidative Combustion",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi00_30.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Demon Rage",
+     "type": "compS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi00_8.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Demon Fire",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi00_6.png",
+     "max": 1,
+     "unlock": 14
+    },
+    {
+     "skill": "Flamestrike",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi00_15.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Scalding",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi00_12.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Volcano",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi00_18.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Incineration",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi00_29.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Flame Demon",
+     "type": "compF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi00_7.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Overheat",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi00_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Split Fireball",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi00_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Meteorite",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi00_11.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Flame Mastery",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi00_28.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Hellfire",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi00_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Explosion",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi00_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Flame Essence",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi00_27.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "FireBall",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi00_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Demon's Heart",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi00_26.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "FireBall",
+     "Explosion"
+    ],
+    [
+     "Explosion",
+     "Split Fireball"
+    ],
+    [
+     "Hellfire",
+     "Overheat"
+    ],
+    [
+     "Overheat",
+     "Demon Fire"
+    ],
+    [
+     "Meteorite",
+     "Scalding"
+    ],
+    [
+     "Scalding",
+     "Burning Sacrifice"
+    ],
+    [
+     "Burning Sacrifice",
+     "Meteor Explosion"
+    ],
+    [
+     "Flamestrike",
+     "Flame Weakening"
+    ],
+    [
+     "Flame Weakening",
+     "Resonance"
+    ],
+    [
+     "Volcano",
+     "Tectonic Movement"
+    ],
+    [
+     "Tectonic Movement",
+     "Preheat"
+    ],
+    [
+     "Preheat",
+     "Heatwave"
+    ],
+    [
+     "Hell Bomb",
+     "Inferno"
+    ],
+    [
+     "Hell Bomb",
+     "Burst Shot"
+    ],
+    [
+     "Hell Bomb",
+     "Flame Core"
+    ],
+    [
+     "Flame Demon",
+     "Demon Rage"
+    ],
+    [
+     "Demon Rage",
+     "Flame Throw"
+    ],
+    [
+     "Flame Throw",
+     "Flame Wave"
+    ],
+    [
+     "Incineration",
+     "Oxidative Combustion"
+    ],
+    [
+     "Oxidative Combustion",
+     "Eternal Flames"
+    ],
+    [
+     "Eternal Flames",
+     "Flame Web"
+    ],
+    [
+     "Flame Web",
+     "Pyroblast"
+    ]
+   ]
+  },
+  {
+   "xi": 1,
+   "name": "Storm Lord",
+   "nodes": [
+    {
+     "skill": "Glacier Spike",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi01_23.png",
+     "max": 3,
+     "unlock": 34
+    },
+    {
+     "skill": "Frostlord",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi01_24.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Frost Burst",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi01_25.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Frost Bomb",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi01_33.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Frost Nova",
+     "type": "compS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi01_10.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Arctic Fury",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi01_22.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Bone Shatter",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi01_21.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Frost Cage",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi01_32.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Polar Chill",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi01_17.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Touch of Ice",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi01_14.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Eternal Winter",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi01_20.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Frost  Seal",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi01_31.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Frost Giant",
+     "type": "compS",
+     "x": 0.0,
+     "y": 480.0,
+     "rawX": -378.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi01_9.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Frostfall",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 480.0,
+     "rawX": -227.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi01_6.png",
+     "max": 1,
+     "unlock": 19
+    },
+    {
+     "skill": "Infinite Freeze",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi01_16.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Frost Mirror",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi01_13.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Flash Freeze",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi01_19.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Bone Chilling Cold",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi01_30.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Frost Barrier",
+     "type": "compS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi01_8.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Ice Ward",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi01_15.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Crystallization",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi01_12.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Blizzard",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi01_18.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Frostbite",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi01_29.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Frost Golem",
+     "type": "compF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi01_7.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Twin Stars",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi01_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Frost Split",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi01_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Frost Ball",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi01_11.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Meditation",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi01_28.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Frost Comet",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi01_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Piercing",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi01_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Frost Bloodline",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi01_27.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Ice Crystal",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi01_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Frost Sting",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi01_26.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Ice Crystal",
+     "Piercing"
+    ],
+    [
+     "Piercing",
+     "Frost Split"
+    ],
+    [
+     "Frost Comet",
+     "Twin Stars"
+    ],
+    [
+     "Twin Stars",
+     "Frostfall"
+    ],
+    [
+     "Frost Ball",
+     "Crystallization"
+    ],
+    [
+     "Crystallization",
+     "Frost Mirror"
+    ],
+    [
+     "Frost Mirror",
+     "Touch of Ice"
+    ],
+    [
+     "Ice Ward",
+     "Infinite Freeze"
+    ],
+    [
+     "Infinite Freeze",
+     "Polar Chill"
+    ],
+    [
+     "Blizzard",
+     "Flash Freeze"
+    ],
+    [
+     "Flash Freeze",
+     "Eternal Winter"
+    ],
+    [
+     "Eternal Winter",
+     "Bone Shatter"
+    ],
+    [
+     "Arctic Fury",
+     "Glacier Spike"
+    ],
+    [
+     "Arctic Fury",
+     "Frostlord"
+    ],
+    [
+     "Arctic Fury",
+     "Frost Burst"
+    ],
+    [
+     "Frost Golem",
+     "Frost Barrier"
+    ],
+    [
+     "Frost Barrier",
+     "Frost Giant"
+    ],
+    [
+     "Frost Giant",
+     "Frost Nova"
+    ],
+    [
+     "Frostbite",
+     "Bone Chilling Cold"
+    ],
+    [
+     "Bone Chilling Cold",
+     "Frost  Seal"
+    ],
+    [
+     "Frost  Seal",
+     "Frost Cage"
+    ],
+    [
+     "Frost Cage",
+     "Frost Bomb"
+    ]
+   ]
+  },
+  {
+   "xi": 2,
+   "name": "Arcanist",
+   "nodes": [
+    {
+     "skill": "Chain Reaction",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi02_23.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Divine Judgment",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi02_24.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Arcane Charge",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi02_25.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Instability",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi02_33.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Elven Mastery",
+     "type": "compS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi02_11.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Thunderous Fury",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi02_22.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Electric Field",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi02_21.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Negative Charge",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi02_32.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Sprite Bomb",
+     "type": "compS",
+     "x": 0.0,
+     "y": 320.0,
+     "rawX": -378.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi02_10.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Touch of Heaven",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 320.0,
+     "rawX": -227.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi02_7.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Electric Shock",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi02_17.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Arcane Torrent",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi02_20.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Electrical Surge",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi02_31.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Charge",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi02_16.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Lightning Javelin",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi02_14.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Deadly Arc",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi02_19.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Lightning Ignition",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi02_30.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Elven Power",
+     "type": "compS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi02_9.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Electric Convergence",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi02_6.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Thunder Teleport",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi02_15.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Electric Overload",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi02_13.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Arcane Bomb",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi02_18.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Conductive",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi02_29.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Electric Sprite",
+     "type": "compF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi02_8.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Electric Absorption",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi02_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Arcane Blast",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi02_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Thunderstrike",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi02_12.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Spirit Control",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi02_28.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Lightning Barrier",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi02_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Thunderous Throw",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi02_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Lightning Mastery",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi02_27.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Lightning Ball",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi02_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Arcane Shockwave",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi02_26.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Lightning Ball",
+     "Thunderous Throw"
+    ],
+    [
+     "Thunderous Throw",
+     "Arcane Blast"
+    ],
+    [
+     "Lightning Barrier",
+     "Electric Absorption"
+    ],
+    [
+     "Electric Absorption",
+     "Electric Convergence"
+    ],
+    [
+     "Electric Convergence",
+     "Touch of Heaven"
+    ],
+    [
+     "Thunderstrike",
+     "Electric Overload"
+    ],
+    [
+     "Electric Overload",
+     "Lightning Javelin"
+    ],
+    [
+     "Thunder Teleport",
+     "Charge"
+    ],
+    [
+     "Charge",
+     "Electric Shock"
+    ],
+    [
+     "Arcane Bomb",
+     "Deadly Arc"
+    ],
+    [
+     "Deadly Arc",
+     "Arcane Torrent"
+    ],
+    [
+     "Arcane Torrent",
+     "Electric Field"
+    ],
+    [
+     "Thunderous Fury",
+     "Chain Reaction"
+    ],
+    [
+     "Thunderous Fury",
+     "Divine Judgment"
+    ],
+    [
+     "Thunderous Fury",
+     "Arcane Charge"
+    ],
+    [
+     "Electric Sprite",
+     "Elven Power"
+    ],
+    [
+     "Elven Power",
+     "Sprite Bomb"
+    ],
+    [
+     "Sprite Bomb",
+     "Elven Mastery"
+    ],
+    [
+     "Conductive",
+     "Lightning Ignition"
+    ],
+    [
+     "Lightning Ignition",
+     "Electrical Surge"
+    ],
+    [
+     "Electrical Surge",
+     "Negative Charge"
+    ],
+    [
+     "Negative Charge",
+     "Instability"
+    ]
+   ]
+  },
+  {
+   "xi": 3,
+   "name": "Blade Master",
+   "nodes": [
+    {
+     "skill": "Blade Mastery",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi03_24.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Blade Walker",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi03_25.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Petrified Skin",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi03_26.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Execution",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi03_34.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Earthquake",
+     "type": "compS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi03_11.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Blade Soul",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi03_23.png",
+     "max": 4,
+     "unlock": 29
+    },
+    {
+     "skill": "Ultimate Shatter",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi03_22.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Suppression",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi03_33.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Havoc",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi03_18.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Fighting Spirit",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi03_15.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Rapid Projectile",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi03_21.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Flesh Blur",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi03_32.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Hammer Smash",
+     "type": "compS",
+     "x": 0.0,
+     "y": 480.0,
+     "rawX": -378.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi03_10.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Bloodletting",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 480.0,
+     "rawX": -227.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi03_7.png",
+     "max": 1,
+     "unlock": 19
+    },
+    {
+     "skill": "Holy Blade Mastery",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi03_17.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Rapid Rotation",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi03_14.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Blade Storm",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi03_20.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Sever",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi03_31.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Ancient Might",
+     "type": "compS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi03_9.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Armor Piercing Blade",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi03_6.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Holy Sword",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi03_16.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Focus",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi03_13.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Death Reaper",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi03_19.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Bleeding",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi03_30.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Ancient Guardian",
+     "type": "compF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi03_8.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Swift Draw",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi03_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Power Strike",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi03_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Blade Dance",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi03_12.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Conqueror",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi03_29.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Phantom Slash",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi03_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Razor blade",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi03_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Zealot",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi03_28.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Cleave",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi03_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Rapid Traveler",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi03_27.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Cleave",
+     "Razor blade"
+    ],
+    [
+     "Razor blade",
+     "Power Strike"
+    ],
+    [
+     "Phantom Slash",
+     "Swift Draw"
+    ],
+    [
+     "Swift Draw",
+     "Armor Piercing Blade"
+    ],
+    [
+     "Armor Piercing Blade",
+     "Bloodletting"
+    ],
+    [
+     "Blade Dance",
+     "Focus"
+    ],
+    [
+     "Focus",
+     "Rapid Rotation"
+    ],
+    [
+     "Rapid Rotation",
+     "Fighting Spirit"
+    ],
+    [
+     "Holy Sword",
+     "Holy Blade Mastery"
+    ],
+    [
+     "Holy Blade Mastery",
+     "Havoc"
+    ],
+    [
+     "Death Reaper",
+     "Blade Storm"
+    ],
+    [
+     "Blade Storm",
+     "Rapid Projectile"
+    ],
+    [
+     "Rapid Projectile",
+     "Ultimate Shatter"
+    ],
+    [
+     "Blade Soul",
+     "Blade Mastery"
+    ],
+    [
+     "Blade Soul",
+     "Blade Walker"
+    ],
+    [
+     "Blade Soul",
+     "Petrified Skin"
+    ],
+    [
+     "Ancient Guardian",
+     "Ancient Might"
+    ],
+    [
+     "Ancient Might",
+     "Hammer Smash"
+    ],
+    [
+     "Hammer Smash",
+     "Earthquake"
+    ],
+    [
+     "Bleeding",
+     "Sever"
+    ],
+    [
+     "Sever",
+     "Flesh Blur"
+    ],
+    [
+     "Flesh Blur",
+     "Suppression"
+    ],
+    [
+     "Suppression",
+     "Execution"
+    ]
+   ]
+  },
+  {
+   "xi": 4,
+   "name": "Holy Light",
+   "nodes": [
+    {
+     "skill": "Grace",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi04_23.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Blade of Light",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi04_24.png",
+     "max": 3,
+     "unlock": 34
+    },
+    {
+     "skill": "Benediction",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi04_25.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Judgement",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi04_33.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Path of Light",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi04_11.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Godly Incarnation",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi04_22.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Divine Surge",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi04_21.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Divine Weakening",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi04_32.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Protection",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 320.0,
+     "rawX": -227.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi04_7.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Halo",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi04_17.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Falling Light Projectile",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi04_20.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Reckoning",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi04_31.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Rapid Dash",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 480.0,
+     "rawX": -378.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi04_10.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Blessing of Light",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi04_16.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Radiant Eruption",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi04_14.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Abundance",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi04_19.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Interrogation",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi04_30.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Dazzling",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi04_9.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Fortitude",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi04_6.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Radiance",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi04_15.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Amplification",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi04_13.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Electric Storm",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi04_18.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Divine Punishment",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi04_29.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Fearless Charge",
+     "type": "sampleF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi04_8.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Swift Stride",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi04_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Holy Blast",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi04_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Hammer of Justice",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi04_12.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Faith",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi04_28.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Sanctuary Shield",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi04_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Charged Strike",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi04_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Elemental Blessing",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi04_27.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Lightning Blade",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi04_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "prayer",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi04_26.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Lightning Blade",
+     "Charged Strike"
+    ],
+    [
+     "Charged Strike",
+     "Holy Blast"
+    ],
+    [
+     "Sanctuary Shield",
+     "Swift Stride"
+    ],
+    [
+     "Swift Stride",
+     "Fortitude"
+    ],
+    [
+     "Fortitude",
+     "Protection"
+    ],
+    [
+     "Fearless Charge",
+     "Dazzling"
+    ],
+    [
+     "Dazzling",
+     "Rapid Dash"
+    ],
+    [
+     "Rapid Dash",
+     "Path of Light"
+    ],
+    [
+     "Hammer of Justice",
+     "Amplification"
+    ],
+    [
+     "Amplification",
+     "Radiant Eruption"
+    ],
+    [
+     "Radiance",
+     "Blessing of Light"
+    ],
+    [
+     "Blessing of Light",
+     "Halo"
+    ],
+    [
+     "Electric Storm",
+     "Abundance"
+    ],
+    [
+     "Abundance",
+     "Falling Light Projectile"
+    ],
+    [
+     "Falling Light Projectile",
+     "Divine Surge"
+    ],
+    [
+     "Godly Incarnation",
+     "Grace"
+    ],
+    [
+     "Godly Incarnation",
+     "Blade of Light"
+    ],
+    [
+     "Godly Incarnation",
+     "Benediction"
+    ],
+    [
+     "Divine Punishment",
+     "Interrogation"
+    ],
+    [
+     "Interrogation",
+     "Reckoning"
+    ],
+    [
+     "Reckoning",
+     "Divine Weakening"
+    ],
+    [
+     "Divine Weakening",
+     "Judgement"
+    ]
+   ]
+  },
+  {
+   "xi": 5,
+   "name": "Apocalypse",
+   "nodes": [
+    {
+     "skill": "Phoenix Flames",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi05_23.png",
+     "max": 3,
+     "unlock": 34
+    },
+    {
+     "skill": "Rebirth from Ashes",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi05_24.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Devastator",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi05_25.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Dragon's Breath",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi05_33.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Embers",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi05_10.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Flame Incarnation",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi05_22.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Sulfur Fire",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi05_21.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Scorch",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi05_32.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Searing",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 320.0,
+     "rawX": -378.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi05_9.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Flame Pour",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi05_17.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Dual Blades Dance",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi05_14.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Cataclysm",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi05_20.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Flame Gathering",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi05_31.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Hellfire Wasteland",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 480.0,
+     "rawX": -378.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi05_8.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "White Heat",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi05_16.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Crippling Strike",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi05_13.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Rapid Descent",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi05_19.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Flame Devourer",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi05_30.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Scorched",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi05_6.png",
+     "max": 1,
+     "unlock": 14
+    },
+    {
+     "skill": "Infernal Slash",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi05_15.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Flame Sever",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi05_12.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Flaming Meteor Storm",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi05_18.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Sacred Flames",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi05_29.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Flame Charge",
+     "type": "sampleF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi05_7.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Passion",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi05_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Fire of Punishment",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi05_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Dragon's Fury",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi05_11.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Reviving Gale",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi05_28.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Molten Fissure",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi05_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Hand of Sacrifice",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi05_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Tempered Blade",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi05_27.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Blazing Sword",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi05_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Dragon's Courage",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi05_26.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Blazing Sword",
+     "Hand of Sacrifice"
+    ],
+    [
+     "Hand of Sacrifice",
+     "Fire of Punishment"
+    ],
+    [
+     "Molten Fissure",
+     "Passion"
+    ],
+    [
+     "Passion",
+     "Scorched"
+    ],
+    [
+     "Flame Charge",
+     "Hellfire Wasteland"
+    ],
+    [
+     "Hellfire Wasteland",
+     "Searing"
+    ],
+    [
+     "Searing",
+     "Embers"
+    ],
+    [
+     "Dragon's Fury",
+     "Flame Sever"
+    ],
+    [
+     "Flame Sever",
+     "Crippling Strike"
+    ],
+    [
+     "Crippling Strike",
+     "Dual Blades Dance"
+    ],
+    [
+     "Infernal Slash",
+     "White Heat"
+    ],
+    [
+     "White Heat",
+     "Flame Pour"
+    ],
+    [
+     "Flaming Meteor Storm",
+     "Rapid Descent"
+    ],
+    [
+     "Rapid Descent",
+     "Cataclysm"
+    ],
+    [
+     "Cataclysm",
+     "Sulfur Fire"
+    ],
+    [
+     "Flame Incarnation",
+     "Phoenix Flames"
+    ],
+    [
+     "Flame Incarnation",
+     "Rebirth from Ashes"
+    ],
+    [
+     "Flame Incarnation",
+     "Devastator"
+    ],
+    [
+     "Sacred Flames",
+     "Flame Devourer"
+    ],
+    [
+     "Flame Devourer",
+     "Flame Gathering"
+    ],
+    [
+     "Flame Gathering",
+     "Scorch"
+    ],
+    [
+     "Scorch",
+     "Dragon's Breath"
+    ]
+   ]
+  },
+  {
+   "xi": 6,
+   "name": "Windwalker",
+   "nodes": [
+    {
+     "skill": "Whirlwind",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi06_23.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Stormblade",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi06_24.png",
+     "max": 3,
+     "unlock": 34
+    },
+    {
+     "skill": "Tailwind",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi06_25.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Storm Wrath",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi06_33.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Power of the Wind",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi06_22.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Lethal Piercing",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi06_21.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Armor Piercing Shot",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi06_32.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Whirlwind Slash",
+     "type": "compS",
+     "x": 0.0,
+     "y": 320.0,
+     "rawX": -378.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi06_10.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Windrunner",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi06_17.png",
+     "max": 2,
+     "unlock": 29
+    },
+    {
+     "skill": "Archery Master",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi06_14.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Talon's Touch",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi06_20.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Heartpiercer Arrow",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi06_31.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Absolute Defense",
+     "type": "compS",
+     "x": 0.0,
+     "y": 480.0,
+     "rawX": -378.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi06_9.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Cold Blooded",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi06_16.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Nimble Footwork",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi06_13.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Fragmented Arrow",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi06_19.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Precision Strike",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi06_30.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Martial Mastery",
+     "type": "compS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi06_8.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Master Marksman",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi06_6.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Gale Arrow",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi06_15.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Rapid Reload",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi06_12.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Storm Barrage",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi06_18.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Way of the Hero",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi06_29.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Sanctuary Warrior",
+     "type": "compF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi06_7.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Ambush",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi06_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "MultiShot",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi06_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Barrage",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi06_11.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Piercing Shot",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi06_28.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Lethal Dart",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi06_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Longbow",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi06_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Bloodthirsty Shot",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi06_27.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Razor Arrow",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi06_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Rapid Fire",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi06_26.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Razor Arrow",
+     "Longbow"
+    ],
+    [
+     "Longbow",
+     "MultiShot"
+    ],
+    [
+     "Lethal Dart",
+     "Ambush"
+    ],
+    [
+     "Ambush",
+     "Master Marksman"
+    ],
+    [
+     "Barrage",
+     "Rapid Reload"
+    ],
+    [
+     "Rapid Reload",
+     "Nimble Footwork"
+    ],
+    [
+     "Nimble Footwork",
+     "Archery Master"
+    ],
+    [
+     "Gale Arrow",
+     "Cold Blooded"
+    ],
+    [
+     "Cold Blooded",
+     "Windrunner"
+    ],
+    [
+     "Storm Barrage",
+     "Fragmented Arrow"
+    ],
+    [
+     "Fragmented Arrow",
+     "Talon's Touch"
+    ],
+    [
+     "Talon's Touch",
+     "Lethal Piercing"
+    ],
+    [
+     "Power of the Wind",
+     "Whirlwind"
+    ],
+    [
+     "Power of the Wind",
+     "Stormblade"
+    ],
+    [
+     "Power of the Wind",
+     "Tailwind"
+    ],
+    [
+     "Sanctuary Warrior",
+     "Martial Mastery"
+    ],
+    [
+     "Martial Mastery",
+     "Absolute Defense"
+    ],
+    [
+     "Absolute Defense",
+     "Whirlwind Slash"
+    ],
+    [
+     "Way of the Hero",
+     "Precision Strike"
+    ],
+    [
+     "Precision Strike",
+     "Heartpiercer Arrow"
+    ],
+    [
+     "Heartpiercer Arrow",
+     "Armor Piercing Shot"
+    ],
+    [
+     "Armor Piercing Shot",
+     "Storm Wrath"
+    ]
+   ]
+  },
+  {
+   "xi": 7,
+   "name": "Doomsday Disciple",
+   "nodes": [
+    {
+     "skill": "Wildfire Spread",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi07_23.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Aerial Menace",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi07_24.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Catastrophe Approaches",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi07_25.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Magma Rage",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi07_33.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Frenzy",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi07_10.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Infernal Cataclysm",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi07_22.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Flame Focus",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi07_21.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Reignition",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi07_32.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Flame Breath",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 320.0,
+     "rawX": -378.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi07_9.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Fissure",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi07_17.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Tempered Arrowhead",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi07_14.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Blinding",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi07_20.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Curse of Fire",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi07_31.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Timely Arrival",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi07_16.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Expanded Arrowhead",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi07_13.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Sacrifice",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi07_19.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "White Phosphorus",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi07_30.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Rapid Rebirth",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi07_8.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Fire Erosion",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi07_6.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Heavenly Flames",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi07_15.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Rapid Shot Arrow",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi07_12.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Blazing Fury",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi07_18.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Oiling",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi07_29.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Fire Hydra",
+     "type": "sampleF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi07_7.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Triple Strike",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi07_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Precision Aim",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi07_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Cluster Cannon",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi07_11.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Demolitionist",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi07_28.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Explosive Arrow",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi07_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Fatal Strike",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi07_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Black Powder",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi07_27.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Flame Arrow",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi07_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Eagle Eye",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi07_26.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Flame Arrow",
+     "Fatal Strike"
+    ],
+    [
+     "Fatal Strike",
+     "Precision Aim"
+    ],
+    [
+     "Explosive Arrow",
+     "Triple Strike"
+    ],
+    [
+     "Triple Strike",
+     "Fire Erosion"
+    ],
+    [
+     "Fire Hydra",
+     "Rapid Rebirth"
+    ],
+    [
+     "Rapid Rebirth",
+     "Flame Breath"
+    ],
+    [
+     "Flame Breath",
+     "Frenzy"
+    ],
+    [
+     "Cluster Cannon",
+     "Rapid Shot Arrow"
+    ],
+    [
+     "Rapid Shot Arrow",
+     "Expanded Arrowhead"
+    ],
+    [
+     "Expanded Arrowhead",
+     "Tempered Arrowhead"
+    ],
+    [
+     "Heavenly Flames",
+     "Timely Arrival"
+    ],
+    [
+     "Timely Arrival",
+     "Fissure"
+    ],
+    [
+     "Blazing Fury",
+     "Sacrifice"
+    ],
+    [
+     "Sacrifice",
+     "Blinding"
+    ],
+    [
+     "Blinding",
+     "Flame Focus"
+    ],
+    [
+     "Infernal Cataclysm",
+     "Wildfire Spread"
+    ],
+    [
+     "Infernal Cataclysm",
+     "Aerial Menace"
+    ],
+    [
+     "Infernal Cataclysm",
+     "Catastrophe Approaches"
+    ],
+    [
+     "Oiling",
+     "White Phosphorus"
+    ],
+    [
+     "White Phosphorus",
+     "Curse of Fire"
+    ],
+    [
+     "Curse of Fire",
+     "Reignition"
+    ],
+    [
+     "Reignition",
+     "Magma Rage"
+    ]
+   ]
+  },
+  {
+   "xi": 8,
+   "name": "High Elf",
+   "nodes": [
+    {
+     "skill": "Death Stare",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi08_23.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Chlorophyte Blades",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi08_24.png",
+     "max": 3,
+     "unlock": 34
+    },
+    {
+     "skill": "Nature's Blessing",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi08_25.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Void Venom",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi08_33.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Plague",
+     "type": "compS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi08_10.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Venomous lord",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi08_22.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Blade Growth",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi08_21.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Infestation",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi08_32.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Poison Spike",
+     "type": "compS",
+     "x": 0.0,
+     "y": 320.0,
+     "rawX": -378.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi08_9.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Acidic Fluid",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi08_17.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Venom Barrage",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi08_14.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Toxic Vines",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi08_20.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Wild Growth",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi08_31.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Rapid Fire Quiver",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi08_16.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Poisoning",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi08_13.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Heroic Shot",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi08_19.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Deadly Poison",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi08_30.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Power of Nature",
+     "type": "compS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi08_8.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Poison Cloud",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi08_6.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Arrow Rain",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi08_15.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Piercing Strike",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi08_12.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Chlorophyte Arrows",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi08_18.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Venomous Parasitism",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi08_29.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Venom Sprite",
+     "type": "compF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi08_7.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Nature's Focus",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi08_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Multi Targeting",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi08_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Parasitic Burst Arrows",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi08_11.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Earth Blessing",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi08_28.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Plague Arrow",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi08_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Agility",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi08_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Acid Arrow",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi08_27.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Venomous Arrows",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi08_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Treant Blessing",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi08_26.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Venomous Arrows",
+     "Agility"
+    ],
+    [
+     "Agility",
+     "Multi Targeting"
+    ],
+    [
+     "Plague Arrow",
+     "Nature's Focus"
+    ],
+    [
+     "Nature's Focus",
+     "Poison Cloud"
+    ],
+    [
+     "Parasitic Burst Arrows",
+     "Piercing Strike"
+    ],
+    [
+     "Piercing Strike",
+     "Poisoning"
+    ],
+    [
+     "Poisoning",
+     "Venom Barrage"
+    ],
+    [
+     "Arrow Rain",
+     "Rapid Fire Quiver"
+    ],
+    [
+     "Rapid Fire Quiver",
+     "Acidic Fluid"
+    ],
+    [
+     "Chlorophyte Arrows",
+     "Heroic Shot"
+    ],
+    [
+     "Heroic Shot",
+     "Toxic Vines"
+    ],
+    [
+     "Toxic Vines",
+     "Blade Growth"
+    ],
+    [
+     "Venomous lord",
+     "Death Stare"
+    ],
+    [
+     "Venomous lord",
+     "Chlorophyte Blades"
+    ],
+    [
+     "Venomous lord",
+     "Nature's Blessing"
+    ],
+    [
+     "Venom Sprite",
+     "Power of Nature"
+    ],
+    [
+     "Power of Nature",
+     "Poison Spike"
+    ],
+    [
+     "Poison Spike",
+     "Plague"
+    ],
+    [
+     "Venomous Parasitism",
+     "Deadly Poison"
+    ],
+    [
+     "Deadly Poison",
+     "Wild Growth"
+    ],
+    [
+     "Wild Growth",
+     "Infestation"
+    ],
+    [
+     "Infestation",
+     "Void Venom"
+    ]
+   ]
+  },
+  {
+   "xi": 9,
+   "name": "Undead Emissary",
+   "nodes": [
+    {
+     "skill": "Chaos Orb",
+     "type": "compS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi09_22.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Void Infusion",
+     "type": "compS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi09_23.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Chaos Nova",
+     "type": "compS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi09_24.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Bone Explosion",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi09_32.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Curse Mage",
+     "type": "compF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi09_21.png",
+     "max": 4,
+     "unlock": 29
+    },
+    {
+     "skill": "Bone Crystal Arrow",
+     "type": "compS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi09_20.png",
+     "max": 2,
+     "unlock": 29
+    },
+    {
+     "skill": "Life Drain",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi09_31.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Bloodthirsty Rage",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 320.0,
+     "rawX": -378.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi09_12.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Spirit Lance",
+     "type": "compS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi09_16.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Shadow Arrow",
+     "type": "compS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi09_19.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Dark Madness",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi09_30.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Soul Surge",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 480.0,
+     "rawX": -378.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi09_11.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Hook",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 480.0,
+     "rawX": -227.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi09_8.png",
+     "max": 1,
+     "unlock": 19
+    },
+    {
+     "skill": "Bloodspear",
+     "type": "compS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi09_15.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Bone Mastery",
+     "type": "compS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi09_18.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Touch of Evil",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi09_29.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Blood Rite",
+     "type": "sampleS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi09_10.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Gutting",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi09_7.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Blade of Curse",
+     "type": "compS",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi09_4.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Bone Rampage",
+     "type": "compS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi09_14.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Bone Archer",
+     "type": "compF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi09_17.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Impure Blood",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi09_28.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Blood Pool",
+     "type": "sampleF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi09_9.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Unholy Grip",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi09_6.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Shield Raise",
+     "type": "compS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi09_3.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Death Sentry",
+     "type": "compF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi09_13.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Mind Blast",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi09_27.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Summoning Mastery",
+     "type": "compS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi09_2.png",
+     "max": 3,
+     "unlock": 4
+    },
+    {
+     "skill": "Bone Piercer",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi09_26.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Spear of Vengeance",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 1120.0,
+     "rawX": -227.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi09_5.png",
+     "max": 3,
+     "unlock": 0
+    },
+    {
+     "skill": "Skeleton Warrior",
+     "type": "compF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi09_1.png",
+     "max": 4,
+     "unlock": 1
+    },
+    {
+     "skill": "Soul Sacrifice",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi09_25.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Spear of Vengeance",
+     "Unholy Grip"
+    ],
+    [
+     "Unholy Grip",
+     "Gutting"
+    ],
+    [
+     "Gutting",
+     "Hook"
+    ],
+    [
+     "Blood Pool",
+     "Blood Rite"
+    ],
+    [
+     "Blood Rite",
+     "Soul Surge"
+    ],
+    [
+     "Soul Surge",
+     "Bloodthirsty Rage"
+    ],
+    [
+     "Skeleton Warrior",
+     "Summoning Mastery"
+    ],
+    [
+     "Summoning Mastery",
+     "Shield Raise"
+    ],
+    [
+     "Shield Raise",
+     "Blade of Curse"
+    ],
+    [
+     "Death Sentry",
+     "Bone Rampage"
+    ],
+    [
+     "Bone Rampage",
+     "Bloodspear"
+    ],
+    [
+     "Bloodspear",
+     "Spirit Lance"
+    ],
+    [
+     "Bone Archer",
+     "Bone Mastery"
+    ],
+    [
+     "Bone Mastery",
+     "Shadow Arrow"
+    ],
+    [
+     "Shadow Arrow",
+     "Bone Crystal Arrow"
+    ],
+    [
+     "Curse Mage",
+     "Chaos Orb"
+    ],
+    [
+     "Curse Mage",
+     "Void Infusion"
+    ],
+    [
+     "Curse Mage",
+     "Chaos Nova"
+    ],
+    [
+     "Impure Blood",
+     "Touch of Evil"
+    ],
+    [
+     "Touch of Evil",
+     "Dark Madness"
+    ],
+    [
+     "Dark Madness",
+     "Life Drain"
+    ],
+    [
+     "Life Drain",
+     "Bone Explosion"
+    ]
+   ]
+  },
+  {
+   "xi": 10,
+   "name": "Void Sorcerer",
+   "nodes": [
+    {
+     "skill": "Chaos",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi10_24.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Void Eruption",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi10_25.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Phantasm",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi10_26.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Soul Devour",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi10_34.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Life Harvest",
+     "type": "compS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi10_11.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Demonic Ball",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi10_23.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Infinite Void",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi10_22.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Curse Seal",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi10_33.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Shadow Scythe",
+     "type": "compS",
+     "x": 0.0,
+     "y": 320.0,
+     "rawX": -378.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi10_10.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Dark Infusion",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi10_18.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Violent Reaction",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi10_15.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Heavenly Fire",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi10_21.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Weakness",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi10_32.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Soul Imprisonment",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 480.0,
+     "rawX": -227.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi10_7.png",
+     "max": 1,
+     "unlock": 19
+    },
+    {
+     "skill": "Energy Overload",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi10_17.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Corruption",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi10_14.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Senescence",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi10_20.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Curse",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi10_31.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Hand of Death",
+     "type": "compS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi10_9.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Profanity",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi10_6.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Shadow Armor",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi10_16.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Diffusion",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi10_13.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Doom Sigil",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi10_19.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Mental Corruption",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi10_30.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Reaper",
+     "type": "compF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi10_8.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Psionics",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi10_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Shadow Fission",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi10_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Corruption Domain",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi10_12.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Psychic Mastery",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi10_29.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Shadow Chains",
+     "type": "sampleF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi10_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Shadow Enhancement",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi10_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Witchcraft",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi10_28.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Shadow Orb",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi10_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Dark Surge",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi10_27.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Shadow Orb",
+     "Shadow Enhancement"
+    ],
+    [
+     "Shadow Enhancement",
+     "Shadow Fission"
+    ],
+    [
+     "Shadow Chains",
+     "Psionics"
+    ],
+    [
+     "Psionics",
+     "Profanity"
+    ],
+    [
+     "Profanity",
+     "Soul Imprisonment"
+    ],
+    [
+     "Corruption Domain",
+     "Diffusion"
+    ],
+    [
+     "Diffusion",
+     "Corruption"
+    ],
+    [
+     "Corruption",
+     "Violent Reaction"
+    ],
+    [
+     "Shadow Armor",
+     "Energy Overload"
+    ],
+    [
+     "Energy Overload",
+     "Dark Infusion"
+    ],
+    [
+     "Doom Sigil",
+     "Senescence"
+    ],
+    [
+     "Senescence",
+     "Heavenly Fire"
+    ],
+    [
+     "Heavenly Fire",
+     "Infinite Void"
+    ],
+    [
+     "Demonic Ball",
+     "Chaos"
+    ],
+    [
+     "Demonic Ball",
+     "Void Eruption"
+    ],
+    [
+     "Demonic Ball",
+     "Phantasm"
+    ],
+    [
+     "Reaper",
+     "Hand of Death"
+    ],
+    [
+     "Hand of Death",
+     "Shadow Scythe"
+    ],
+    [
+     "Shadow Scythe",
+     "Life Harvest"
+    ],
+    [
+     "Mental Corruption",
+     "Curse"
+    ],
+    [
+     "Curse",
+     "Weakness"
+    ],
+    [
+     "Weakness",
+     "Curse Seal"
+    ],
+    [
+     "Curse Seal",
+     "Soul Devour"
+    ]
+   ]
+  },
+  {
+   "xi": 11,
+   "name": "Corrupt Priest",
+   "nodes": [
+    {
+     "skill": "Venomous Might",
+     "type": "sampleS",
+     "x": 151.0,
+     "y": 0.0,
+     "rawX": -227.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi11_24.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Calamity",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 0.0,
+     "rawX": -76.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi11_25.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Toxic Mastery",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 0.0,
+     "rawX": 74.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi11_26.png",
+     "max": 2,
+     "unlock": 34
+    },
+    {
+     "skill": "Epidemic",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 0.0,
+     "rawX": 376.5,
+     "rawY": 621.2,
+     "icon": "icons/skills/xi11_34.png",
+     "max": 1,
+     "unlock": 34
+    },
+    {
+     "skill": "Soulrend Arrow",
+     "type": "compS",
+     "x": 0.0,
+     "y": 160.0,
+     "rawX": -378.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi11_11.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Venom Nova",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 160.0,
+     "rawX": -76.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi11_23.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Soul Poison Flame",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 160.0,
+     "rawX": 225.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi11_22.png",
+     "max": 1,
+     "unlock": 29
+    },
+    {
+     "skill": "Infection",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 160.0,
+     "rawX": 376.5,
+     "rawY": 461.2,
+     "icon": "icons/skills/xi11_33.png",
+     "max": 3,
+     "unlock": 29
+    },
+    {
+     "skill": "Phantom Shot",
+     "type": "compS",
+     "x": 0.0,
+     "y": 320.0,
+     "rawX": -378.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi11_10.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Soul Siphon",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 320.0,
+     "rawX": -76.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi11_18.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Unclean Domain",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 320.0,
+     "rawX": 74.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi11_15.png",
+     "max": 1,
+     "unlock": 24
+    },
+    {
+     "skill": "Acidic Explosion",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 320.0,
+     "rawX": 225.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi11_21.png",
+     "max": 2,
+     "unlock": 24
+    },
+    {
+     "skill": "Incurable",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 320.0,
+     "rawX": 376.5,
+     "rawY": 301.2,
+     "icon": "icons/skills/xi11_32.png",
+     "max": 3,
+     "unlock": 24
+    },
+    {
+     "skill": "Spider Mastery",
+     "type": "compS",
+     "x": 151.0,
+     "y": 480.0,
+     "rawX": -227.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi11_7.png",
+     "max": 1,
+     "unlock": 19
+    },
+    {
+     "skill": "Dark Murmurs",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 480.0,
+     "rawX": -76.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi11_17.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Sticky Spiderwebs",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 480.0,
+     "rawX": 74.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi11_14.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Master of Traps",
+     "type": "sampleS",
+     "x": 604.0,
+     "y": 480.0,
+     "rawX": 225.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi11_20.png",
+     "max": 2,
+     "unlock": 19
+    },
+    {
+     "skill": "Poisonous Sores",
+     "type": "dotS",
+     "x": 755.0,
+     "y": 480.0,
+     "rawX": 376.5,
+     "rawY": 141.2,
+     "icon": "icons/skills/xi11_31.png",
+     "max": 3,
+     "unlock": 19
+    },
+    {
+     "skill": "Nether Power",
+     "type": "compS",
+     "x": 0.0,
+     "y": 640.0,
+     "rawX": -378.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi11_9.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Acid Splash",
+     "type": "compS",
+     "x": 151.0,
+     "y": 640.0,
+     "rawX": -227.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi11_6.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Cursed Totem",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 640.0,
+     "rawX": -76.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi11_16.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Venomous Invasion",
+     "type": "sampleS",
+     "x": 453.0,
+     "y": 640.0,
+     "rawX": 74.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi11_13.png",
+     "max": 2,
+     "unlock": 14
+    },
+    {
+     "skill": "Venom Trap",
+     "type": "sampleF",
+     "x": 604.0,
+     "y": 640.0,
+     "rawX": 225.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi11_19.png",
+     "max": 4,
+     "unlock": 14
+    },
+    {
+     "skill": "Black Plague",
+     "type": "dotF",
+     "x": 755.0,
+     "y": 640.0,
+     "rawX": 376.5,
+     "rawY": -18.8,
+     "icon": "icons/skills/xi11_30.png",
+     "max": 3,
+     "unlock": 14
+    },
+    {
+     "skill": "Phantom Archer",
+     "type": "compF",
+     "x": 0.0,
+     "y": 800.0,
+     "rawX": -378.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi11_8.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Frenzied Bite",
+     "type": "compS",
+     "x": 151.0,
+     "y": 800.0,
+     "rawX": -227.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi11_5.png",
+     "max": 2,
+     "unlock": 9
+    },
+    {
+     "skill": "Poison Ball Scatter",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 800.0,
+     "rawX": -76.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi11_3.png",
+     "max": 1,
+     "unlock": 9
+    },
+    {
+     "skill": "Toxic Domain",
+     "type": "sampleF",
+     "x": 453.0,
+     "y": 800.0,
+     "rawX": 74.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi11_12.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Immunity",
+     "type": "bei",
+     "x": 755.0,
+     "y": 800.0,
+     "rawX": 376.5,
+     "rawY": -178.8,
+     "icon": "icons/skills/xi11_29.png",
+     "max": 4,
+     "unlock": 9
+    },
+    {
+     "skill": "Venomous Spider",
+     "type": "compF",
+     "x": 151.0,
+     "y": 960.0,
+     "rawX": -227.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi11_4.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Confusion Venom",
+     "type": "sampleS",
+     "x": 302.0,
+     "y": 960.0,
+     "rawX": -76.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi11_2.png",
+     "max": 2,
+     "unlock": 4
+    },
+    {
+     "skill": "Deadly Venom",
+     "type": "bei",
+     "x": 755.0,
+     "y": 960.0,
+     "rawX": 376.5,
+     "rawY": -338.8,
+     "icon": "icons/skills/xi11_28.png",
+     "max": 4,
+     "unlock": 4
+    },
+    {
+     "skill": "Toxic Shot",
+     "type": "sampleF",
+     "x": 302.0,
+     "y": 1120.0,
+     "rawX": -76.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi11_1.png",
+     "max": 4,
+     "unlock": 0
+    },
+    {
+     "skill": "Herbalism",
+     "type": "bei",
+     "x": 755.0,
+     "y": 1120.0,
+     "rawX": 376.5,
+     "rawY": -498.8,
+     "icon": "icons/skills/xi11_27.png",
+     "max": 4,
+     "unlock": 0
+    }
+   ],
+   "links": [
+    [
+     "Toxic Shot",
+     "Confusion Venom"
+    ],
+    [
+     "Confusion Venom",
+     "Poison Ball Scatter"
+    ],
+    [
+     "Toxic Domain",
+     "Venomous Invasion"
+    ],
+    [
+     "Venomous Invasion",
+     "Sticky Spiderwebs"
+    ],
+    [
+     "Sticky Spiderwebs",
+     "Unclean Domain"
+    ],
+    [
+     "Cursed Totem",
+     "Dark Murmurs"
+    ],
+    [
+     "Dark Murmurs",
+     "Soul Siphon"
+    ],
+    [
+     "Venom Trap",
+     "Master of Traps"
+    ],
+    [
+     "Master of Traps",
+     "Acidic Explosion"
+    ],
+    [
+     "Acidic Explosion",
+     "Soul Poison Flame"
+    ],
+    [
+     "Venom Nova",
+     "Venomous Might"
+    ],
+    [
+     "Venom Nova",
+     "Calamity"
+    ],
+    [
+     "Venom Nova",
+     "Toxic Mastery"
+    ],
+    [
+     "Venomous Spider",
+     "Frenzied Bite"
+    ],
+    [
+     "Frenzied Bite",
+     "Acid Splash"
+    ],
+    [
+     "Acid Splash",
+     "Spider Mastery"
+    ],
+    [
+     "Phantom Archer",
+     "Nether Power"
+    ],
+    [
+     "Nether Power",
+     "Phantom Shot"
+    ],
+    [
+     "Phantom Shot",
+     "Soulrend Arrow"
+    ],
+    [
+     "Black Plague",
+     "Poisonous Sores"
+    ],
+    [
+     "Poisonous Sores",
+     "Incurable"
+    ],
+    [
+     "Incurable",
+     "Infection"
+    ],
+    [
+     "Infection",
+     "Epidemic"
+    ]
+   ]
+  },
+  {
+   "xi": 12,
+   "name": "Paragon Talents",
+   "nodes": [
+    {
+     "skill": "DF_47",
+     "type": "df",
+     "x": 114.5,
+     "y": 0.0,
+     "rawX": -279.2,
+     "rawY": 624.2,
+     "icon": "icons/skills/df_59.png",
+     "max": 5,
+     "unlock": 160,
+     "lie": [
+      0,
+      1,
+      2
+     ],
+     "choices": [
+      {
+       "name": "DFA47",
+       "info": "InfoA_DF47",
+       "icon": "icons/skills/df_59.png"
+      },
+      {
+       "name": "DFB47",
+       "info": "InfoB_DF47",
+       "icon": "icons/skills/df_60.png"
+      },
+      {
+       "name": "DFC47",
+       "info": "InfoC_DF47",
+       "icon": "icons/skills/df_61.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_48",
+     "type": "df",
+     "x": 453.9,
+     "y": 0.0,
+     "rawX": 60.2,
+     "rawY": 624.2,
+     "icon": "icons/skills/df_62.png",
+     "max": 3,
+     "unlock": 160,
+     "lie": [
+      3,
+      4,
+      5
+     ],
+     "choices": [
+      {
+       "name": "DFA48",
+       "info": "InfoA_DF48",
+       "icon": "icons/skills/df_62.png"
+      },
+      {
+       "name": "DFB48",
+       "info": "InfoB_DF48",
+       "icon": "icons/skills/df_63.png"
+      },
+      {
+       "name": "DFC48",
+       "info": "InfoC_DF48",
+       "icon": "icons/skills/df_64.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_49",
+     "type": "df",
+     "x": 732.5,
+     "y": 0.0,
+     "rawX": 338.8,
+     "rawY": 624.2,
+     "icon": "icons/skills/df_65.png",
+     "max": 5,
+     "unlock": 160,
+     "lie": [
+      6,
+      7
+     ],
+     "choices": [
+      {
+       "name": "DFA49",
+       "info": "InfoA_DF49",
+       "icon": "icons/skills/df_65.png"
+      },
+      {
+       "name": "DFB49",
+       "info": "InfoB_DF49",
+       "icon": "icons/skills/df_66.png"
+      },
+      {
+       "name": "DFC49",
+       "info": "InfoC_DF49",
+       "icon": "icons/skills/df_67.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_39",
+     "type": "df",
+     "x": 0.0,
+     "y": 140.0,
+     "rawX": -393.7,
+     "rawY": 484.2,
+     "icon": "icons/skills/df_51.png",
+     "max": 5,
+     "unlock": 150,
+     "lie": [
+      0
+     ],
+     "choices": [
+      {
+       "name": "DFA39",
+       "info": "InfoA_DF39",
+       "icon": "icons/skills/df_51.png"
+      },
+      {
+       "name": "DFB39",
+       "info": "InfoB_DF39",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC39",
+       "info": "InfoC_DF39",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_40",
+     "type": "df",
+     "x": 113.8,
+     "y": 140.0,
+     "rawX": -279.9,
+     "rawY": 484.2,
+     "icon": "icons/skills/df_52.png",
+     "max": 5,
+     "unlock": 150,
+     "lie": [
+      1
+     ],
+     "choices": [
+      {
+       "name": "DFA40",
+       "info": "InfoA_DF40",
+       "icon": "icons/skills/df_52.png"
+      },
+      {
+       "name": "DFB40",
+       "info": "InfoB_DF40",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC40",
+       "info": "InfoC_DF40",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_41",
+     "type": "df",
+     "x": 224.5,
+     "y": 140.0,
+     "rawX": -169.2,
+     "rawY": 484.2,
+     "icon": "icons/skills/df_53.png",
+     "max": 5,
+     "unlock": 150,
+     "lie": [
+      2
+     ],
+     "choices": [
+      {
+       "name": "DFA41",
+       "info": "InfoA_DF41",
+       "icon": "icons/skills/df_53.png"
+      },
+      {
+       "name": "DFB41",
+       "info": "InfoB_DF41",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC41",
+       "info": "InfoC_DF41",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_42",
+     "type": "df",
+     "x": 338.3,
+     "y": 140.0,
+     "rawX": -55.4,
+     "rawY": 484.2,
+     "icon": "icons/skills/df_54.png",
+     "max": 5,
+     "unlock": 150,
+     "lie": [
+      3
+     ],
+     "choices": [
+      {
+       "name": "DFA42",
+       "info": "InfoA_DF42",
+       "icon": "icons/skills/df_54.png"
+      },
+      {
+       "name": "DFB42",
+       "info": "InfoB_DF42",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC42",
+       "info": "InfoC_DF42",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_43",
+     "type": "df",
+     "x": 452.1,
+     "y": 140.0,
+     "rawX": 58.4,
+     "rawY": 484.2,
+     "icon": "icons/skills/df_55.png",
+     "max": 5,
+     "unlock": 150,
+     "lie": [
+      4
+     ],
+     "choices": [
+      {
+       "name": "DFA43",
+       "info": "InfoA_DF43",
+       "icon": "icons/skills/df_55.png"
+      },
+      {
+       "name": "DFB43",
+       "info": "InfoB_DF43",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC43",
+       "info": "InfoC_DF43",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_44",
+     "type": "df",
+     "x": 565.1,
+     "y": 140.0,
+     "rawX": 171.4,
+     "rawY": 484.2,
+     "icon": "icons/skills/df_56.png",
+     "max": 5,
+     "unlock": 150,
+     "lie": [
+      5
+     ],
+     "choices": [
+      {
+       "name": "DFA44",
+       "info": "InfoA_DF44",
+       "icon": "icons/skills/df_56.png"
+      },
+      {
+       "name": "DFB44",
+       "info": "InfoB_DF44",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC44",
+       "info": "InfoC_DF44",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_45",
+     "type": "df",
+     "x": 678.1,
+     "y": 140.0,
+     "rawX": 284.4,
+     "rawY": 484.2,
+     "icon": "icons/skills/df_57.png",
+     "max": 3,
+     "unlock": 150,
+     "lie": [
+      6
+     ],
+     "choices": [
+      {
+       "name": "DFA45",
+       "info": "InfoA_DF45",
+       "icon": "icons/skills/df_57.png"
+      },
+      {
+       "name": "DFB45",
+       "info": "InfoB_DF45",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC45",
+       "info": "InfoC_DF45",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_46",
+     "type": "df",
+     "x": 784.2,
+     "y": 140.0,
+     "rawX": 390.5,
+     "rawY": 484.2,
+     "icon": "icons/skills/df_58.png",
+     "max": 3,
+     "unlock": 150,
+     "lie": [
+      7
+     ],
+     "choices": [
+      {
+       "name": "DFA46",
+       "info": "InfoA_DF46",
+       "icon": "icons/skills/df_58.png"
+      },
+      {
+       "name": "DFB46",
+       "info": "InfoB_DF46",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC46",
+       "info": "InfoC_DF46",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_36",
+     "type": "df",
+     "x": 114.9,
+     "y": 280.0,
+     "rawX": -278.8,
+     "rawY": 344.2,
+     "icon": "icons/skills/df_43.png",
+     "max": 3,
+     "unlock": 120,
+     "lie": [
+      0,
+      1,
+      2
+     ],
+     "choices": [
+      {
+       "name": "DFA36",
+       "info": "InfoA_DF36",
+       "icon": "icons/skills/df_43.png"
+      },
+      {
+       "name": "DFB36",
+       "info": "InfoB_DF36",
+       "icon": "icons/skills/df_44.png"
+      },
+      {
+       "name": "DFC36",
+       "info": "InfoC_DF36",
+       "icon": "icons/skills/df_45.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_37",
+     "type": "df",
+     "x": 453.2,
+     "y": 280.0,
+     "rawX": 59.5,
+     "rawY": 344.2,
+     "icon": "icons/skills/df_46.png",
+     "max": 5,
+     "unlock": 120,
+     "lie": [
+      3,
+      4,
+      5
+     ],
+     "choices": [
+      {
+       "name": "DFA37",
+       "info": "InfoA_DF37",
+       "icon": "icons/skills/df_46.png"
+      },
+      {
+       "name": "DFB37",
+       "info": "InfoB_DF37",
+       "icon": "icons/skills/df_47.png"
+      },
+      {
+       "name": "DFC37",
+       "info": "InfoC_DF37",
+       "icon": "icons/skills/df_48.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_38",
+     "type": "df",
+     "x": 734.8,
+     "y": 280.0,
+     "rawX": 341.1,
+     "rawY": 344.2,
+     "icon": "icons/skills/df_49.png",
+     "max": 5,
+     "unlock": 120,
+     "lie": [
+      6,
+      7
+     ],
+     "choices": [
+      {
+       "name": "DFA38",
+       "info": "InfoA_DF38",
+       "icon": "icons/skills/df_49.png"
+      },
+      {
+       "name": "DFB38",
+       "info": "InfoB_DF38",
+       "icon": "icons/skills/df_50.png"
+      },
+      {
+       "name": "DFC38",
+       "info": "InfoC_DF38",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_28",
+     "type": "df",
+     "x": 0.0,
+     "y": 420.0,
+     "rawX": -393.7,
+     "rawY": 204.2,
+     "icon": "icons/skills/df_35.png",
+     "max": 20,
+     "unlock": 100,
+     "lie": [
+      0
+     ],
+     "choices": [
+      {
+       "name": "DFA28",
+       "info": "InfoA_DF28",
+       "icon": "icons/skills/df_35.png"
+      },
+      {
+       "name": "DFB28",
+       "info": "InfoB_DF28",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC28",
+       "info": "InfoC_DF28",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_29",
+     "type": "df",
+     "x": 113.8,
+     "y": 420.0,
+     "rawX": -279.9,
+     "rawY": 204.2,
+     "icon": "icons/skills/df_36.png",
+     "max": 20,
+     "unlock": 100,
+     "lie": [
+      1
+     ],
+     "choices": [
+      {
+       "name": "DFA29",
+       "info": "InfoA_DF29",
+       "icon": "icons/skills/df_36.png"
+      },
+      {
+       "name": "DFB29",
+       "info": "InfoB_DF29",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC29",
+       "info": "InfoC_DF29",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_30",
+     "type": "df",
+     "x": 224.5,
+     "y": 420.0,
+     "rawX": -169.2,
+     "rawY": 204.2,
+     "icon": "icons/skills/df_37.png",
+     "max": 20,
+     "unlock": 100,
+     "lie": [
+      2
+     ],
+     "choices": [
+      {
+       "name": "DFA30",
+       "info": "InfoA_DF30",
+       "icon": "icons/skills/df_37.png"
+      },
+      {
+       "name": "DFB30",
+       "info": "InfoB_DF30",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC30",
+       "info": "InfoC_DF30",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_31",
+     "type": "df",
+     "x": 338.3,
+     "y": 420.0,
+     "rawX": -55.4,
+     "rawY": 204.2,
+     "icon": "icons/skills/df_38.png",
+     "max": 20,
+     "unlock": 100,
+     "lie": [
+      3
+     ],
+     "choices": [
+      {
+       "name": "DFA31",
+       "info": "InfoA_DF31",
+       "icon": "icons/skills/df_38.png"
+      },
+      {
+       "name": "DFB31",
+       "info": "InfoB_DF31",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC31",
+       "info": "InfoC_DF31",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_32",
+     "type": "df",
+     "x": 452.1,
+     "y": 420.0,
+     "rawX": 58.4,
+     "rawY": 204.2,
+     "icon": "icons/skills/df_39.png",
+     "max": 20,
+     "unlock": 100,
+     "lie": [
+      4
+     ],
+     "choices": [
+      {
+       "name": "DFA32",
+       "info": "InfoA_DF32",
+       "icon": "icons/skills/df_39.png"
+      },
+      {
+       "name": "DFB32",
+       "info": "InfoB_DF32",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC32",
+       "info": "InfoC_DF32",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_33",
+     "type": "df",
+     "x": 565.1,
+     "y": 420.0,
+     "rawX": 171.4,
+     "rawY": 204.2,
+     "icon": "icons/skills/df_40.png",
+     "max": 20,
+     "unlock": 100,
+     "lie": [
+      5
+     ],
+     "choices": [
+      {
+       "name": "DFA33",
+       "info": "InfoA_DF33",
+       "icon": "icons/skills/df_40.png"
+      },
+      {
+       "name": "DFB33",
+       "info": "InfoB_DF33",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC33",
+       "info": "InfoC_DF33",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_34",
+     "type": "df",
+     "x": 678.1,
+     "y": 420.0,
+     "rawX": 284.4,
+     "rawY": 204.2,
+     "icon": "icons/skills/df_41.png",
+     "max": 20,
+     "unlock": 100,
+     "lie": [
+      6
+     ],
+     "choices": [
+      {
+       "name": "DFA34",
+       "info": "InfoA_DF34",
+       "icon": "icons/skills/df_41.png"
+      },
+      {
+       "name": "DFB34",
+       "info": "InfoB_DF34",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC34",
+       "info": "InfoC_DF34",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_35",
+     "type": "df",
+     "x": 784.2,
+     "y": 420.0,
+     "rawX": 390.5,
+     "rawY": 204.2,
+     "icon": "icons/skills/df_42.png",
+     "max": 20,
+     "unlock": 100,
+     "lie": [
+      7
+     ],
+     "choices": [
+      {
+       "name": "DFA35",
+       "info": "InfoA_DF35",
+       "icon": "icons/skills/df_42.png"
+      },
+      {
+       "name": "DFB35",
+       "info": "InfoB_DF35",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC35",
+       "info": "InfoC_DF35",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_24",
+     "type": "df",
+     "x": 62.4,
+     "y": 560.0,
+     "rawX": -331.3,
+     "rawY": 64.2,
+     "icon": "icons/skills/df_27.png",
+     "max": 30,
+     "unlock": 80,
+     "lie": [
+      0,
+      1
+     ],
+     "choices": [
+      {
+       "name": "DFA24",
+       "info": "InfoA_DF24",
+       "icon": "icons/skills/df_27.png"
+      },
+      {
+       "name": "DFB24",
+       "info": "InfoB_DF24",
+       "icon": "icons/skills/df_28.png"
+      },
+      {
+       "name": "DFC24",
+       "info": "InfoC_DF24",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_25",
+     "type": "df",
+     "x": 283.8,
+     "y": 560.0,
+     "rawX": -109.9,
+     "rawY": 64.2,
+     "icon": "icons/skills/df_29.png",
+     "max": 30,
+     "unlock": 80,
+     "lie": [
+      2,
+      3
+     ],
+     "choices": [
+      {
+       "name": "DFA25",
+       "info": "InfoA_DF25",
+       "icon": "icons/skills/df_29.png"
+      },
+      {
+       "name": "DFB25",
+       "info": "InfoB_DF25",
+       "icon": "icons/skills/df_30.png"
+      },
+      {
+       "name": "DFC25",
+       "info": "InfoC_DF25",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_26",
+     "type": "df",
+     "x": 506.8,
+     "y": 560.0,
+     "rawX": 113.1,
+     "rawY": 64.2,
+     "icon": "icons/skills/df_31.png",
+     "max": 30,
+     "unlock": 80,
+     "lie": [
+      4,
+      5
+     ],
+     "choices": [
+      {
+       "name": "DFA26",
+       "info": "InfoA_DF26",
+       "icon": "icons/skills/df_31.png"
+      },
+      {
+       "name": "DFB26",
+       "info": "InfoB_DF26",
+       "icon": "icons/skills/df_32.png"
+      },
+      {
+       "name": "DFC26",
+       "info": "InfoC_DF26",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_27",
+     "type": "df",
+     "x": 732.2,
+     "y": 560.0,
+     "rawX": 338.5,
+     "rawY": 64.2,
+     "icon": "icons/skills/df_33.png",
+     "max": 30,
+     "unlock": 80,
+     "lie": [
+      6,
+      7
+     ],
+     "choices": [
+      {
+       "name": "DFA27",
+       "info": "InfoA_DF27",
+       "icon": "icons/skills/df_33.png"
+      },
+      {
+       "name": "DFB27",
+       "info": "InfoB_DF27",
+       "icon": "icons/skills/df_34.png"
+      },
+      {
+       "name": "DFC27",
+       "info": "InfoC_DF27",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_16",
+     "type": "df",
+     "x": 0.0,
+     "y": 700.0,
+     "rawX": -393.7,
+     "rawY": -75.8,
+     "icon": "icons/skills/df_19.png",
+     "max": 40,
+     "unlock": 50,
+     "lie": [
+      0
+     ],
+     "choices": [
+      {
+       "name": "DFA16",
+       "info": "InfoA_DF16",
+       "icon": "icons/skills/df_19.png"
+      },
+      {
+       "name": "DFB16",
+       "info": "InfoB_DF16",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC16",
+       "info": "InfoC_DF16",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_17",
+     "type": "df",
+     "x": 113.8,
+     "y": 700.0,
+     "rawX": -279.9,
+     "rawY": -75.8,
+     "icon": "icons/skills/df_20.png",
+     "max": 40,
+     "unlock": 50,
+     "lie": [
+      1
+     ],
+     "choices": [
+      {
+       "name": "DFA17",
+       "info": "InfoA_DF17",
+       "icon": "icons/skills/df_20.png"
+      },
+      {
+       "name": "DFB17",
+       "info": "InfoB_DF17",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC17",
+       "info": "InfoC_DF17",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_18",
+     "type": "df",
+     "x": 224.5,
+     "y": 700.0,
+     "rawX": -169.2,
+     "rawY": -75.8,
+     "icon": "icons/skills/df_21.png",
+     "max": 40,
+     "unlock": 50,
+     "lie": [
+      2
+     ],
+     "choices": [
+      {
+       "name": "DFA18",
+       "info": "InfoA_DF18",
+       "icon": "icons/skills/df_21.png"
+      },
+      {
+       "name": "DFB18",
+       "info": "InfoB_DF18",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC18",
+       "info": "InfoC_DF18",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_19",
+     "type": "df",
+     "x": 338.3,
+     "y": 700.0,
+     "rawX": -55.4,
+     "rawY": -75.8,
+     "icon": "icons/skills/df_22.png",
+     "max": 40,
+     "unlock": 50,
+     "lie": [
+      3
+     ],
+     "choices": [
+      {
+       "name": "DFA19",
+       "info": "InfoA_DF19",
+       "icon": "icons/skills/df_22.png"
+      },
+      {
+       "name": "DFB19",
+       "info": "InfoB_DF19",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC19",
+       "info": "InfoC_DF19",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_20",
+     "type": "df",
+     "x": 452.1,
+     "y": 700.0,
+     "rawX": 58.4,
+     "rawY": -75.8,
+     "icon": "icons/skills/df_23.png",
+     "max": 40,
+     "unlock": 50,
+     "lie": [
+      4
+     ],
+     "choices": [
+      {
+       "name": "DFA20",
+       "info": "InfoA_DF20",
+       "icon": "icons/skills/df_23.png"
+      },
+      {
+       "name": "DFB20",
+       "info": "InfoB_DF20",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC20",
+       "info": "InfoC_DF20",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_21",
+     "type": "df",
+     "x": 565.1,
+     "y": 700.0,
+     "rawX": 171.4,
+     "rawY": -75.8,
+     "icon": "icons/skills/df_24.png",
+     "max": 40,
+     "unlock": 50,
+     "lie": [
+      5
+     ],
+     "choices": [
+      {
+       "name": "DFA21",
+       "info": "InfoA_DF21",
+       "icon": "icons/skills/df_24.png"
+      },
+      {
+       "name": "DFB21",
+       "info": "InfoB_DF21",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC21",
+       "info": "InfoC_DF21",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_22",
+     "type": "df",
+     "x": 678.1,
+     "y": 700.0,
+     "rawX": 284.4,
+     "rawY": -75.8,
+     "icon": "icons/skills/df_25.png",
+     "max": 40,
+     "unlock": 50,
+     "lie": [
+      6
+     ],
+     "choices": [
+      {
+       "name": "DFA22",
+       "info": "InfoA_DF22",
+       "icon": "icons/skills/df_25.png"
+      },
+      {
+       "name": "DFB22",
+       "info": "InfoB_DF22",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC22",
+       "info": "InfoC_DF22",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_23",
+     "type": "df",
+     "x": 784.2,
+     "y": 700.0,
+     "rawX": 390.5,
+     "rawY": -75.8,
+     "icon": "icons/skills/df_26.png",
+     "max": 40,
+     "unlock": 50,
+     "lie": [
+      7
+     ],
+     "choices": [
+      {
+       "name": "DFA23",
+       "info": "InfoA_DF23",
+       "icon": "icons/skills/df_26.png"
+      },
+      {
+       "name": "DFB23",
+       "info": "InfoB_DF23",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC23",
+       "info": "InfoC_DF23",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_8",
+     "type": "df",
+     "x": 0.0,
+     "y": 840.0,
+     "rawX": -393.7,
+     "rawY": -215.8,
+     "icon": "icons/skills/df_11.png",
+     "max": 60,
+     "unlock": 20,
+     "lie": [
+      0
+     ],
+     "choices": [
+      {
+       "name": "DFA8",
+       "info": "InfoA_DF8",
+       "icon": "icons/skills/df_11.png"
+      },
+      {
+       "name": "DFB8",
+       "info": "InfoB_DF8",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC8",
+       "info": "InfoC_DF8",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_9",
+     "type": "df",
+     "x": 113.8,
+     "y": 840.0,
+     "rawX": -279.9,
+     "rawY": -215.8,
+     "icon": "icons/skills/df_12.png",
+     "max": 60,
+     "unlock": 20,
+     "lie": [
+      1
+     ],
+     "choices": [
+      {
+       "name": "DFA9",
+       "info": "InfoA_DF9",
+       "icon": "icons/skills/df_12.png"
+      },
+      {
+       "name": "DFB9",
+       "info": "InfoB_DF9",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC9",
+       "info": "InfoC_DF9",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_10",
+     "type": "df",
+     "x": 224.5,
+     "y": 840.0,
+     "rawX": -169.2,
+     "rawY": -215.8,
+     "icon": "icons/skills/df_13.png",
+     "max": 60,
+     "unlock": 20,
+     "lie": [
+      2
+     ],
+     "choices": [
+      {
+       "name": "DFA10",
+       "info": "InfoA_DF10",
+       "icon": "icons/skills/df_13.png"
+      },
+      {
+       "name": "DFB10",
+       "info": "InfoB_DF10",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC10",
+       "info": "InfoC_DF10",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_11",
+     "type": "df",
+     "x": 338.3,
+     "y": 840.0,
+     "rawX": -55.4,
+     "rawY": -215.8,
+     "icon": "icons/skills/df_14.png",
+     "max": 60,
+     "unlock": 20,
+     "lie": [
+      3
+     ],
+     "choices": [
+      {
+       "name": "DFA11",
+       "info": "InfoA_DF11",
+       "icon": "icons/skills/df_14.png"
+      },
+      {
+       "name": "DFB11",
+       "info": "InfoB_DF11",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC11",
+       "info": "InfoC_DF11",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_12",
+     "type": "df",
+     "x": 452.1,
+     "y": 840.0,
+     "rawX": 58.4,
+     "rawY": -215.8,
+     "icon": "icons/skills/df_15.png",
+     "max": 60,
+     "unlock": 20,
+     "lie": [
+      4
+     ],
+     "choices": [
+      {
+       "name": "DFA12",
+       "info": "InfoA_DF12",
+       "icon": "icons/skills/df_15.png"
+      },
+      {
+       "name": "DFB12",
+       "info": "InfoB_DF12",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC12",
+       "info": "InfoC_DF12",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_13",
+     "type": "df",
+     "x": 565.1,
+     "y": 840.0,
+     "rawX": 171.4,
+     "rawY": -215.8,
+     "icon": "icons/skills/df_16.png",
+     "max": 60,
+     "unlock": 20,
+     "lie": [
+      5
+     ],
+     "choices": [
+      {
+       "name": "DFA13",
+       "info": "InfoA_DF13",
+       "icon": "icons/skills/df_16.png"
+      },
+      {
+       "name": "DFB13",
+       "info": "InfoB_DF13",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC13",
+       "info": "InfoC_DF13",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_14",
+     "type": "df",
+     "x": 678.1,
+     "y": 840.0,
+     "rawX": 284.4,
+     "rawY": -215.8,
+     "icon": "icons/skills/df_17.png",
+     "max": 60,
+     "unlock": 20,
+     "lie": [
+      6
+     ],
+     "choices": [
+      {
+       "name": "DFA14",
+       "info": "InfoA_DF14",
+       "icon": "icons/skills/df_17.png"
+      },
+      {
+       "name": "DFB14",
+       "info": "InfoB_DF14",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC14",
+       "info": "InfoC_DF14",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_15",
+     "type": "df",
+     "x": 784.2,
+     "y": 840.0,
+     "rawX": 390.5,
+     "rawY": -215.8,
+     "icon": "icons/skills/df_18.png",
+     "max": 60,
+     "unlock": 20,
+     "lie": [
+      7
+     ],
+     "choices": [
+      {
+       "name": "DFA15",
+       "info": "InfoA_DF15",
+       "icon": "icons/skills/df_18.png"
+      },
+      {
+       "name": "DFB15",
+       "info": "InfoB_DF15",
+       "icon": "icons/skills/df_0.png"
+      },
+      {
+       "name": "DFC15",
+       "info": "InfoC_DF15",
+       "icon": "icons/skills/df_0.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_0",
+     "type": "df",
+     "x": 1.1,
+     "y": 980.0,
+     "rawX": -392.6,
+     "rawY": -355.8,
+     "icon": "icons/skills/df_8.png",
+     "max": 100,
+     "unlock": 0,
+     "lie": [
+      0
+     ],
+     "choices": [
+      {
+       "name": "DFA0",
+       "info": "InfoA_DF0",
+       "icon": "icons/skills/df_8.png"
+      },
+      {
+       "name": "DFB0",
+       "info": "InfoB_DF0",
+       "icon": "icons/skills/df_9.png"
+      },
+      {
+       "name": "DFC0",
+       "info": "InfoC_DF0",
+       "icon": "icons/skills/df_10.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_1",
+     "type": "df",
+     "x": 114.9,
+     "y": 980.0,
+     "rawX": -278.8,
+     "rawY": -355.8,
+     "icon": "icons/skills/df_8.png",
+     "max": 100,
+     "unlock": 0,
+     "lie": [
+      1
+     ],
+     "choices": [
+      {
+       "name": "DFA1",
+       "info": "InfoA_DF1",
+       "icon": "icons/skills/df_8.png"
+      },
+      {
+       "name": "DFB1",
+       "info": "InfoB_DF1",
+       "icon": "icons/skills/df_9.png"
+      },
+      {
+       "name": "DFC1",
+       "info": "InfoC_DF1",
+       "icon": "icons/skills/df_10.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_2",
+     "type": "df",
+     "x": 225.6,
+     "y": 980.0,
+     "rawX": -168.1,
+     "rawY": -355.8,
+     "icon": "icons/skills/df_8.png",
+     "max": 100,
+     "unlock": 0,
+     "lie": [
+      2
+     ],
+     "choices": [
+      {
+       "name": "DFA2",
+       "info": "InfoA_DF2",
+       "icon": "icons/skills/df_8.png"
+      },
+      {
+       "name": "DFB2",
+       "info": "InfoB_DF2",
+       "icon": "icons/skills/df_9.png"
+      },
+      {
+       "name": "DFC2",
+       "info": "InfoC_DF2",
+       "icon": "icons/skills/df_10.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_3",
+     "type": "df",
+     "x": 339.4,
+     "y": 980.0,
+     "rawX": -54.3,
+     "rawY": -355.8,
+     "icon": "icons/skills/df_8.png",
+     "max": 100,
+     "unlock": 0,
+     "lie": [
+      3
+     ],
+     "choices": [
+      {
+       "name": "DFA3",
+       "info": "InfoA_DF3",
+       "icon": "icons/skills/df_8.png"
+      },
+      {
+       "name": "DFB3",
+       "info": "InfoB_DF3",
+       "icon": "icons/skills/df_9.png"
+      },
+      {
+       "name": "DFC3",
+       "info": "InfoC_DF3",
+       "icon": "icons/skills/df_10.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_4",
+     "type": "df",
+     "x": 453.2,
+     "y": 980.0,
+     "rawX": 59.5,
+     "rawY": -355.8,
+     "icon": "icons/skills/df_8.png",
+     "max": 100,
+     "unlock": 0,
+     "lie": [
+      4
+     ],
+     "choices": [
+      {
+       "name": "DFA4",
+       "info": "InfoA_DF4",
+       "icon": "icons/skills/df_8.png"
+      },
+      {
+       "name": "DFB4",
+       "info": "InfoB_DF4",
+       "icon": "icons/skills/df_9.png"
+      },
+      {
+       "name": "DFC4",
+       "info": "InfoC_DF4",
+       "icon": "icons/skills/df_10.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_5",
+     "type": "df",
+     "x": 566.2,
+     "y": 980.0,
+     "rawX": 172.5,
+     "rawY": -355.8,
+     "icon": "icons/skills/df_8.png",
+     "max": 100,
+     "unlock": 0,
+     "lie": [
+      5
+     ],
+     "choices": [
+      {
+       "name": "DFA5",
+       "info": "InfoA_DF5",
+       "icon": "icons/skills/df_8.png"
+      },
+      {
+       "name": "DFB5",
+       "info": "InfoB_DF5",
+       "icon": "icons/skills/df_9.png"
+      },
+      {
+       "name": "DFC5",
+       "info": "InfoC_DF5",
+       "icon": "icons/skills/df_10.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_6",
+     "type": "df",
+     "x": 679.2,
+     "y": 980.0,
+     "rawX": 285.5,
+     "rawY": -355.8,
+     "icon": "icons/skills/df_8.png",
+     "max": 100,
+     "unlock": 0,
+     "lie": [
+      6
+     ],
+     "choices": [
+      {
+       "name": "DFA6",
+       "info": "InfoA_DF6",
+       "icon": "icons/skills/df_8.png"
+      },
+      {
+       "name": "DFB6",
+       "info": "InfoB_DF6",
+       "icon": "icons/skills/df_9.png"
+      },
+      {
+       "name": "DFC6",
+       "info": "InfoC_DF6",
+       "icon": "icons/skills/df_10.png"
+      }
+     ]
+    },
+    {
+     "skill": "DF_7",
+     "type": "df",
+     "x": 785.3,
+     "y": 980.0,
+     "rawX": 391.6,
+     "rawY": -355.8,
+     "icon": "icons/skills/df_8.png",
+     "max": 100,
+     "unlock": 0,
+     "lie": [
+      7
+     ],
+     "choices": [
+      {
+       "name": "DFA7",
+       "info": "InfoA_DF7",
+       "icon": "icons/skills/df_8.png"
+      },
+      {
+       "name": "DFB7",
+       "info": "InfoB_DF7",
+       "icon": "icons/skills/df_9.png"
+      },
+      {
+       "name": "DFC7",
+       "info": "InfoC_DF7",
+       "icon": "icons/skills/df_10.png"
+      }
+     ]
+    }
+   ],
+   "links": [
+    [
+     "DF_0",
+     "DF_8"
+    ],
+    [
+     "DF_1",
+     "DF_9"
+    ],
+    [
+     "DF_2",
+     "DF_10"
+    ],
+    [
+     "DF_3",
+     "DF_11"
+    ],
+    [
+     "DF_4",
+     "DF_12"
+    ],
+    [
+     "DF_5",
+     "DF_13"
+    ],
+    [
+     "DF_6",
+     "DF_14"
+    ],
+    [
+     "DF_7",
+     "DF_15"
+    ],
+    [
+     "DF_8",
+     "DF_16"
+    ],
+    [
+     "DF_9",
+     "DF_17"
+    ],
+    [
+     "DF_10",
+     "DF_18"
+    ],
+    [
+     "DF_11",
+     "DF_19"
+    ],
+    [
+     "DF_12",
+     "DF_20"
+    ],
+    [
+     "DF_13",
+     "DF_21"
+    ],
+    [
+     "DF_14",
+     "DF_22"
+    ],
+    [
+     "DF_15",
+     "DF_23"
+    ],
+    [
+     "DF_16",
+     "DF_24"
+    ],
+    [
+     "DF_17",
+     "DF_24"
+    ],
+    [
+     "DF_18",
+     "DF_25"
+    ],
+    [
+     "DF_19",
+     "DF_25"
+    ],
+    [
+     "DF_20",
+     "DF_26"
+    ],
+    [
+     "DF_21",
+     "DF_26"
+    ],
+    [
+     "DF_22",
+     "DF_27"
+    ],
+    [
+     "DF_23",
+     "DF_27"
+    ],
+    [
+     "DF_24",
+     "DF_28"
+    ],
+    [
+     "DF_24",
+     "DF_29"
+    ],
+    [
+     "DF_25",
+     "DF_30"
+    ],
+    [
+     "DF_25",
+     "DF_31"
+    ],
+    [
+     "DF_26",
+     "DF_32"
+    ],
+    [
+     "DF_26",
+     "DF_33"
+    ],
+    [
+     "DF_27",
+     "DF_34"
+    ],
+    [
+     "DF_27",
+     "DF_35"
+    ],
+    [
+     "DF_28",
+     "DF_36"
+    ],
+    [
+     "DF_29",
+     "DF_36"
+    ],
+    [
+     "DF_30",
+     "DF_36"
+    ],
+    [
+     "DF_31",
+     "DF_37"
+    ],
+    [
+     "DF_32",
+     "DF_37"
+    ],
+    [
+     "DF_33",
+     "DF_37"
+    ],
+    [
+     "DF_34",
+     "DF_38"
+    ],
+    [
+     "DF_35",
+     "DF_38"
+    ],
+    [
+     "DF_36",
+     "DF_39"
+    ],
+    [
+     "DF_36",
+     "DF_40"
+    ],
+    [
+     "DF_36",
+     "DF_41"
+    ],
+    [
+     "DF_37",
+     "DF_42"
+    ],
+    [
+     "DF_37",
+     "DF_43"
+    ],
+    [
+     "DF_37",
+     "DF_44"
+    ],
+    [
+     "DF_38",
+     "DF_45"
+    ],
+    [
+     "DF_38",
+     "DF_46"
+    ],
+    [
+     "DF_39",
+     "DF_47"
+    ],
+    [
+     "DF_40",
+     "DF_47"
+    ],
+    [
+     "DF_41",
+     "DF_47"
+    ],
+    [
+     "DF_42",
+     "DF_48"
+    ],
+    [
+     "DF_43",
+     "DF_48"
+    ],
+    [
+     "DF_44",
+     "DF_48"
+    ],
+    [
+     "DF_45",
+     "DF_49"
+    ],
+    [
+     "DF_46",
+     "DF_49"
+    ]
+   ],
+   "columns": [
+    {
+     "lie": 0,
+     "x": -1.2,
+     "y": 1133.6
+    },
+    {
+     "lie": 1,
+     "x": 111.2,
+     "y": 1133.6
+    },
+    {
+     "lie": 2,
+     "x": 223.5,
+     "y": 1133.6
+    },
+    {
+     "lie": 3,
+     "x": 337.5,
+     "y": 1133.6
+    },
+    {
+     "lie": 4,
+     "x": 451.3,
+     "y": 1133.6
+    },
+    {
+     "lie": 5,
+     "x": 565.6,
+     "y": 1133.6
+    },
+    {
+     "lie": 6,
+     "x": 676.7,
+     "y": 1133.6
+    },
+    {
+     "lie": 7,
+     "x": 785.1,
+     "y": 1133.6
+    }
+   ]
+  }
+ ]
+}
