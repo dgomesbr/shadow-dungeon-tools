@@ -16,11 +16,14 @@ These docs are grounded in two real, working plugins:
   [`mods/SummonAll/`](../../mods/SummonAll/README.md)) — one click re-summons every
   companion skill; embeds into Character Utilities' F6 window when present.
 
+Both ship prebuilt as `ShadowDungeon-F6-Mods-1.0.0.zip` on this repo's
+[`mods-v1.0.0` release](https://github.com/dgomesbr/shadow-dungeon-tools/releases/tag/mods-v1.0.0).
+
 ## Contents
 
 | Doc | What's in it |
 |---|---|
-| [installation.md](installation.md) | Installing BepInEx 5.4.23.5 x64 step by step, verifying with `LogOutput.log`, and installing both plugins. |
+| [installation.md](installation.md) | Installing BepInEx 5.4.23.5 x64 step by step, verifying with `LogOutput.log`, and installing both plugins — either via the one-zip [`mods-v1.0.0` release](https://github.com/dgomesbr/shadow-dungeon-tools/releases/tag/mods-v1.0.0) (`ShadowDungeon-F6-Mods-1.0.0.zip`) or by hand. |
 | [mod-mechanics.md](mod-mechanics.md) | How the game is put together for modders: the singleton/manager landscape (`PlayerManager`, `SaveManager`, `ACTbar`, `Gun`, ...), the four Harmony patch patterns with code, safe save mutation, the IMGUI overlay pattern, config binding and hotkeys. |
 | [adding-features.md](adding-features.md) | Building a new plugin from zero: csproj, plugin skeleton, finding patch targets in decompiled code, the build/deploy loop, debugging, and the pitfalls that cost us real time. |
 | [credits.md](credits.md) | Max, OO Cat, and the tooling this all stands on. |

@@ -103,7 +103,7 @@ export function createCharacterRenderer(cat: Catalog, affixNames: AffixNames) {
 
   function fmtBy(n: number, format?: string): string {
     if (format === 'int') return String(Math.floor(n));
-    if (format === '0.0') return n.toFixed(1);
+    if (format === '1dp') return n.toFixed(1);
     return fmt(n);
   }
 

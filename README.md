@@ -2,18 +2,24 @@
 
 Fan-made tooling for **Shadow Dungeon** (OO Cat, Steam appid 4423580):
 
-- **`web/`** — a 100% client-side item library + save editor, hosted on GitHub Pages.
-  Upload your `.sav`, browse/edit items, gems, equipment and character stats in the
-  browser, download the edited save. No backend, nothing leaves your machine.
+- **`web/`** — a 100% client-side site on GitHub Pages: Home, Item library
+  (`#/items`), Save Editor (`#/editor`), Mods download page (`#/mods`), plus a
+  read-only shared-build viewer (`#/build`). Upload your `.sav`, browse/edit
+  items, gems, equipment and character stats in the browser, download the
+  edited save, or share your build as a ~1 KB link. No backend, nothing
+  leaves your machine.
   Inspired by [juister.dev/shadowdungeon](https://juister.dev/shadowdungeon/items/) and
   [d2runewizard's hero editor](https://d2runewizard.com/hero-editor).
 - **`pipeline/`** — scripts that extract the game's item/affix/set/skill tables and
   localization into the compact JSON the web app ships with.
-- **`mods/`** — BepInEx plugins (e.g. [SummonAll](mods/SummonAll/)).
+- **`mods/`** — BepInEx plugins (e.g. [SummonAll](mods/SummonAll/)). Prebuilt DLLs
+  ship in the [`mods-v1.0.0` release](https://github.com/dgomesbr/shadow-dungeon-tools/releases/tag/mods-v1.0.0)
+  as `ShadowDungeon-F6-Mods-1.0.0.zip`.
 - **`docs/`** — everything reverse-engineered, code-cited:
   - [sav-binary-format.md](docs/sav-binary-format.md) — the OdinSerializer binary wire format, byte by byte
   - [save-data-model.md](docs/save-data-model.md) — every serialized save class, enums, editing invariants
   - [data-schema.md](docs/data-schema.md) — the generated JSON tables and their join keys
+  - [affix-mapping.md](docs/affix-mapping.md) — affix index → tooltip line, and the `affix-names.json` schema
   - [icons.md](docs/icons.md) — how item icons are resolved and extracted
   - [architecture.md](docs/architecture.md) — web app design, safety gates, perf budgets
   - [ui-reference.md](docs/ui-reference.md) — research on juister.dev and d2runewizard

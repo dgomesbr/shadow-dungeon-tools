@@ -630,6 +630,6 @@ function readEntry() {                  // one top-level entry
 
 ---
 
-*Prepared 2026-08-31. Note that the live `slot_1.sav` changes while the game runs
+*Prepared 2026-08-31. The live `slot_1.sav` changes while the game runs
 (the annotated example was taken from a consistent snapshot); `_auto`/`_exit`/`.bak`
 variants use the identical format.*

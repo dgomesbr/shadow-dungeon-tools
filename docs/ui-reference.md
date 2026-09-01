@@ -6,6 +6,9 @@ Sources were fetched 2026-08-31: live HTML/JS/CSS/data files from `juister.dev` 
 behind a Cloudflare challenge). Everything below marked *verified* comes from actual
 source/data files; items marked *inferred* are deduced from code, strings, or changelogs.
 
+These notes predate the app. Section 4's checklist is the original v1 plan;
+the shipped implementation is documented in [architecture.md](architecture.md).
+
 ---
 
 ## 1. juister.dev/shadowdungeon/items/ — "Item & Affix Database"
@@ -14,20 +17,18 @@ source/data files; items marked *inferred* are deduced from code, strings, or ch
 
 Classic two-pane master–detail, full viewport height:
 
-```
-+--------------------------------------------------------------+
-| Header: title + subtitle              | stats "N / M items"  |
-+--------------------------------------------------------------+
-| Controls (sticky): [search][weapon type v][quality v]        |
-|                    [Item level: 100][Reset]                  |
-+----------------+---------------------------------------------+
-| <aside #list>  | <article #detail>                           |
-| scrollable     |  - Base item tooltip (game-styled)          |
-| item rows      |  - Item summary (chips, IDs, base values)   |
-| 350px wide     |  - "Complete extracted modifier data" cards |
-+----------------+---------------------------------------------+
-| Footer: methodology disclaimer (game-code references)        |
-+--------------------------------------------------------------+
+```mermaid
+flowchart TD
+  H["Header: title + subtitle, stats 'N / M items'"] --> C
+  C["Controls (sticky): search, weapon-type + quality selects,<br>item level input, Reset"] --> L
+  C --> D
+  subgraph MAIN [main area]
+    L["aside #35;list — scrollable item rows, 350px wide"]
+    D["article #35;detail — game-styled tooltip,<br>summary chips/IDs, 'Complete extracted modifier data' cards"]
+  end
+  L --> F
+  D --> F
+  F["Footer: methodology disclaimer (game-code references)"]
 ```
 
 ### Tech stack (verified)
@@ -236,8 +237,8 @@ d2s parser library. Post-load UI details that could not be captured are marked *
   streak gamification, light-mode toggle, "Support Us".
 - Hero editor landing: title + date, then **two entry tabs: "Load Existing Character" /
   "Create New Character"**.
-- Load tab copy: "Select the character save file (.d2s), commonly found under
-  `C:\Users\(your user name)\Saved Games\Diablo II Resurrected`" + explanation that a save
+- Load tab copy: "Select the character save file (.d2s)", pointing at the
+  `Saved Games\Diablo II Resurrected` folder in the user profile, + explanation that a save
   consists of .d2s/.map/.key/.ctl and you overwrite the .d2s. "This tool allows you to load,
   edit, and generate .d2s files. It also supports loading shared stash files (.d2i)."
 - Below the fold: **"What's new" changelog**, **"Known issues"** ("Some items ... do not have

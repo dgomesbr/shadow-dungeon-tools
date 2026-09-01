@@ -27,6 +27,11 @@ Config lives in `BepInEx\config\dgome.summonall.cfg` after first run. An optiona
 
 ## Build
 
+Don't want to build? A prebuilt `SummonAll.dll` ships in the
+[`mods-v1.0.0` release](https://github.com/dgomesbr/shadow-dungeon-tools/releases/tag/mods-v1.0.0),
+both inside `ShadowDungeon-F6-Mods-1.0.0.zip` (bundled with Character
+Utilities) and as a standalone asset.
+
 Prerequisites: a .NET SDK (`dotnet` on PATH) and a Shadow Dungeon install with
 BepInEx 5 already set up (see [`docs/modding/installation.md`](../../docs/modding/installation.md)).
 

@@ -29,8 +29,9 @@ function affixLabel(pool: 'main' | 'dot' | 'sk', index: number, el: number, nb: 
     .replace(/\{skill\}|\{target\}|\{link\}|\{mode\}/g, skn ?? 'skill');
   if (spec.bool) return esc(label);
   // Percent labels already carry their % sign after {n}.
-  const v = (spec.format === 'int' ? String(Math.floor(nb)) : String(nb))
-    + (spec.percent && !label.includes('{n}%') ? '%' : '');
+  const num = spec.format === 'int' ? String(Math.floor(nb))
+    : spec.format === '1dp' ? nb.toFixed(1) : String(nb);
+  const v = num + (spec.percent && !label.includes('{n}%') ? '%' : '');
   return esc(label.replace('{n}', v));
 }
 

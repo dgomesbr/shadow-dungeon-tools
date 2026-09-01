@@ -9,64 +9,46 @@ Game version: Unity 2019.4 Mono, Steam appid 4423580. Saves in
 
 ## 1. Containment tree
 
-```
-SaveData                                    (Data.SaveData/SaveData.cs:9)
-├── GameVersion, BackupKind, SaveCreatedUtcTicks, SessionBaselineUtcTicks,
-│   SessionId, SaveTransactionId            (session/backup header — NEVER EDIT)
-├── EmbeddedGlobalData : GlobalSaveData     (Data.SaveData.GlobalSave/GlobalSaveData.cs:6)
-│   ├── LastWriterSlotId, SaveTransactionId, SaveCreatedUtcTicks
-│   └── GlobalChestData : GlobalChestSaveData  (GlobalChestSaveData.cs:48)
-│       ├── PageCount                       (global chest pages; this user: 10)
-│       └── ChestItems : List<ContainerItemSaveData>
-├── PlayerDataSavedWithoutEquipment : bool  (must stay true — see invariants)
-├── PlayTimeSeconds : long
-├── PlayerData : PlayerSaveData             (Data.SaveData/PlayerSaveData.cs:7, ~450 fields)
-│   └── Dot_Fire/Ice/TD/Du/Phy/SD : PlayerDotData   (PlayerDotData.cs:5)
-├── TalentData : TalentSaveData             (TalentSaveData.cs:7)
-│   ├── P_Base, P_Used, P_Used_DF (+4 bool flags)
-│   ├── All_Skill_Datas : Dict<string, SkillSaveData>   {Level_Base, Level_WeaponOn, SelectedIndex}
-│   └── All_Xi_Datas   : Dict<string, XiSaveData>       {Level_Base}
-├── ActbarData : ActbarSaveData             (ActbarSaveData.cs:7)
-│   ├── SkillSlots : List<ActbarSkillSlotSaveData>  {Opened, AutoAttack*, IndexName, Xi, SkillType}
-│   └── UseSlots   : List<ActbarUseSlotSaveData>    {Opend, IndexName, Type}
-├── InventoryData : InventorySaveData       (InventorySaveData.cs:7)
-│   ├── Money : long
-│   ├── PageCount                           (inventory pages; this user: 15; grid 15x17 per page)
-│   ├── Equipments : List<WeaponSaveData>   (10 entries, index = slot, null = empty slot)
-│   └── InventoryItems : List<ContainerItemSaveData>
-│       └── ContainerItemSaveData           (ContainerItemSaveData.cs:6)
-│           ├── Page, GridX, GridY, ItemType (0/1/2)
-│           ├── Weapon : WeaponSaveData     (when ItemType == 0)
-│           ├── Baoshi : BaoshiSaveData     (when ItemType == 1: gems, essences, stones, runes)
-│           └── UseItem : UseItemSaveData   (when ItemType == 2: potions, keys, scrolls)
-├── DialogData : DialogSaveData             {TriggeredEvents, CompletedDialogs : List<string>}
-├── UnlockedChapterIds : HashSet<int>       (default {1})
-├── UnlockedLevelIds : HashSet<string>      (level ids like "01_01")
-├── DefeatedBossLevelIds : HashSet<string>
-├── LastPlayLevelId : string
-├── UnlockedMijing : bool                   (secret-realm/endless dungeon unlocked)
-└── mijingFloor_easy/_medium/_hard/_master : int   (highest reached floor per difficulty, min 1)
+Top two levels of the root object (every node's fields, ranges and file:line
+citations are in the section 3 tables):
 
-WeaponSaveData                              (Data.SaveData/WeaponSaveData.cs:8)
-├── counters: RebuildTime, EnhanceTime, HHTime, SkillFWTime, JHEL_Count, JH_Count
-├── identity: PLtype, WeaponType, CharType, ItemType, GlobalID, ItemName, Quality, Level,
-│   Price, Size, SaveSlot, SoundDrop, SoundUse, RotateType
-├── set: Set_Index, SetRuntimeData : Set_DT {SetID, SetName, Lit[3] : Set_DT_Lit, Buff*}, BS_Set_Index
-├── mijing: DropScene, MJ_Level
-├── base stats: Damage, Health, Mana, BaseValueDoubled, BaseValueMultiplier,
-│   Fire, Frozen, Thunder, Poison, Physics, Shadow
-├── Main : WPDT_A[]   {Index, EL, number}   (main affixes)
-├── DOT  : WPDT_A[]   {Index, EL, number}   (damage-over-time affixes)
-├── SK   : WPDT_B[]   {SkillName, Index, GlobleID, EL, number, LinkSK}  (skill-modifier affixes)
-├── CP   : WPDT_B[]   (companion-modifier affixes)
-├── FW_Base : WPFW_Base {FWname, type, number, price}   (attribute rune, 1 per item)
-├── WP_SkillCount, WPSK : List<WPSkillSaveData>  {IndexName, Number, Number2, price}  (6 skill sockets)
-├── MaxAocaoCount, AocaoCount, Aocao : List<WPAocaoSaveData>
-│   └── {HasAocao, HasBaoshi, Name, Type 0-25, UseType, BS_Quality, Number}  (6 gem sockets)
-├── SPC : List<WPSPC> {Index, EL, PRC, price}  ([0]=innate orb proc, [1]=socketed SPC rune)
-├── SPCindex, SPC_EL, SPC_PRC               (legacy mirror of SPC[0])
-├── SPC_DMG_Bei                             (orb-proc damage multiplier, 100 = neutral)
-└── Enchanted : bool
+```mermaid
+flowchart TD
+  SD["SaveData<br>(SaveData.cs:9)"] --> HDR["session/backup header — NEVER EDIT<br>GameVersion, BackupKind, ticks, SessionId, SaveTransactionId"]
+  SD --> EGD["EmbeddedGlobalData : GlobalSaveData<br>(GlobalSaveData.cs:6)"]
+  EGD --> GCD["GlobalChestData : GlobalChestSaveData<br>PageCount + ChestItems (this user: 10 pages)"]
+  SD --> FLAGS["PlayerDataSavedWithoutEquipment : bool (keep true)<br>PlayTimeSeconds : long"]
+  SD --> PD["PlayerData : PlayerSaveData<br>(~450 fields, PlayerSaveData.cs:7)"]
+  PD --> DOTB["Dot_Fire/Ice/TD/Du/Phy/SD : PlayerDotData"]
+  SD --> TAL["TalentData : TalentSaveData<br>P_Base/P_Used/P_Used_DF + flags"]
+  TAL --> TDICT["All_Skill_Datas, All_Xi_Datas (dicts by IndexName)"]
+  SD --> ACT["ActbarData : ActbarSaveData"]
+  ACT --> ASL["SkillSlots + UseSlots (lists)"]
+  SD --> INV["InventoryData : InventorySaveData<br>Money, PageCount (this user: 15)"]
+  INV --> EQ["Equipments: 10 x WeaponSaveData<br>(index = slot, null = empty)"]
+  INV --> II["InventoryItems: list of ContainerItemSaveData"]
+  II --> WRAP["ContainerItemSaveData<br>Page/GridX/GridY + ItemType<br>0=Weapon, 1=Baoshi, 2=UseItem"]
+  SD --> DLG["DialogData : DialogSaveData"]
+  SD --> UNL["UnlockedChapterIds / UnlockedLevelIds /<br>DefeatedBossLevelIds / LastPlayLevelId"]
+  SD --> MJ["UnlockedMijing : bool<br>mijingFloor_easy/_medium/_hard/_master : int"]
+```
+
+`WeaponSaveData` (WeaponSaveData.cs:8), the payload behind every equipped
+item and every ItemType-0 container item — field-level detail in section 3.9:
+
+```mermaid
+flowchart TD
+  W["WeaponSaveData"] --> IDY["identity: GlobalID, ItemName, Quality, Level,<br>PLtype, WeaponType, CharType, Price, Size, SaveSlot"]
+  W --> CNT["counters: RebuildTime, EnhanceTime, HHTime,<br>SkillFWTime, JHEL_Count, JH_Count"]
+  W --> BST["base stats: Damage, Health, Mana,<br>BaseValueDoubled/Multiplier, Fire..Shadow"]
+  W --> SETG["set: Set_Index, SetRuntimeData : Set_DT, BS_Set_Index"]
+  W --> MJG["mijing: DropScene, MJ_Level"]
+  W --> MAINA["Main / DOT : WPDT_A arrays {Index, EL, number}"]
+  W --> SKCP["SK / CP : WPDT_B arrays<br>{SkillName, Index, GlobleID, EL, number, LinkSK}"]
+  W --> FWB["FW_Base : WPFW_Base (attribute rune, 1 per item)"]
+  W --> WPSKN["WP_SkillCount + WPSK: 6 skill sockets<br>{IndexName, Number, Number2, price}"]
+  W --> AOC["MaxAocaoCount, AocaoCount + Aocao: 6 gem sockets<br>{HasAocao, HasBaoshi, Name, Type 0-25, ...}"]
+  W --> SPCG["SPC: orb procs {Index, EL, PRC, price}<br>+ legacy mirror SPCindex/SPC_EL/SPC_PRC<br>+ SPC_DMG_Bei (100 = neutral), Enchanted"]
 ```
 
 Non-payload sibling types: `SaveBackupKind` enum (SaveBackupKind.cs:3), `SaveSlotData`

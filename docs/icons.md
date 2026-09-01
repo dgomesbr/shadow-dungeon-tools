@@ -3,6 +3,11 @@
 Extracted by `pipeline/extract-icons.py` into `web/public/icons/` (5,197 unique
 PNGs + `icons-index.json`). Game files were read-only inputs.
 
+The web app does **not** fetch `icons-index.json` at runtime: icon paths are
+computed from the `ICON_SHEETS` constant in `web/src/data/catalog.ts`, which
+mirrors the IconType → sheet table below. The index file is still written by
+the extractor as reference/verification data.
+
 ## Where the icons live in the game assets
 
 | What | Location |
@@ -105,7 +110,7 @@ Runtime overrides from `ItemIconUtil.GetBaoshiIcon` for rune-type gems:
 CSV col 5 (0-based; per `LoadData_USE`) is the `Icon` index into LittleA:
 `icons/consumables/LittleA_<Icon>.png` (`useItemIcons.sprites[Icon]`).
 
-### icons-index.json schema
+### icons-index.json schema (reference only — not fetched by the web app)
 
 ```jsonc
 {
@@ -118,11 +123,12 @@ CSV col 5 (0-based; per `LoadData_USE`) is the `Icon` index into LittleA:
 }
 ```
 
-Web-app recipe: load the index once; for a weapon do
-`idx.sprites[idx.weaponIconTypes[iconType].sprites[icon]].path`; for
-gems/consumables use `gemIcons`/`useItemIcons` the same way. Since the
-name-suffix invariant holds, `icons/weapons/${SHEET[iconType]}_${icon}.png`
-also works without the index.
+Web-app recipe: because the name-suffix invariant holds, the app skips the
+index entirely — `web/src/data/catalog.ts` builds
+`icons/weapons/${ICON_SHEETS[iconType]}_${icon}.png` (and
+`icons/gems/LittleC_${icon}.png` / `icons/consumables/LittleA_${icon}.png`)
+directly. Tools that prefer a lookup table can still use the index:
+`idx.sprites[idx.weaponIconTypes[iconType].sprites[icon]].path`.
 
 ## Re-running
 

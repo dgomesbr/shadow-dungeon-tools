@@ -13,6 +13,38 @@ F:\SteamLibrary\steamapps\common\Shadow Dungeon\
 
 Adjust the drive/path for your own Steam library.
 
+How the pieces load once everything is installed:
+
+```mermaid
+flowchart LR
+  exe["Shadow Dungeon.exe"] --> door["winhttp.dll<br>(Unity Doorstop)"]
+  door --> cfg["doorstop_config.ini"]
+  cfg --> pre["BepInEx.Preloader.dll"]
+  pre --> chain["BepInEx chainloader"]
+  chain --> cu["ShadowDungeonPlus.dll<br>(Character Utilities)"]
+  chain --> sa["SummonAll.dll"]
+  cu --> harmony["Harmony patches"]
+  sa --> harmony
+  harmony --> game["Assembly-CSharp<br>(game code, in memory)"]
+```
+
+No game files are modified at any point — everything happens in the running
+process.
+
+## The short version: one zip
+
+If you just want the mods, install BepInEx once (section 1), then download
+**`ShadowDungeon-F6-Mods-1.0.0.zip`** from this repo's
+[`mods-v1.0.0` release](https://github.com/dgomesbr/shadow-dungeon-tools/releases/tag/mods-v1.0.0)
+and extract it into the game root. It only adds two files to
+`BepInEx\plugins\`: `ShadowDungeonPlus.dll` (Max's *Character Utilities*
+v1.1.0) and `SummonAll.dll` (v1.0.0). Launch the game and press **F6**.
+The release page also carries the individual DLLs; the site's
+[Mods page](https://dgomesbr.github.io/shadow-dungeon-tools/#/mods) shows the
+zip's SHA-256 and walks through the same three steps.
+
+Sections 2 and 3 below cover installing each plugin by hand instead.
+
 ## 1. Install BepInEx 5.4.23.5 (x64)
 
 1. Download **`BepInEx_win_x64_5.4.23.5.zip`** from the
@@ -85,7 +117,9 @@ fact.
 
 *Character Utilities* v1.1.0 by Discord user **Max** is distributed as a single DLL
 (`ShadowDungeonPlus.dll` — the assembly name differs from the plugin name) in the
-[#qol-mod channel of the Shadow Dungeon Discord](https://discord.com/channels/1543586564439810138/1543599915006165002).
+[#qol-mod channel of the Shadow Dungeon Discord](https://discord.com/channels/1543586564439810138/1543599915006165002),
+and redistributed with attribution in this repo's
+[`mods-v1.0.0` release](https://github.com/dgomesbr/shadow-dungeon-tools/releases/tag/mods-v1.0.0).
 
 1. Drop `ShadowDungeonPlus.dll` into `BepInEx\plugins\`.
 2. Start the game. `LogOutput.log` should show:
@@ -106,7 +140,9 @@ is implemented.
 ## 3. Install SummonAll (this repo)
 
 Either build it from [`mods/SummonAll/`](../../mods/SummonAll/README.md)
-(`dotnet build -c Release`) or take a prebuilt `SummonAll.dll`, then:
+(`dotnet build -c Release`) or take the prebuilt `SummonAll.dll` from the
+[`mods-v1.0.0` release](https://github.com/dgomesbr/shadow-dungeon-tools/releases/tag/mods-v1.0.0),
+then:
 
 1. Copy `SummonAll.dll` into `BepInEx\plugins\`.
 2. Start the game and check the log:
