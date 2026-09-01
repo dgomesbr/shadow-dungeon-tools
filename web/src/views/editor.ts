@@ -62,7 +62,7 @@ export async function editorView(): Promise<View> {
       const st: State = {
         files: new Map(), active: null, container: 'inventory', page: 0,
         selected: null, pending: new Map(), mirror: true,
-        talentArch: 0, talentXi: -1,
+        talentArch: -1, talentXi: -1, // -1 = follow the character's class
       };
       // Deep-handle maps per file+item; index paths are stable across value
       // edits, so entries stay valid until files are (re)loaded.
@@ -545,6 +545,19 @@ export async function editorView(): Promise<View> {
         const pUsed = tp.get('P_Used') ?? 0;
         const pDF = tp.get('P_Used_DF') ?? 0;
         const nArch = data.archetypes.length;
+
+        // Only the character's own class trees are editable; Divine Favor
+        // unlocks at level 100 (TalentManager gates it the same way).
+        const pmap = new Map(s.player.map((l) => [l.name, l.value]));
+        const playerType = Math.min(Math.max(Number(pmap.get('PlayerType')) || 0, 0), nArch - 1);
+        const charLevel = Number(pmap.get('Level')) || 0;
+        const dfAvailable = charLevel >= 100;
+        if (st.talentArch < 0
+          || (st.talentArch < nArch && st.talentArch !== playerType)
+          || (st.talentArch >= nArch && !dfAvailable)) {
+          st.talentArch = playerType;
+          st.talentXi = data.archetypes[playerType]?.classIds[0] ?? 0;
+        }
         const isDF = st.talentArch >= nArch;
         if (st.talentXi < 0) st.talentXi = isDF ? 12 : data.archetypes[st.talentArch]?.classIds[0] ?? 0;
         const curXi = isDF ? 12 : st.talentXi;
@@ -561,9 +574,13 @@ export async function editorView(): Promise<View> {
             <span class="dim">click +1 · right-click or Shift+click −1</span>
           </div>
           <div class="tt-tabs">
-            ${data.archetypes.map((a, i) =>
-              `<button class="seg ${!isDF && st.talentArch === i ? 'on' : ''}" data-arch="${i}">${esc(a.name)}</button>`).join('')}
-            <button class="seg ${isDF ? 'on' : ''}" data-arch="${nArch}">Divine Favor</button>
+            ${data.archetypes.map((a, i) => {
+              const mine = i === playerType;
+              return `<button class="seg ${!isDF && st.talentArch === i ? 'on' : ''}" data-arch="${i}"
+                ${mine ? '' : `disabled title="This character is a ${esc(data.archetypes[playerType]?.name ?? '')}"`}>${esc(a.name)}</button>`;
+            }).join('')}
+            <button class="seg ${isDF ? 'on' : ''}" data-arch="${nArch}"
+              ${dfAvailable ? '' : `disabled title="Divine Favor unlocks at level 100 (character is level ${charLevel})"`}>Divine Favor</button>
           </div>`;
         if (!isDF) {
           const arch = data.archetypes[st.talentArch];

@@ -285,6 +285,7 @@ kbd {
 #talent-trees { padding-bottom: 2rem; }
 .tt-head { display: flex; gap: 1.4rem; align-items: baseline; flex-wrap: wrap; padding: 0.3rem 0 0.6rem; }
 .tt-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.tt-tabs .seg:disabled { opacity: 0.4; cursor: not-allowed; }
 .tt-tabs.sub .seg { font-size: 0.85rem; }
 .tree-canvas {
   position: relative; background:
